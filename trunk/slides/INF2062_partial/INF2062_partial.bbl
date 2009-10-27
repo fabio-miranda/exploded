@@ -12,10 +12,24 @@ Bruckner, S. (2006{\rm{}}).
   12}, 1077--1084.
 \newblock Member-Groller, M. Eduard.
 
+\bibitem[Carpendale {\rm et~al.}, 1997]{618448}
+Carpendale, M. S.~T., Cowperthwaite, D.~J.  \& Fracchia, F.~D. (1997{\rm{}}).
+\newblock {\rm IEEE Comput. Graph. Appl.} {\rm 17}, 42--51.
+
+\bibitem[Correa {\rm et~al.}, 2006]{10.1109/TVCG.2006.144}
+Correa, C., Silver, D.  \& Chen, M. (2006{\rm{}}).
+\newblock {\rm IEEE Transactions on Visualization and Computer Graphics } {\rm
+  12}, 1069--1076.
+
 \bibitem[Elmqvist \& Tsigas, 2008]{1446259}
 Elmqvist, N. \& Tsigas, P. (2008{\rm{}}).
 \newblock {\rm IEEE Transactions on Visualization and Computer Graphics } {\rm
   14}, 1095--1109.
+
+\bibitem[H.~Sonnet, 2004]{23}
+H.~Sonnet, M.S.T.~Carpendale, T.~S. (2004{\rm{}}).
+\newblock In {\rm ACM Conference on Advanced Visual Interfaces} pp. 61--70, ACM
+  Press.
 
 \bibitem[Li {\rm et~al.}, 2008]{1360700}
 Li, W., Agrawala, M., Curless, B.  \& Salesin, D. (2008{\rm{}}).

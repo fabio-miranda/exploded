@@ -1,4 +1,4 @@
-\section{Técnicas de gerenciamento de oclusão}
+\section{Características da Vista Explodida}
 \begin{frame}\frametitle{\emph{A Taxonomy of 3D Occlusion Management for Visualization} \cite{1446259}} 
 \begin{itemize}
 	\item Apresenta uma classificação das técnicas de gerenciamento de oclusão, sendo possível perceber de forma objetiva as diferenças entre as diversas técnicas.
@@ -20,9 +20,8 @@
 	
 \begin{frame}\frametitle{Características das técnicas de gerenciamento de oclusão (2)}
 \begin{itemize}
-	\item \textbf{Poder de desambigução}
+	\item \textbf{Poder de desambigüação}: medida de quão complexos poderão ser as interações entre os objetos tratados pelo gerenciamento de oclusão.
 	\begin{itemize}
-		\item \textbf{Proximidade}:
 		\item \textbf{Interseção}:
 		\item \textbf{"Acercar" (\emph(enclosement))}:
 		\item \textbf{Confinamento}:
@@ -35,13 +34,13 @@
 	
 \begin{frame}\frametitle{Características das técnicas de gerenciamento de oclusão (3)}
 \begin{itemize}
-	\item \textbf{Sugestões de profundidade (\emph{depth cues})}:
+	\item \textbf{Sugestões de profundidade (\emph{depth cues})}: o nível de percepção de profundidade que determinada técnica transmite ao observador.
 	\begin{itemize}
-		\item \textbf{Baixa}:
-		\item \textbf{Ligeiramente baixa}:
-		\item \textbf{Média}:
-		\item \textbf{Ligeiramente alta}:
-		\item \textbf{Alta}:
+		\item \textbf{Baixa}.
+		\item \textbf{Ligeiramente baixa}.
+		\item \textbf{Média}.
+		\item \textbf{Ligeiramente alta}.
+		\item \textbf{Alta}.
 	\end{itemize}
 \end{itemize}
 \end{frame}
@@ -61,11 +60,11 @@
 	
 \begin{frame}\frametitle{Características das técnicas de gerenciamento de oclusão (5)}
 \begin{itemize}
-	\item \textbf{Modelo de interação}:
+	\item \textbf{Modelo de interação}: como se dá a interação com o usuário.
 	\begin{itemize}
-		\item \textbf{Passivo}:
-		\item \textbf{Híbrido}:
-		\item \textbf{Ativo}:
+		\item \textbf{Passivo}: sem intervenção do usuário.
+		\item \textbf{Híbrido}: pode haver uma transição entre o modo passivo e o ativo.
+		\item \textbf{Ativo}: intervensão ativa do usuário.
 	\end{itemize}
 \end{itemize}
 \end{frame}
@@ -74,9 +73,9 @@
 \begin{itemize}
 	\item \textbf{Invariantes do objeto}:
 	\begin{itemize}
-		\item \textbf{Posição e orientação}:
-		\item \textbf{Geometria}:
-		\item \textbf{Aparência}:
+		\item \textbf{Posição e orientação}: posição e orientação.
+		\item \textbf{Geometria}: forma e tamanho do objeto.
+		\item \textbf{Aparência}: cor, textura e material.
 	\end{itemize}
 \end{itemize}
 \end{frame}
@@ -88,19 +87,31 @@
 \end{frame}
 
 \begin{frame}\frametitle{Classificação}
-	\begin{columns}[T]
-	\begin{column}{3cm}
 	\begin{itemize}
-		\item \alert<1>{Cut-away view, Ghosted View}
-		\item \alert<2>{Exploders}
+		\item Virtual X-Ray: Cut-away view, Ghosted View
 	\end{itemize}
-	\vspace{3cm} 
-	\end{column}
-	\begin{column}{7cm}
-	\begin{overprint}
-		\includegraphics<1>[height=100.0px]{img/xray}
-		\includegraphics<2>[height=100.0px]{img/exploder}
-	\end{overprint}
-	\end{column}
-	\end{columns}
+	\begin{center}
+		\includegraphics[height=115.0px]{img/xray}
+	\end{center}
+	\begin{itemize}
+		\item \footnotesize Ao remover partes que estão obstruindo as partes de maior interesse, há uma perda na sugestão de profundidade. O relacionamento espacial também fica comprometido.
+		\item \footnotesize A única invariante é posição e orientação.
+	\end{itemize}
+\end{frame}
+
+\begin{frame}\frametitle{Classificação}
+	\begin{itemize}
+		\item Exploders
+	\end{itemize}
+	\begin{center}
+		\includegraphics[height=115.0px]{img/exploder}
+	\end{center}
+	\begin{itemize}
+		\item \footnotesize O gerenciamento de oclusão é feita de maneira ativa pelo usuário.
+		\item \footnotesize Não há invariantes.
+		\item \footnotesize Como não há uma remoção de partes, não há perda na sugestão de profundidade.
+	\end{itemize}
+	
+	
+	
 \end{frame}
