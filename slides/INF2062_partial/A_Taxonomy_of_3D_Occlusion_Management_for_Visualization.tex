@@ -1,12 +1,106 @@
-\section{A Taxonomy of 3D Occlusion Management for Visualization}
+\section{Técnicas de gerenciamento de oclusão}
 \begin{frame}\frametitle{\emph{A Taxonomy of 3D Occlusion Management for Visualization} \cite{1446259}} 
 \begin{itemize}
-	\item Apresenta uma classificação das técnicas de gerenciamento de oclusão.
+	\item Apresenta uma classificação das técnicas de gerenciamento de oclusão, sendo possível perceber de forma objetiva as diferenças entre as diversas técnicas.
 	\item A partir de 25 características, o trabalho deriva 5 \emph{patterns} para reduzir a oclusão em modelos 3D.
 \end{itemize}
 \end{frame}
 
-\begin{frame}\frametitle{Características}
+\begin{frame}\frametitle{Características das técnicas de gerenciamento de oclusão (1)}
+\begin{itemize}
+	\item \textbf{Propósito principal}:
+	\begin{itemize}
+		\item \textbf{Descoberta}: tem como objetivo fazer com que o usuário fique ciente de partes obstruídas, não necessariamente deixando mais acessível as informações do objeto.
+		\item \textbf{Acesso}: diferentemente da \textbf{descoberta}, deixa necessariamente as informações do objeto mais acessíveis.
+		\item \textbf{Relacionamento espacial}: busca deixar o contexto em que o objeto está inserido visível e mais fácil de ser entendido pelo usuário. 
+	\end{itemize}
+\end{itemize}
+\end{frame}
+	
+	
+\begin{frame}\frametitle{Características das técnicas de gerenciamento de oclusão (2)}
+\begin{itemize}
+	\item \textbf{Poder de desambigução}
+	\begin{itemize}
+		\item \textbf{Proximidade}:
+		\item \textbf{Interseção}:
+		\item \textbf{"Acercar" (\emph(enclosement))}:
+		\item \textbf{Confinamento}:
+	\end{itemize}
+	\begin{center}
+		\includegraphics[width=\linewidth]{img/objectInteractions}
+	\end{center}
+\end{itemize}
+\end{frame}
+	
+\begin{frame}\frametitle{Características das técnicas de gerenciamento de oclusão (3)}
+\begin{itemize}
+	\item \textbf{Sugestões de profundidade (\emph{depth cues})}:
+	\begin{itemize}
+		\item \textbf{Baixa}:
+		\item \textbf{Ligeiramente baixa}:
+		\item \textbf{Média}:
+		\item \textbf{Ligeiramente alta}:
+		\item \textbf{Alta}:
+	\end{itemize}
+\end{itemize}
+\end{frame}
+	
+\begin{frame}\frametitle{Características das técnicas de gerenciamento de oclusão (4)}
+\begin{itemize}
+	\item \textbf{Tipos de visão}:
+	\begin{itemize}
+		\item \textbf{\emph{Single view}}:
+		\item \textbf{\emph{Twin separeta views}}:
+		\item \textbf{\emph{Twin integrated views}}:
+		\item \textbf{\emph{Multiple separate views}}:
+		\item \textbf{\emph{Multiple integrated views}}:
+	\end{itemize}
+\end{itemize}
+\end{frame}
+	
+\begin{frame}\frametitle{Características das técnicas de gerenciamento de oclusão (5)}
+\begin{itemize}
+	\item \textbf{Modelo de interação}:
+	\begin{itemize}
+		\item \textbf{Passivo}:
+		\item \textbf{Híbrido}:
+		\item \textbf{Ativo}:
+	\end{itemize}
+\end{itemize}
+\end{frame}
+	
+\begin{frame}\frametitle{Características das técnicas de gerenciamento de oclusão (6)}
+\begin{itemize}
+	\item \textbf{Invariantes do objeto}:
+	\begin{itemize}
+		\item \textbf{Posição e orientação}:
+		\item \textbf{Geometria}:
+		\item \textbf{Aparência}:
+	\end{itemize}
+\end{itemize}
+\end{frame}
 
 
+
+\begin{frame}\frametitle{Classificação}
+	\includegraphics[width=\linewidth]{img/classification}
+\end{frame}
+
+\begin{frame}\frametitle{Classificação}
+	\begin{columns}[T]
+	\begin{column}{3cm}
+	\begin{itemize}
+		\item \alert<1>{Cut-away view, Ghosted View}
+		\item \alert<2>{Exploders}
+	\end{itemize}
+	\vspace{3cm} 
+	\end{column}
+	\begin{column}{7cm}
+	\begin{overprint}
+		\includegraphics<1>[height=100.0px]{img/xray}
+		\includegraphics<2>[height=100.0px]{img/exploder}
+	\end{overprint}
+	\end{column}
+	\end{columns}
 \end{frame}
