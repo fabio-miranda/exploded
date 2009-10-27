@@ -1,10 +1,51 @@
 \subsection{Automated generation of interactive 3D exploded view diagrams}
 \begin{frame}\frametitle{\emph{Automated generation of interactive 3D exploded view diagrams} \cite{1360700}} 
-\begin{figure}[ht]
-\includemovie[
-  inline=false, %nao inclui arquivo no pdf final
-  poster,
-  text={\small{Carregando vídeo: exview3D-SIG08.mov}}
-]{6cm}{6cm}{videos/exview3D-SIG08.mov}
-\end{figure}
+\begin{itemize}
+	\item Elabora o trabalho apresentado em \cite{882352}.
+	\item Leva em consideração "grupos" de partes do objeto.
+	\item Trata também casos em que as partes estão "cercadas".
+	\item Maior controle sobre o que é explodido.
+\end{itemize}
+\begin{center}
+	\includegraphics[height=125.0px]{img/exview3D-SIG08_1}
+\end{center}
+\end{frame}
+
+
+
+\begin{frame}\frametitle{\emph{Automated generation of interactive 3D exploded view diagrams} \cite{1360700}} 
+\begin{itemize}
+	\item Os autores apresentam as seguintes considerações para se criar uma vista explodida:
+	\begin{itemize}
+		\item \textbf{Bloqueios}:  as partes devem ser explodidas em direções não bloqueadas.
+		\item \textbf{Visiblidade}: a distância entre as partes deve ser escolhida de modo que todas as partes de interesse estejam visíveis.
+		\item \textbf{Compacidade (\emph{compactness})}: a distância entre a posição da parte explodida e sua posição original deve ser minimizada.
+		\item \textbf{Direções da explosão}: as partes devem ser explodidas em um número restrito de direções, facilitando a interpretação pelo usuário.
+		\item \textbf{Hierarquia das partes}: partes podem ser agrupadas em coleções.
+	\end{itemize}
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}\frametitle{\emph{Automated generation of interactive 3D exploded view diagrams} \cite{1360700}} 
+\begin{itemize}
+	\item O algoritmo proposto pelos autores tem como entrada um modelo 3D em que as partes são representadas como objetos geométricos separados.
+	\item O modelo é então organizado em um grafo acíclico dirigido:
+	\begin{center}
+		\includegraphics[height=125.0px]{img/exview3D-SIG08_2}
+	\end{center}
+\end{itemize}
+\end{frame}
+
+\begin{frame}\frametitle{\emph{Automated generation of interactive 3D exploded view diagrams} \cite{1360700}} 
+\begin{itemize}
+	\item Construindo o grafo explodido (\cite{882352}):
+	\item S: conjunto com as partes ativas do modelo (ou seja, ainda não inseridas no grafo).
+	\item P: sub-conjunto de S de partes que não possuam restrição em pelo menos uma direção.
+	\begin{enumerate}
+		\item Determina P.
+		\item Para cada parte $\emph{p} \in P$: determina a distância mínima que \emph{p} teria que mover para sair do \emph{bounding box} das partes em contato com \emph{p}.
+		\item \emph{p} com a menor distância é adicionado ao grafo. Arestas são adicionadas ligando \emph{p} a todas as outras partes que estão em contato.
+	\end{enumerate}
+\end{itemize}
 \end{frame}
