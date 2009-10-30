@@ -6,9 +6,7 @@ find_package(Qt4 COMPONENTS QtCore QtGui QtOpenGL)
 find_package(OpenSceneGraph COMPONENTS osgViewer osgUtil osgGa osgDB osgText)
 find_package(OpenGL)
 
-#find_library(OPENSCENEGRAPHPLUGINS osgdb_osj osgdb_obj)
-set(PLUGIN_DIR ${OPENSCENEGRAPH_INCLUDE_DIRS}/../lib/osgPlugins-${OPENSCENEGRAPH_VERSION})
-set(TARGET_ADDED_LIBRARIES ${PLUGIN_DIR}/osgdb_ive.lib ${PLUGIN_DIR}/osgdb_openflight.lib ${PLUGIN_DIR}/osgdb_osg.lib  ${PLUGIN_DIR}/osgdb_rgb.lib ${PLUGIN_DIR}/osgdb_obj.lib)
+
 
 #Dynamic or static linking
 OPTION(STATIC_OPENSCENEGRAPH "Set to ON if OpenSceneGraph has been built staticly.  Use OFF for dynamic." ON)
@@ -22,6 +20,11 @@ include_directories(${QT_INCLUDE_DIR})
 if(STATIC_OPENSCENEGRAPH)
 	add_definitions(-DOSG_LIBRARY_STATIC)
 endif(STATIC_OPENSCENEGRAPH)
+
+#Plugins
+set(PLUGIN_DIR ${OPENSCENEGRAPH_INCLUDE_DIRS}/../lib/osgPlugins-${OPENSCENEGRAPH_VERSION})
+set(TARGET_ADDED_LIBRARIES ${PLUGIN_DIR}/osgdb_obj.lib)
+
 
 
 #Libs

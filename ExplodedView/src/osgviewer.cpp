@@ -39,8 +39,8 @@
 // include the plugins we need
 //USE_OSGPLUGIN(ive);
 //USE_OSGPLUGIN(freetype);
-USE_OSGPLUGIN(osg);
-USE_OSGPLUGIN(rgb);
+//USE_OSGPLUGIN(osg);
+//USE_OSGPLUGIN(rgb);
 USE_OSGPLUGIN(obj);
 //USE_OSGPLUGIN(OpenFlight);
 
