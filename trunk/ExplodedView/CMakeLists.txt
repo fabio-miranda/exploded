@@ -23,13 +23,16 @@ endif(STATIC_OPENSCENEGRAPH)
 
 #Plugins
 set(PLUGIN_DIR ${OPENSCENEGRAPH_INCLUDE_DIRS}/../lib/osgPlugins-${OPENSCENEGRAPH_VERSION})
-set(TARGET_ADDED_LIBRARIES ${PLUGIN_DIR}/osgdb_obj.lib)
+set(TARGET_ADDED_LIBRARIES_DEBUG ${PLUGIN_DIR}/osgdb_3dsd.lib)
+set(TARGET_ADDED_LIBRARIES ${PLUGIN_DIR}/osgdb_3ds.lib)
 
 
 
 #Libs
 add_executable(ExplodedView ${CMAKE_CURRENT_SOURCE_DIR}/src/osgviewer.cpp)
-target_link_libraries(ExplodedView ${OPENSCENEGRAPH_LIBRARIES} ${QT_LIBRARIES} ${OPENGL_LIBRARIES} ${TARGET_ADDED_LIBRARIES})
+target_link_libraries(ExplodedView ${OPENSCENEGRAPH_LIBRARIES} ${QT_LIBRARIES} ${OPENGL_LIBRARIES}
+								   debug ${TARGET_ADDED_LIBRARIES_DEBUG}
+								   optimized ${TARGET_ADDED_LIBRARIES})
 
 #Debug
 set(CMAKE_DEBUG_POSTFIX "_d" CACHE STRING "add a postfix")
