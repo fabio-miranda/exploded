@@ -7,6 +7,7 @@ USE_GRAPHICSWINDOW();
 ExplodedView::ExplodedView(){
 	m_activeGraphRoot = new osg::Group();
 	m_viewer = new osgViewer::Viewer();
+	m_vcollide = new VCollide();
 	
 }
 
@@ -32,7 +33,7 @@ void ExplodedView::setUp(){
 
 }
 
-void ExplodedView::loadModel(char* modelName){
+void ExplodedView::buildPartsGraph(char* modelName){
 
 	
 
@@ -49,40 +50,63 @@ void ExplodedView::loadModel(char* modelName){
     osgUtil::Optimizer optimizer;
     optimizer.optimize(loadedModel.get());
 
+
+
+	///Find the parts
+	FindNamedPartVisitor findNode("part_");
+
+	loadedModel->accept(findNode);
+
+	std::vector< osg::ref_ptr< Part > > nodeList = findNode.getPartList();
 	
-	//initial position
-	/*
-	osg::Vec3 position(0,0,0);
-	osg::PositionAttitudeTransform* transform = new osg::PositionAttitudeTransform();
+	for (int i=0; i<nodeList.size(); i++) {
+		m_activeGraphRoot->addChild(nodeList[i]);
 
-	transform->setPosition(position);
+		nodeList[i]->setCollision(m_vcollide);
+	}
 
 
-	m_activeGraphRoot->addChild(transform);
-	*/
-	m_activeGraphRoot->addChild(loadedModel);
-
+	//Set the scene
 	m_viewer->setSceneData(m_activeGraphRoot);
 
 
 
+	//Collisions
+	//Detect collisions
 
-
-
-	///temp
-	FindNamedNodeVisitor findNode("part_");
-
-	loadedModel->accept(findNode);
-
-	std::vector< osg::ref_ptr<osg::Node> > nodeList = findNode.getNodeList();
-	
-	for (int i=0; i<nodeList.size(); i++) {
-		//nodeList[i]->setNodeMask(0x0);
+	//Detect a node without any collisions
+	int activeNodes = 0;
+	bool* collisions = new bool[nodeList.size()];
+	for(int i=0; i<nodeList.size(); i++){
+		collisions[i] = false;
 	}
+
+	while(activeNodes < nodeList.size()){
+		
+
+		VCReport report;
+		m_vcollide->Collide( &report , VC_ALL_CONTACTS);
+
+
+		for (int i = 0; i < report.numObjPairs(); i++){
+			std::cout<<"Detected collision between objects " <<report.obj1ID(i) <<" and "<< report.obj2ID(i) <<"\n";
+			collisions[i] = true;
+		}
+
+		for(int i=0; i<nodeList.size(); i++){
+			collisions[i] = false;
+		}
+	}
+	
+
+	
+	
+	
 
 
 
 }
+
 
 void ExplodedView::loop(){
 	
