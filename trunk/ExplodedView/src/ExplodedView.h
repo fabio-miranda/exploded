@@ -1,7 +1,10 @@
 #ifndef ExplodedView_H
 #define ExplodedView_H
 
-#include "findNodeVisitor.h"
+#include "FindPartVisitor.h"
+#include "Part.h"
+
+#include "VCollide.h"
 
 
 #include <iostream>
@@ -24,12 +27,17 @@ public:
 	ExplodedView();
 
 	void setUp();
-	void loadModel(char*);
+	void buildPartsGraph(char* modelName);
 	void loop();
 
 private:
+
+	
+
 	osgViewer::Viewer* m_viewer;
 	osg::Group* m_activeGraphRoot;
+
+	VCollide* m_vcollide;
 
 
 };
