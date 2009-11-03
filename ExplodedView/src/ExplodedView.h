@@ -9,6 +9,7 @@
 
 #include <iostream>
 #include <limits>
+#include <queue>
 
 
 //osg
@@ -35,6 +36,8 @@ public:
 	void calculateDistancesOutBB();
 	Part* findSmallestDistance();
 	void insertOnPartsGraph(Part* part);
+	void printGraph();
+	void explode();
 
 private:
 	double ExplodedView::calculateDistance(int index1, int index2, PQP_REAL translation_x, PQP_REAL translation_y, PQP_REAL translation_z);

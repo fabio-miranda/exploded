@@ -42,12 +42,19 @@ void Part::resetRestrictedMoviments(){
 	
 	m_countRestrictedDirections = 0;
 	for(int i=0; i<6; i++){
-		m_collisions[i].collided = false;
-		m_collisions[i].collidedWith = NULL;
+		m_collisions[i].clear();
+		//m_collisions[i].collided = false;
+		//m_collisions[i].collidedWith = NULL;
 	}
 }
 
-void Part::insertVertex(Part* vertexFrom){
+void Part::explode(double stepSize){
+
+
+
+}
+
+void Part::insertVertexFrom(Part* vertexFrom){
 	
 	ProxyPart* proxyPart = new ProxyPart(this);
 
@@ -89,27 +96,28 @@ void Part::findDistancesOutBoundingBox(osgViewer::Viewer* viewer, double stepSiz
 	double x, y, z;
 	int count = 0;
 	for(int i=0; i<6; i++){
-		if(m_collisions[i].collided == true){
-			bool insideBoundingBox = true;
-			while(insideBoundingBox){
-				x = - m_collisions[i].collisionDirection[0] * count * stepSize;
-				y = - m_collisions[i].collisionDirection[1] * count * stepSize;
-				z = - m_collisions[i].collisionDirection[2] * count * stepSize;
-				distance = calculateDistance(m_collisions[i].collidedWith, x, y, z);
+		for(int j=0; j<m_collisions[i].size(); j++){
+			if(m_collisions[i][j]->collided == true){
+				bool insideBoundingBox = true;
+				while(insideBoundingBox){
+					x = - m_collisions[i][j]->collisionDirection[0] * count * stepSize;
+					y = - m_collisions[i][j]->collisionDirection[1] * count * stepSize;
+					z = - m_collisions[i][j]->collisionDirection[2] * count * stepSize;
+					distance = calculateDistance(m_collisions[i][j]->collidedWith, x, y, z);
 
-				if(visualize){
-					m_osgTransform->setPosition(osg::Vec3d(x, y, z));
-					viewer->frame();
+					if(visualize){
+						m_osgTransform->setPosition(osg::Vec3d(x, y, z));
+						viewer->frame();
+					}
+
+					if(distance > minimumDistance){
+						insideBoundingBox = false;
+
+						m_collisions[i][j]->distanceOutBoundingBox = distance;
+					}
+					count++;
 				}
-
-				if(distance > minimumDistance){
-					insideBoundingBox = false;
-
-					m_collisions[i].distanceOutBoundingBox = distance;
-				}
-				count++;
 			}
-
 		}
 	}
 
@@ -128,37 +136,31 @@ void Part::checkCollisionsAlongAxis(osgViewer::Viewer* viewer, Part* compareTo, 
 
 
 		if(distance < minimumDistance){
-
+			CollisionData* aux = new CollisionData();
+			aux->collided = true;
+			aux->collidedWith = compareTo;
+			aux->collisionDirection[0] = x; 
+			aux->collisionDirection[1] = y; 
+			aux->collisionDirection[2] = z; 
 			if(x == 1){
-				m_collisions[0].collided = true;
-				m_collisions[0].collidedWith = compareTo;
-				m_collisions[0].collisionDirection[0] = 1;m_collisions[0].collisionDirection[1] = 0;m_collisions[0].collisionDirection[2] = 0;
+				m_collisions[0].push_back(aux);
 			}
 			else if(x == -1){
-				m_collisions[1].collided = true;
-				m_collisions[1].collidedWith = compareTo;
-				m_collisions[1].collisionDirection[0] = -1;m_collisions[1].collisionDirection[1] = 0;m_collisions[1].collisionDirection[2] = 0;
+				m_collisions[1].push_back(aux);
 			}
 			else if(y == 1){
-				m_collisions[2].collided = true;
-				m_collisions[2].collidedWith = compareTo;
-				m_collisions[2].collisionDirection[0] = 0;m_collisions[2].collisionDirection[1] = 1;m_collisions[2].collisionDirection[2] = 0;
+				m_collisions[2].push_back(aux);	
 			}
 			else if(y == -1){
-				m_collisions[3].collided = true;
-				m_collisions[3].collidedWith = compareTo;
-				m_collisions[3].collisionDirection[0] = 0;m_collisions[3].collisionDirection[1] = -1;m_collisions[3].collisionDirection[2] = 0;
+				m_collisions[3].push_back(aux);	
 			}
 			else if(z == 1){
-				m_collisions[4].collided = true;
-				m_collisions[4].collidedWith = compareTo;
-				m_collisions[4].collisionDirection[0] = 0;m_collisions[4].collisionDirection[1] = 0;m_collisions[4].collisionDirection[2] = 1;
+				m_collisions[4].push_back(aux);	
 			}
 			else if(z == -1){
-				m_collisions[5].collided = true;
-				m_collisions[5].collidedWith = compareTo;
-				m_collisions[5].collisionDirection[0] = 0;m_collisions[5].collisionDirection[1] = 0;m_collisions[5].collisionDirection[2] = -1;
+				m_collisions[5].push_back(aux);
 			}
+
 
 
 			m_countRestrictedDirections++;
