@@ -1,13 +1,19 @@
 #include "ExplodedView.h"
 
 
+#define MINIMUM_DISTANCE_TO_CONSIDER_CONTACT 0.1
+#define STEPSIZE 0.1
+#define ITERATIONS 100
+#define VISUALIZE_GRAPH_BUILDING false
+
+
 USE_OSGPLUGIN(3ds);
 USE_GRAPHICSWINDOW();
 
 ExplodedView::ExplodedView(){
-	m_activeGraphRoot = new osg::Group();
+	m_sceneGraphRoot = new osg::Group();
 	m_viewer = new osgViewer::Viewer();
-	m_vcollide = new VCollide();
+	
 	
 }
 
@@ -53,57 +59,120 @@ void ExplodedView::buildPartsGraph(char* modelName){
 
 
 	///Find the parts
-	FindNamedPartVisitor findNode("part_");
+	FindNamedPartVisitor findParts("part_");
 
-	loadedModel->accept(findNode);
-
-	std::vector< osg::ref_ptr< Part > > nodeList = findNode.getPartList();
+	loadedModel->accept(findParts);
+	m_partsGraph = findParts.getPartList();
 	
-	for (int i=0; i<nodeList.size(); i++) {
-		m_activeGraphRoot->addChild(nodeList[i]);
-
-		nodeList[i]->setCollision(m_vcollide);
+	for (int i=0; i<m_partsGraph.size(); i++) {
+		//m_sceneGraphRoot->addChild(m_partsGraph[i]->getOSGNode());
+		m_partsGraph[i]->m_osgTransform->addChild(m_partsGraph[i]->m_osgNode);
+		m_sceneGraphRoot->addChild(m_partsGraph[i]->m_osgTransform);
+		m_partsGraph[i]->setPQPModel();
 	}
-
 
 	//Set the scene
-	m_viewer->setSceneData(m_activeGraphRoot);
+	m_viewer->setSceneData(m_sceneGraphRoot);
 
-
-
-	//Collisions
 	//Detect collisions
+	int insertedParts = 0;
 
-	//Detect a node without any collisions
-	int activeNodes = 0;
-	bool* collisions = new bool[nodeList.size()];
-	for(int i=0; i<nodeList.size(); i++){
-		collisions[i] = false;
-	}
-
-	while(activeNodes < nodeList.size()){
-		
-
-		VCReport report;
-		m_vcollide->Collide( &report , VC_ALL_CONTACTS);
-
-
-		for (int i = 0; i < report.numObjPairs(); i++){
-			std::cout<<"Detected collision between objects " <<report.obj1ID(i) <<" and "<< report.obj2ID(i) <<"\n";
-			collisions[i] = true;
+	while(insertedParts < m_partsGraph.size()){
+		for(int i=0; i<m_partsGraph.size(); i++){
+			if(m_partsGraph[i]->m_inserted == false){
+				m_partsGraph[i]->resetRestrictedMoviments();
+			}
 		}
 
-		for(int i=0; i<nodeList.size(); i++){
-			collisions[i] = false;
+		//Find the directions in which the parts are blocked or not
+		calculateBlockedDirections();
+
+		//Find the distance that the parts have to walk in order to get out of the bounding box
+		calculateDistancesOutBB();
+
+		//Find the smallest distance and insert it on the graph
+		Part* aux = findSmallestDistance();
+
+		insertOnPartsGraph(aux);
+
+		//insertPart(currentPart);
+		insertedParts++;
+	}
+
+	//Reset positions
+	for(int i=0; i<m_partsGraph.size(); i++){
+		m_partsGraph[i]->m_osgTransform->setPosition(osg::Vec3d(0, 0, 0));
+	}
+
+
+
+}
+
+void ExplodedView::calculateBlockedDirections(){
+	for(int i=0; i<m_partsGraph.size(); i++){
+		if(m_partsGraph[i]->m_inserted == false){
+			for(int j=0; j<m_partsGraph.size(); j++){
+				if(j != i && m_partsGraph[j]->m_inserted == false){
+					//just count a restriction in a given direction only once (if there is three parts adjacents, just count once)
+					if(m_partsGraph[i]->m_collisions[0].collided == false)
+						m_partsGraph[i]->checkCollisionsAlongAxis(m_viewer, m_partsGraph[j], 1, 0, 0, STEPSIZE, ITERATIONS, MINIMUM_DISTANCE_TO_CONSIDER_CONTACT, VISUALIZE_GRAPH_BUILDING);
+					if(m_partsGraph[i]->m_collisions[1].collided == false)
+						m_partsGraph[i]->checkCollisionsAlongAxis(m_viewer, m_partsGraph[j], -1, 0, 0, STEPSIZE, ITERATIONS, MINIMUM_DISTANCE_TO_CONSIDER_CONTACT, VISUALIZE_GRAPH_BUILDING);
+					if(m_partsGraph[i]->m_collisions[2].collided == false)
+						m_partsGraph[i]->checkCollisionsAlongAxis(m_viewer, m_partsGraph[j], 0, 1, 0, STEPSIZE, ITERATIONS, MINIMUM_DISTANCE_TO_CONSIDER_CONTACT, VISUALIZE_GRAPH_BUILDING);
+					if(m_partsGraph[i]->m_collisions[3].collided == false)
+						m_partsGraph[i]->checkCollisionsAlongAxis(m_viewer, m_partsGraph[j], 0, -1, 0, STEPSIZE, ITERATIONS, MINIMUM_DISTANCE_TO_CONSIDER_CONTACT, VISUALIZE_GRAPH_BUILDING);
+					if(m_partsGraph[i]->m_collisions[4].collided == false)
+						m_partsGraph[i]->checkCollisionsAlongAxis(m_viewer, m_partsGraph[j], 0, 0, 1, STEPSIZE, ITERATIONS, MINIMUM_DISTANCE_TO_CONSIDER_CONTACT, VISUALIZE_GRAPH_BUILDING);
+					if(m_partsGraph[i]->m_collisions[5].collided == false)
+						m_partsGraph[i]->checkCollisionsAlongAxis(m_viewer, m_partsGraph[j], 0, 0, -1, STEPSIZE, ITERATIONS, MINIMUM_DISTANCE_TO_CONSIDER_CONTACT, VISUALIZE_GRAPH_BUILDING);
+				}
+			}
+		}
+		m_partsGraph[i]->m_osgTransform->setPosition(osg::Vec3d(0, 0, 0));
+	}
+
+}
+
+void ExplodedView::calculateDistancesOutBB(){
+	for(int i=0; i<m_partsGraph.size(); i++){
+		if(m_partsGraph[i]->m_inserted == false && m_partsGraph[i]->m_countRestrictedDirections < 6){
+				m_partsGraph[i]->findDistancesOutBoundingBox(m_viewer, STEPSIZE, MINIMUM_DISTANCE_TO_CONSIDER_CONTACT, VISUALIZE_GRAPH_BUILDING);
+			}
+		}
+}
+
+Part* ExplodedView::findSmallestDistance(){
+	double smallestDistance = std::numeric_limits<double>::infinity();
+	Part* currentPart = NULL;
+	Part* lastOne = NULL;
+	for(int i=0; i<m_partsGraph.size(); i++){
+		if(m_partsGraph[i]->m_inserted == false){
+			lastOne = m_partsGraph[i];
+			for(int j=0; j<6; j++){
+				if(m_partsGraph[i]->m_collisions[j].collided){
+					if(m_partsGraph[i]->m_collisions[j].distanceOutBoundingBox < smallestDistance)
+						currentPart = m_partsGraph[i];
+				}
+			}
+		}
+	}
+
+	if(currentPart == NULL)
+		return lastOne;
+	else
+		return currentPart;
+}
+
+void ExplodedView::insertOnPartsGraph(Part* part){
+	part->m_inserted = true;
+
+	for(int i=0; i<6; i++){
+		if(part->m_collisions[i].collided && part->m_collisions[i].collidedWith->m_inserted == false){
+			part->insertVertex(part->m_collisions[i].collidedWith);
 		}
 	}
 	
-
-	
-	
-	
-
-
 
 }
 

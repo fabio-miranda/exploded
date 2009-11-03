@@ -24,12 +24,18 @@ public:
     {
 		if (node.getName().find(_name) != string::npos)
         {
-            _foundParts.push_back((Part*)&node);
+			Part* part = new Part();
+			part->m_osgNode = &node;
+            _foundParts.push_back(part);
         }
         traverse(node);
     }
-    
-    typedef std::vector< osg::ref_ptr< Part > > PartList;
+
+
+
+    //TODO:
+    //typedef std::vector< osg::ref_ptr< Part > > PartList;
+	typedef std::vector< Part* > PartList;
 
     std::string _name;
     PartList _foundParts;

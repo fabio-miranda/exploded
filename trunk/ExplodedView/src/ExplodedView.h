@@ -4,10 +4,11 @@
 #include "FindPartVisitor.h"
 #include "Part.h"
 
-#include "VCollide.h"
+#include "PQP.h"
 
 
 #include <iostream>
+#include <limits>
 
 
 //osg
@@ -30,14 +31,22 @@ public:
 	void buildPartsGraph(char* modelName);
 	void loop();
 
-private:
+	void calculateBlockedDirections();
+	void calculateDistancesOutBB();
+	Part* findSmallestDistance();
+	void insertOnPartsGraph(Part* part);
 
+private:
+	double ExplodedView::calculateDistance(int index1, int index2, PQP_REAL translation_x, PQP_REAL translation_y, PQP_REAL translation_z);
 	
 
 	osgViewer::Viewer* m_viewer;
-	osg::Group* m_activeGraphRoot;
+	osg::Group* m_sceneGraphRoot;
 
-	VCollide* m_vcollide;
+	std::vector< Part* > m_partsGraph;
+
+	//TODO:
+	//std::vector< osg::ref_ptr< Part > > m_partsGraph;
 
 
 };
