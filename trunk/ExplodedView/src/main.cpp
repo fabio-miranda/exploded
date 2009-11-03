@@ -5,6 +5,7 @@ int main(int argc, char** argv){
 	ExplodedView* explodedView = new ExplodedView();
 	explodedView->setUp();
 	explodedView->buildPartsGraph("test1.3ds");
+	explodedView->explode();
 	explodedView->loop();
 
 }
