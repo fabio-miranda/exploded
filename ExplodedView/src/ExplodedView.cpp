@@ -1,9 +1,9 @@
 #include "ExplodedView.h"
 
 
-#define MINIMUM_DISTANCE_TO_CONSIDER_CONTACT 0.1
+#define MINIMUM_DISTANCE_TO_CONSIDER_CONTACT 0.0
 #define STEPSIZE 0.5
-#define ITERATIONS 10
+#define ITERATIONS 100
 #define VISUALIZE_GRAPH_BUILDING false
 #define PRINT_GRAPH true
 
@@ -84,7 +84,7 @@ void ExplodedView::buildPartsGraph(char* modelName){
 		}
 
 		//Find the directions in which the parts are blocked or not
-		calculateBlockedDirections();
+		findBlockedDirections();
 
 		//Find the distance that the parts have to walk in order to get out of the bounding box
 		calculateDistancesOutBB();
@@ -107,7 +107,7 @@ void ExplodedView::buildPartsGraph(char* modelName){
 	}
 }
 
-void ExplodedView::calculateBlockedDirections(){
+void ExplodedView::findBlockedDirections(){
 	for(int i=0; i<m_partsGraph.size(); i++){
 		if(m_partsGraph[i]->m_inserted == false){
 			for(int j=0; j<m_partsGraph.size(); j++){
@@ -202,14 +202,14 @@ void ExplodedView::printGraph(){
 			cout << "\n:: Distance: "<< m_partsGraph[i]->m_explosionDirection->distanceOutBoundingBox;
 		}
 
-		cout << "\n";
+		cout << "\n\n";
 	}
 
 }
 
 
 void ExplodedView::explode(){
-	bfs(m_partsGraph[0]);
+	//bfs(m_partsGraph[0]);
 }
 
 void ExplodedView::bfs(Part* v){
@@ -284,7 +284,7 @@ void ExplodedView::loop(){
 	
 	
 	while(!m_viewer->done()){
-		updateExplodingParts();
+		//updateExplodingParts();
 		//verifyExplodingParts();
 		m_viewer->frame();
 	}
