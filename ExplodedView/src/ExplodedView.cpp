@@ -16,7 +16,7 @@ ExplodedView::ExplodedView(){
 	m_viewer = new osgViewer::Viewer();
 }
 
-
+ 
 void ExplodedView::setUp(){
 
     m_viewer->setCameraManipulator( new osgGA::TrackballManipulator() );
