@@ -130,7 +130,6 @@ void ExplodedView::calculateBlockedDirections(){
 		}
 		m_partsGraph[i]->m_osgTransform->setPosition(osg::Vec3d(0, 0, 0));
 	}
-
 }
 
 void ExplodedView::calculateDistancesOutBB(){
@@ -183,8 +182,6 @@ void ExplodedView::insertOnPartsGraph(Part* part){
 		}
 		
 	}
-	
-
 }
 
 void ExplodedView::printGraph(){
@@ -212,22 +209,83 @@ void ExplodedView::printGraph(){
 
 
 void ExplodedView::explode(){
+	bfs(m_partsGraph[0]);
+}
+
+void ExplodedView::bfs(Part* v){
+
+	m_explodingLevels = new std::vector< std::vector<Part*> >();
+
+	std::list< Part* > queue;
+	v->m_visited = true;
+	queue.push_back(v);
+	m_explodingLevels->push_back(std::vector<Part*>());
+	m_explodingLevels->back().push_back(v);
+
+
+	while(queue.size() > 0){
+		Part* v = queue.front();
+		queue.pop_front();
+		m_explodingLevels->push_back(std::vector<Part*>());
+		ProxyPart* vNeighbour = v->m_ptrFirstProxyPart;
+
+		while(vNeighbour != NULL){
+
+			if(vNeighbour->m_ptrActualPart->m_visited == false){
+				queue.push_back(vNeighbour->m_ptrActualPart);
+				vNeighbour->m_ptrActualPart->m_visited = true;
+				m_explodingLevels->back().push_back(vNeighbour->m_ptrActualPart);
+			}
+
+			vNeighbour = vNeighbour->m_ptrNextProxyPart;
+		}
+
+		if(m_explodingLevels->back().size() == 0)
+			m_explodingLevels->pop_back();
+	}
+
+}
+
+void ExplodedView::updateExplodingParts(){
 	
-	std::queue< Part* > partsToExplode;
+	bool allFromLevelExploded = true;
+	//Explode the leaf nodes
+	if((*m_explodingLevels).size() > 1){ //do not explode the root node
+		for(int j=0; j<(*m_explodingLevels).back().size(); j++){ 
+			(*m_explodingLevels).back()[j]->explode(0.1);
+			m_viewer->frame();
 
-	partsToExplode.push(m_partsGraph[10]);
+			if((*m_explodingLevels).back()[j]->m_exploded == false)
+				allFromLevelExploded = false;
+		}
 
+		if(allFromLevelExploded)
+			(*m_explodingLevels).pop_back();
+		
+	}
+}
 
+void ExplodedView::verifyExplodingParts(){
+	
+	//Verify if the leaf nodes are on their correct positions
+	if((*m_explodingLevels).size() > 1){ //do not explode the root node
+		for(int j=0; j<(*m_explodingLevels).back().size(); j++){ 
+			(*m_explodingLevels).back()[j]->explode(0.1);
+			m_viewer->frame();
+		}
+		(*m_explodingLevels).pop_back();
+	}
 
-
-
-
+	(*m_explodingLevels).pop_back();
 }
 
 
 void ExplodedView::loop(){
 	
+	
 	while(!m_viewer->done()){
+		updateExplodingParts();
+		//verifyExplodingParts();
 		m_viewer->frame();
 	}
 

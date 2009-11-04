@@ -3,10 +3,13 @@
 
 Part::Part(){
 	m_inserted = false;
+	m_visited = false;
+	m_exploded = false;
 	m_pqpModel = new PQP_Model();
 	m_osgTransform = new osg::PositionAttitudeTransform();
 	m_ptrFirstProxyPart = NULL;
 	m_ptrLastProxyPart = NULL;
+	m_currentDistanceExploded = 0;
 	
 
 	resetRestrictedMoviments();
@@ -50,7 +53,21 @@ void Part::resetRestrictedMoviments(){
 
 void Part::explode(double stepSize){
 
+	if(m_exploded) return;
 
+	osg::Vec3d currentPosition = m_osgTransform->getPosition();
+	double* explosionDirection = m_explosionDirection->collisionDirection;
+
+	osg::Vec3d newPosition = osg::Vec3d(currentPosition.x() - explosionDirection[0]*stepSize,
+										   currentPosition.y() - explosionDirection[1]*stepSize,
+										   currentPosition.z() - explosionDirection[2]*stepSize);
+	
+	m_currentDistanceExploded += (newPosition - currentPosition).length();
+
+	if(m_currentDistanceExploded < m_explosionDirection->distanceOutBoundingBox * 10.0)
+		m_osgTransform->setPosition(newPosition);
+	else
+		m_exploded = true;
 
 }
 
