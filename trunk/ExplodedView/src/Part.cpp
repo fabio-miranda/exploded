@@ -14,7 +14,7 @@ Part::Part(){
 
 	resetRestrictedMoviments();
 }
-
+ 
 
 void Part::setPQPModel(){
 	m_pqpModel = new PQP_Model();
