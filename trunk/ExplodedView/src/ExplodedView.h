@@ -32,7 +32,7 @@ public:
 	void buildPartsGraph(char* modelName);
 	void loop();
 
-	void calculateBlockedDirections();
+	void findBlockedDirections();
 	void calculateDistancesOutBB();
 	Part* findSmallestDistance();
 	void insertOnPartsGraph(Part* part);

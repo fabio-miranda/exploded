@@ -127,7 +127,7 @@ void Part::findDistancesOutBoundingBox(osgViewer::Viewer* viewer, double stepSiz
 						viewer->frame();
 					}
 
-					if(distance > minimumDistance){
+					if(distance >= minimumDistance){
 						insideBoundingBox = false;
 
 						m_collisions[i][j]->distanceOutBoundingBox = distance;
@@ -152,7 +152,7 @@ void Part::checkCollisionsAlongAxis(osgViewer::Viewer* viewer, Part* compareTo, 
 		}
 
 
-		if(distance < minimumDistance){
+		if(distance <= minimumDistance){
 			CollisionData* aux = new CollisionData();
 			aux->collided = true;
 			aux->collidedWith = compareTo;
