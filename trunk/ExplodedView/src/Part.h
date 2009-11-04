@@ -37,12 +37,14 @@ public:
 	int m_countRestrictedDirections;
 	CollisionData* m_explosionDirection;// Pointer to the CollisionData that represents the explosion direction
 	double m_currentDistanceExploded;
+	bool m_exploded;
 
 	osg::Node* m_osgNode;
 	osg::PositionAttitudeTransform* m_osgTransform;
 
 	ProxyPart* m_ptrFirstProxyPart;
 	ProxyPart* m_ptrLastProxyPart;
+	bool m_visited;
 	
 
 

@@ -38,6 +38,9 @@ public:
 	void insertOnPartsGraph(Part* part);
 	void printGraph();
 	void explode();
+	void bfs(Part* v);
+	void updateExplodingParts();
+	void verifyExplodingParts();
 
 private:
 	double ExplodedView::calculateDistance(int index1, int index2, PQP_REAL translation_x, PQP_REAL translation_y, PQP_REAL translation_z);
@@ -47,6 +50,7 @@ private:
 	osg::Group* m_sceneGraphRoot;
 
 	std::vector< Part* > m_partsGraph;
+	std::vector< std::vector<Part*> >* m_explodingLevels;
 
 	//TODO:
 	//std::vector< osg::ref_ptr< Part > > m_partsGraph;
