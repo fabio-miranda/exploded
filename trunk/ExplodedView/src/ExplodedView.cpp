@@ -2,7 +2,7 @@
 
 
 #define MINIMUM_DISTANCE_TO_CONSIDER_CONTACT 0.0
-#define STEPSIZE 0.5
+#define STEPSIZE 0.1
 #define ITERATIONS 100
 #define VISUALIZE_GRAPH_BUILDING false
 #define PRINT_GRAPH true
@@ -14,6 +14,7 @@ USE_GRAPHICSWINDOW();
 ExplodedView::ExplodedView(){
 	m_sceneGraphRoot = new osg::Group();
 	m_viewer = new osgViewer::Viewer();
+	m_vCollide = new VCollide();
 }
 
  
@@ -65,9 +66,7 @@ void ExplodedView::buildPartsGraph(char* modelName){
 	
 	for (int i=0; i<m_partsGraph.size(); i++) {
 		//m_sceneGraphRoot->addChild(m_partsGraph[i]->getOSGNode());
-		m_partsGraph[i]->m_osgTransform->addChild(m_partsGraph[i]->m_osgNode);
-		m_sceneGraphRoot->addChild(m_partsGraph[i]->m_osgTransform);
-		m_partsGraph[i]->setPQPModel();
+		m_partsGraph[i]->setUp(m_vCollide, m_sceneGraphRoot);
 	}
 
 	//Set the scene
@@ -84,14 +83,17 @@ void ExplodedView::buildPartsGraph(char* modelName){
 		}
 
 		//Find the directions in which the parts are blocked or not
+		//TODO: only do it once. After one iteration, we already know every possible collision between the parts
 		findBlockedDirections();
 
 		//Find the distance that the parts have to walk in order to get out of the bounding box
-		calculateDistancesOutBB();
+		//calculateDistancesOutBB();
+		//this is done on the findBlockedDirections
 
 		//Find the smallest distance and insert it on the graph
 		Part* aux = findSmallestDistance();
-
+		
+		m_vCollide->DeactivateObject(aux->m_vcollideId);
 		insertOnPartsGraph(aux);
 
 		//insertPart(currentPart);
@@ -109,36 +111,20 @@ void ExplodedView::buildPartsGraph(char* modelName){
 
 void ExplodedView::findBlockedDirections(){
 	for(int i=0; i<m_partsGraph.size(); i++){
+
 		if(m_partsGraph[i]->m_inserted == false){
-			for(int j=0; j<m_partsGraph.size(); j++){
-				if(j != i && m_partsGraph[j]->m_inserted == false){
-					//just count a restriction in a given direction only once (if there is three parts adjacents, just count once)
-					//if(m_partsGraph[i]->m_collisions[0].empty())
-						m_partsGraph[i]->checkCollisionsAlongAxis(m_viewer, m_partsGraph[j], 1, 0, 0, STEPSIZE, ITERATIONS, MINIMUM_DISTANCE_TO_CONSIDER_CONTACT, VISUALIZE_GRAPH_BUILDING);
-					//if(m_partsGraph[i]->m_collisions[1].empty())
-						m_partsGraph[i]->checkCollisionsAlongAxis(m_viewer, m_partsGraph[j], -1, 0, 0, STEPSIZE, ITERATIONS, MINIMUM_DISTANCE_TO_CONSIDER_CONTACT, VISUALIZE_GRAPH_BUILDING);
-					//if(m_partsGraph[i]->m_collisions[2].empty())
-						m_partsGraph[i]->checkCollisionsAlongAxis(m_viewer, m_partsGraph[j], 0, 1, 0, STEPSIZE, ITERATIONS, MINIMUM_DISTANCE_TO_CONSIDER_CONTACT, VISUALIZE_GRAPH_BUILDING);
-					//if(m_partsGraph[i]->m_collisions[3].empty())
-						m_partsGraph[i]->checkCollisionsAlongAxis(m_viewer, m_partsGraph[j], 0, -1, 0, STEPSIZE, ITERATIONS, MINIMUM_DISTANCE_TO_CONSIDER_CONTACT, VISUALIZE_GRAPH_BUILDING);
-					//if(m_partsGraph[i]->m_collisions[4].empty())
-						m_partsGraph[i]->checkCollisionsAlongAxis(m_viewer, m_partsGraph[j], 0, 0, 1, STEPSIZE, ITERATIONS, MINIMUM_DISTANCE_TO_CONSIDER_CONTACT, VISUALIZE_GRAPH_BUILDING);
-					//if(m_partsGraph[i]->m_collisions[5].empty())
-						m_partsGraph[i]->checkCollisionsAlongAxis(m_viewer, m_partsGraph[j], 0, 0, -1, STEPSIZE, ITERATIONS, MINIMUM_DISTANCE_TO_CONSIDER_CONTACT, VISUALIZE_GRAPH_BUILDING);
-				}
-			}
+			m_partsGraph[i]->checkCollisionsAlongAxis(m_viewer, m_vCollide, m_partsGraph, 1, 0, 0, STEPSIZE, ITERATIONS, MINIMUM_DISTANCE_TO_CONSIDER_CONTACT, VISUALIZE_GRAPH_BUILDING);
+			m_partsGraph[i]->checkCollisionsAlongAxis(m_viewer, m_vCollide, m_partsGraph, -1, 0, 0, STEPSIZE, ITERATIONS, MINIMUM_DISTANCE_TO_CONSIDER_CONTACT, VISUALIZE_GRAPH_BUILDING);
+			m_partsGraph[i]->checkCollisionsAlongAxis(m_viewer, m_vCollide, m_partsGraph, 0, 1, 0, STEPSIZE, ITERATIONS, MINIMUM_DISTANCE_TO_CONSIDER_CONTACT, VISUALIZE_GRAPH_BUILDING);
+			m_partsGraph[i]->checkCollisionsAlongAxis(m_viewer, m_vCollide, m_partsGraph, 0, -1, 0, STEPSIZE, ITERATIONS, MINIMUM_DISTANCE_TO_CONSIDER_CONTACT, VISUALIZE_GRAPH_BUILDING);
+			m_partsGraph[i]->checkCollisionsAlongAxis(m_viewer, m_vCollide, m_partsGraph, 0, 0, 1, STEPSIZE, ITERATIONS, MINIMUM_DISTANCE_TO_CONSIDER_CONTACT, VISUALIZE_GRAPH_BUILDING);
+			m_partsGraph[i]->checkCollisionsAlongAxis(m_viewer, m_vCollide, m_partsGraph, 0, 0, -1, STEPSIZE, ITERATIONS, MINIMUM_DISTANCE_TO_CONSIDER_CONTACT, VISUALIZE_GRAPH_BUILDING);
 		}
+
 		m_partsGraph[i]->m_osgTransform->setPosition(osg::Vec3d(0, 0, 0));
 	}
 }
 
-void ExplodedView::calculateDistancesOutBB(){
-	for(int i=0; i<m_partsGraph.size(); i++){
-		if(m_partsGraph[i]->m_inserted == false && m_partsGraph[i]->m_countRestrictedDirections < 6){
-				m_partsGraph[i]->findDistancesOutBoundingBox(m_viewer, STEPSIZE, MINIMUM_DISTANCE_TO_CONSIDER_CONTACT, VISUALIZE_GRAPH_BUILDING);
-			}
-		}
-}
 
 Part* ExplodedView::findSmallestDistance(){
 	double smallestDistance = std::numeric_limits<double>::infinity();
@@ -146,15 +132,13 @@ Part* ExplodedView::findSmallestDistance(){
 	CollisionData* currentCollision = NULL;
 	Part* lastOne = NULL;
 	for(int i=0; i<m_partsGraph.size(); i++){
-		if(m_partsGraph[i]->m_inserted == false){
+		if(m_partsGraph[i]->m_inserted == false && m_partsGraph[i]->m_countRestrictedDirections < 6){
 			lastOne = m_partsGraph[i];
 			for(int j=0; j<6; j++){
-				for(int k=0; k<m_partsGraph[i]->m_collisions[j].size(); k++){
-					if(m_partsGraph[i]->m_collisions[j][k]->collided){
-						if(m_partsGraph[i]->m_collisions[j][k]->distanceOutBoundingBox < smallestDistance)
-							currentPart = m_partsGraph[i];
-							currentCollision = m_partsGraph[i]->m_collisions[j][k];
-					}
+				if(m_partsGraph[i]->m_smallestDistanceCollisions[j] != NULL
+					&& m_partsGraph[i]->m_smallestDistanceCollisions[j]->distanceOutBoundingBox < smallestDistance){
+					currentPart = m_partsGraph[i];
+					currentCollision = m_partsGraph[i]->m_smallestDistanceCollisions[j];
 				}
 			}
 		}
@@ -175,9 +159,9 @@ void ExplodedView::insertOnPartsGraph(Part* part){
 	part->m_inserted = true;
 
 	for(int i=0; i<6; i++){
-		for(int j=0; j<part->m_collisions[i].size(); j++){
-			if(part->m_collisions[i][j]->collided && part->m_collisions[i][j]->collidedWith->m_inserted == false){
-				part->insertVertexFrom(part->m_collisions[i][j]->collidedWith);
+		for(int j=0; j<part->m_allDistanceCollisions[i].size(); j++){
+			if(part->m_allDistanceCollisions[i][j]->collided && part->m_allDistanceCollisions[i][j]->collidedWith->m_inserted == false){
+				part->insertVertexFrom(part->m_allDistanceCollisions[i][j]->collidedWith);
 			}
 		}
 		

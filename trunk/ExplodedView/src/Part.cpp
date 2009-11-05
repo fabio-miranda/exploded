@@ -5,28 +5,46 @@ Part::Part(){
 	m_inserted = false;
 	m_visited = false;
 	m_exploded = false;
-	m_pqpModel = new PQP_Model();
+	//m_pqpModel = new PQP_Model();
 	m_osgTransform = new osg::PositionAttitudeTransform();
+	m_osgOriginalTransform = new osg::PositionAttitudeTransform();
 	m_ptrFirstProxyPart = NULL;
 	m_ptrLastProxyPart = NULL;
 	m_currentDistanceExploded = 0;
 	
 
 	resetRestrictedMoviments();
+
+
+	//Calculate bounding box
+	//m_boundingBox = new osg::BoundingBox();
+	//const osg::BoundingBox& bb1 = m_osgNode->getBound();
+	
+	//TODO: optimized this. The bounding box is bigger than it needs to be (it is the bounding box of the bounding sphere)
+	//m_boundingBox->expandBy(m_osgNode->getBound());
+}
+
+void Part::setUp(VCollide* vCollide, osg::Group* sceneGraphRoot){
+	m_osgTransform->addChild(m_osgNode);
+	sceneGraphRoot->addChild(m_osgTransform);
+	m_osgOriginalTransform->setPosition(m_osgTransform->getPosition());
+	setVCollide(vCollide);
 }
  
 
-void Part::setPQPModel(){
-	m_pqpModel = new PQP_Model();
+void Part::setVCollide(VCollide* vCollide){
+	//m_pqpModel = new PQP_Model();
 	m_inserted = false;
 
-	m_pqpModel->BeginModel();
+	//m_pqpModel->BeginModel();
+	vCollide->NewObject(&m_vcollideId);
 
-	AddTrianglesCollision triangles(m_pqpModel);
+	AddTrianglesCollision triangles(vCollide);
 
 	m_osgNode->accept(triangles);
 
-	m_pqpModel->EndModel();
+	//m_pqpModel->EndModel();
+	vCollide->EndObject();
 	
 
 }
@@ -44,11 +62,32 @@ osg::Node* Part::getOSGNode(){
 void Part::resetRestrictedMoviments(){
 	
 	m_countRestrictedDirections = 0;
+	
 	for(int i=0; i<6; i++){
-		m_collisions[i].clear();
+		m_allDistanceCollisions[i].clear();
 		//m_collisions[i].collided = false;
 		//m_collisions[i].collidedWith = NULL;
+		m_smallestDistanceCollisions[i] = NULL;
 	}
+	
+}
+
+void Part::resetPosition(VCollide* vCollide){
+	double trans[4][4];
+
+	for(int i=0; i<4; i++)
+		for(int j=0; j<4; j++)
+			if(i==j) trans[i][i] = 1;
+			else trans[i][j] = 0;
+
+	trans[0][3] = m_osgOriginalTransform->getPosition().x();
+	trans[1][3] = m_osgOriginalTransform->getPosition().y();
+	trans[2][3] = m_osgOriginalTransform->getPosition().z();
+
+	vCollide->UpdateTrans(m_vcollideId, trans);
+
+	m_osgTransform->setPosition(m_osgOriginalTransform->getPosition());
+
 }
 
 void Part::explode(double stepSize){
@@ -86,104 +125,103 @@ void Part::insertVertexFrom(Part* vertexFrom){
 
 }
 
-double Part::calculateDistance(Part* compareTo, PQP_REAL translation_x, PQP_REAL translation_y, PQP_REAL translation_z){
-	
-	PQP_DistanceResult dres;
-	double rel_err = 0.0, abs_err = 0.0;
-	PQP_REAL R1[3][3],R2[3][3],T1[3],T2[3];
-	R1[0][0] = R1[1][1] = R1[2][2] = 1.0;
-	R1[0][1] = R1[1][0] = R1[2][0] = 0.0;
-	R1[0][2] = R1[1][2] = R1[2][1] = 0.0;
 
-	R2[0][0] = R2[1][1] = R2[2][2] = 1.0;
-	R2[0][1] = R2[1][0] = R2[2][0] = 0.0;
-	R2[0][2] = R2[1][2] = R2[2][1] = 0.0;
 
-	T1[0] = translation_x;  T1[1] = translation_y; T1[2] = translation_z;
-	T2[0] = 0.0;  T2[1] = 0.0; T2[2] = 0.0;
-	PQP_Distance(&dres,R1,T1,m_pqpModel,R2,T2,compareTo->m_pqpModel,rel_err,abs_err, 100);
-
-	return dres.Distance();
-
-}
-
-void Part::findDistancesOutBoundingBox(osgViewer::Viewer* viewer, double stepSize, double minimumDistance, bool visualize){
-	
+void Part::checkCollisionsAlongAxis(osgViewer::Viewer* viewer, VCollide* vCollide, std::vector< Part* > partsGraph, int x, int y, int z, double stepSize, int numIterations, double minimumDistance, bool visualize){
 	double distance;
-	double x, y, z;
-	int count = 0;
-	for(int i=0; i<6; i++){
-		for(int j=0; j<m_collisions[i].size(); j++){
-			if(m_collisions[i][j]->collided == true){
-				bool insideBoundingBox = true;
-				while(insideBoundingBox){
-					x = - m_collisions[i][j]->collisionDirection[0] * count * stepSize;
-					y = - m_collisions[i][j]->collisionDirection[1] * count * stepSize;
-					z = - m_collisions[i][j]->collisionDirection[2] * count * stepSize;
-					distance = calculateDistance(m_collisions[i][j]->collidedWith, x, y, z);
+	double trans[4][4]; //transformation matrix
+	VCReport report;
+	
+	for(int i=0; i<4; i++)
+		for(int j=0; j<4; j++)
+			if(i==j) trans[i][i] = 1;
+			else trans[i][j] = 0;
 
-					if(visualize){
-						m_osgTransform->setPosition(osg::Vec3d(x, y, z));
-						viewer->frame();
-					}
-
-					if(distance >= minimumDistance){
-						insideBoundingBox = false;
-
-						m_collisions[i][j]->distanceOutBoundingBox = distance;
-					}
-					count++;
-				}
-			}
-		}
-	}
-
-}
-
-void Part::checkCollisionsAlongAxis(osgViewer::Viewer* viewer, Part* compareTo, int x, int y, int z, double stepSize, int numIterations, double minimumDistance, bool visualize){
-	double distance;
 	for(int i=0; i<numIterations; i++){
-		distance = calculateDistance(compareTo, i*stepSize*x, i*stepSize*y, i*stepSize*z);
+		
+		trans[0][3] = m_osgTransform->getPosition().x() + i*stepSize*x;
+		trans[1][3] = m_osgTransform->getPosition().y() + i*stepSize*y;
+		trans[2][3] = m_osgTransform->getPosition().z() + i*stepSize*z;
 
-
+		vCollide->UpdateTrans(m_vcollideId, trans);
+		
+		
 		if(visualize){
-			m_osgTransform->setPosition(osg::Vec3d(i*stepSize*x, i*stepSize*y, i*stepSize*z));
+			m_osgTransform->setPosition(osg::Vec3d(trans[0][3], trans[1][3], trans[2][3]));
 			viewer->frame();
 		}
+		
 
+		vCollide->Collide( &report, VC_ALL_CONTACTS);
 
-		if(distance <= minimumDistance){
+		for(int j=0; j<report.numObjPairs(); j++){
+			int collidedId;
+			double distanceOutBoundingBox;
+			int arrayPosition;
+
+			report.obj1ID(j) != m_vcollideId ?  collidedId = report.obj1ID(j) : collidedId = report.obj2ID(j);
+
 			CollisionData* aux = new CollisionData();
 			aux->collided = true;
-			aux->collidedWith = compareTo;
+			aux->collidedWith = partsGraph[collidedId];
 			aux->collisionDirection[0] = x; 
 			aux->collisionDirection[1] = y; 
 			aux->collisionDirection[2] = z; 
-			if(x == 1){
-				m_collisions[0].push_back(aux);
-			}
-			else if(x == -1){
-				m_collisions[1].push_back(aux);
-			}
-			else if(y == 1){
-				m_collisions[2].push_back(aux);	
-			}
-			else if(y == -1){
-				m_collisions[3].push_back(aux);	
-			}
-			else if(z == 1){
-				m_collisions[4].push_back(aux);	
-			}
-			else if(z == -1){
-				m_collisions[5].push_back(aux);
+
+			if(x == 1) arrayPosition = 0;
+			else if(x == -1) arrayPosition = 1;
+			else if(y == 1)  arrayPosition = 2;
+			else if(y == -1) arrayPosition = 3;
+			else if(z == 1) arrayPosition = 4;
+			else if(z == -1) arrayPosition = 5;
+
+			if(m_smallestDistanceCollisions[arrayPosition] == NULL) m_countRestrictedDirections++;
+			distanceOutBoundingBox = calculateDistanceOutBoundingBox(aux->collidedWith, aux->collisionDirection);
+
+			if(m_smallestDistanceCollisions[arrayPosition] == NULL ||
+				distanceOutBoundingBox < m_smallestDistanceCollisions[arrayPosition]->distanceOutBoundingBox){
+
+				aux->distanceOutBoundingBox = distanceOutBoundingBox;
+				m_smallestDistanceCollisions[arrayPosition] = aux;
 			}
 
+			//Check if the collision with this part has been added before
+			//TODO: improve that
+			if(m_allDistanceCollisions[arrayPosition].size() == 0)
+				m_allDistanceCollisions[arrayPosition].push_back(aux);
+			else
+				for(int k=0; k<m_allDistanceCollisions[arrayPosition].size(); k++){
+					if(m_allDistanceCollisions[arrayPosition][k]->collidedWith->m_vcollideId == aux->collidedWith->m_vcollideId)
+					 //check the distance too and get the closest one
+						if(m_allDistanceCollisions[arrayPosition][k]->distanceOutBoundingBox <= aux->distanceOutBoundingBox){
+							m_allDistanceCollisions[arrayPosition].erase(m_allDistanceCollisions[arrayPosition].begin()+k);
+							m_allDistanceCollisions[arrayPosition].push_back(aux);
+						}
+				}
 
-
-			m_countRestrictedDirections++;
-
-			return;
+			
 		}
 
 	}
+
+	resetPosition(vCollide);
+
+	
+
+}
+
+double Part::calculateDistanceOutBoundingBox(Part* collidedWith, double* collisionDirection){
+	/*
+	osg::Vec3d vector;
+
+	osg::BoundingBox* bb1 = m_boundingBox;
+	osg::BoundingBox* bb2 = collidedWith->m_boundingBox;
+
+	vector.set(osg::minimum(bb1->xMax(), bb2->xMax()) - osg::maximum(bb1->xMin(), bb2->xMin()),
+				osg::minimum(bb1->yMax(), bb2->yMax()) - osg::maximum(bb1->yMin(), bb2->yMin()),
+				osg::minimum(bb1->zMax(), bb2->zMax()) - osg::maximum(bb1->zMin(), bb2->zMin()));
+
+	return vector.length();
+	*/
+	return 0;
 }
