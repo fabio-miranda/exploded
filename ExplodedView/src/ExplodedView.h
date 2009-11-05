@@ -4,7 +4,7 @@
 #include "FindPartVisitor.h"
 #include "Part.h"
 
-#include "PQP.h"
+//#include "PQP.h"
 
 
 #include <iostream>
@@ -42,15 +42,17 @@ public:
 	void updateExplodingParts();
 	void verifyExplodingParts();
 
-private:
-	double ExplodedView::calculateDistance(int index1, int index2, PQP_REAL translation_x, PQP_REAL translation_y, PQP_REAL translation_z);
-	
 
+	VCollide* m_vCollide;
 	osgViewer::Viewer* m_viewer;
 	osg::Group* m_sceneGraphRoot;
-
 	std::vector< Part* > m_partsGraph;
+
+private:
+	
 	std::vector< std::vector<Part*> >* m_explodingLevels;
+
+	
 
 	//TODO:
 	//std::vector< osg::ref_ptr< Part > > m_partsGraph;
