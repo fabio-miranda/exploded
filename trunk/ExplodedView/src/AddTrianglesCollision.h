@@ -1,8 +1,8 @@
 #ifndef GET_VERTICES_H
 #define GET_VERTICES_H
 
-//#include "PQP.H"
-#include "VCollide.H"
+#include "PQP.H"
+//#include "VCollide.H"
 
 #include <osg/NodeVisitor>
 #include <osg/Node>
@@ -19,9 +19,10 @@ using namespace std;
 class AddTrianglesCollision : public osg::NodeVisitor
 {
 public:
-    AddTrianglesCollision(VCollide* vCollide):
+	AddTrianglesCollision(PQP_Model* pqpModel)://(VCollide* vCollide):
 	  osg::NodeVisitor(osg::NodeVisitor::TRAVERSE_ALL_CHILDREN){
-		m_vCollide = vCollide;
+		//m_vCollide = vCollide;
+		  m_pqpModel = pqpModel;
 	  }
     
 	virtual void apply(osg::Geode& geode)
@@ -51,7 +52,8 @@ public:
 				v3[j] = vertex3[j];
 			}
 
-			m_vCollide->AddTri(v1, v2, v3,aux);
+			//m_vCollide->AddTri(v1, v2, v3,aux);
+			m_pqpModel->AddTri(v1, v2, v3,aux);
 			aux++;
 		}
 
@@ -60,7 +62,8 @@ public:
     }
 
 private:
-	VCollide* m_vCollide;
+	//VCollide* m_vCollide;
+	PQP_Model* m_pqpModel;
 };
 
 #endif
