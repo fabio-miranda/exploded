@@ -17,11 +17,12 @@ Part::Part(){
 
 
 	//Calculate bounding box
-	//m_boundingBox = new osg::BoundingBox();
+	m_boundingBox = new osg::BoundingBox();
 	//const osg::BoundingBox& bb1 = m_osgNode->getBound();
 	
 	//TODO: optimized this. The bounding box is bigger than it needs to be (it is the bounding box of the bounding sphere)
-	//m_boundingBox->expandBy(m_osgNode->getBound());
+	
+	
 }
 
 void Part::setUp(VCollide* vCollide, osg::Group* sceneGraphRoot){
@@ -29,6 +30,8 @@ void Part::setUp(VCollide* vCollide, osg::Group* sceneGraphRoot){
 	sceneGraphRoot->addChild(m_osgTransform);
 	m_osgOriginalTransform->setPosition(m_osgTransform->getPosition());
 	setVCollide(vCollide);
+
+	m_boundingBox->expandBy(m_osgNode->getBound());
 }
  
 
@@ -67,7 +70,7 @@ void Part::resetRestrictedMoviments(){
 		m_allDistanceCollisions[i].clear();
 		//m_collisions[i].collided = false;
 		//m_collisions[i].collidedWith = NULL;
-		m_smallestDistanceCollisions[i] = NULL;
+		//m_smallestDistanceCollisions[i] = NULL;
 	}
 	
 }
@@ -103,7 +106,7 @@ void Part::explode(double stepSize){
 	
 	m_currentDistanceExploded += (newPosition - currentPosition).length();
 
-	if(m_currentDistanceExploded < m_explosionDirection->distanceOutBoundingBox * 10.0)
+	if(m_currentDistanceExploded < m_explosionDirection->distanceOutBoundingBox)
 		m_osgTransform->setPosition(newPosition);
 	else
 		m_exploded = true;
@@ -136,7 +139,8 @@ void Part::checkCollisionsAlongAxis(osgViewer::Viewer* viewer, VCollide* vCollid
 		for(int j=0; j<4; j++)
 			if(i==j) trans[i][i] = 1;
 			else trans[i][j] = 0;
-
+	
+	double distanceOutBoundingBox = 0;
 	for(int i=0; i<numIterations; i++){
 		
 		trans[0][3] = m_osgTransform->getPosition().x() + i*stepSize*x;
@@ -154,12 +158,14 @@ void Part::checkCollisionsAlongAxis(osgViewer::Viewer* viewer, VCollide* vCollid
 
 		vCollide->Collide( &report, VC_ALL_CONTACTS);
 
+		//If there is no collision on this direction, then we have a free direction
 		for(int j=0; j<report.numObjPairs(); j++){
 			int collidedId;
 			double distanceOutBoundingBox;
 			int arrayPosition;
 
 			report.obj1ID(j) != m_vcollideId ?  collidedId = report.obj1ID(j) : collidedId = report.obj2ID(j);
+
 
 			CollisionData* aux = new CollisionData();
 			aux->collided = true;
@@ -175,15 +181,18 @@ void Part::checkCollisionsAlongAxis(osgViewer::Viewer* viewer, VCollide* vCollid
 			else if(z == 1) arrayPosition = 4;
 			else if(z == -1) arrayPosition = 5;
 
-			if(m_smallestDistanceCollisions[arrayPosition] == NULL) m_countRestrictedDirections++;
+			//if(m_smallestDistanceCollisions[arrayPosition] == NULL) m_countRestrictedDirections++;
 			distanceOutBoundingBox = calculateDistanceOutBoundingBox(aux->collidedWith, aux->collisionDirection);
+			aux->distanceOutBoundingBox = distanceOutBoundingBox;
 
+			/*
 			if(m_smallestDistanceCollisions[arrayPosition] == NULL ||
 				distanceOutBoundingBox < m_smallestDistanceCollisions[arrayPosition]->distanceOutBoundingBox){
 
 				aux->distanceOutBoundingBox = distanceOutBoundingBox;
 				m_smallestDistanceCollisions[arrayPosition] = aux;
 			}
+			*/
 
 			//Check if the collision with this part has been added before
 			//TODO: improve that
@@ -210,8 +219,37 @@ void Part::checkCollisionsAlongAxis(osgViewer::Viewer* viewer, VCollide* vCollid
 
 }
 
+double Part::findSmallestDistance(){
+	
+	
+	double smallestDistance = std::numeric_limits<double>::infinity();
+	for(int i=0; i<6; i++){
+		double currentSmallestDistance = std::numeric_limits<double>::infinity();
+		m_smallestDistanceCollisions[i] = NULL;
+
+		for(int j=0; j<m_allDistanceCollisions[i].size(); j++){
+			if(m_allDistanceCollisions[i][j]->collidedWith->m_inserted == false
+				&& m_allDistanceCollisions[i][j]->distanceOutBoundingBox < currentSmallestDistance){
+				currentSmallestDistance = m_allDistanceCollisions[i][j]->distanceOutBoundingBox;
+				smallestDistance = currentSmallestDistance;
+				
+				m_smallestDistanceCollisions[i] = m_allDistanceCollisions[i][j];
+				m_explosionDirection = m_allDistanceCollisions[i][j];
+
+			}
+		}
+
+		if(m_smallestDistanceCollisions[i] != NULL)
+			m_countRestrictedDirections++;
+
+	}
+
+	return smallestDistance;
+
+}
+
 double Part::calculateDistanceOutBoundingBox(Part* collidedWith, double* collisionDirection){
-	/*
+	
 	osg::Vec3d vector;
 
 	osg::BoundingBox* bb1 = m_boundingBox;
@@ -222,6 +260,4 @@ double Part::calculateDistanceOutBoundingBox(Part* collidedWith, double* collisi
 				osg::minimum(bb1->zMax(), bb2->zMax()) - osg::maximum(bb1->zMin(), bb2->zMin()));
 
 	return vector.length();
-	*/
-	return 0;
 }

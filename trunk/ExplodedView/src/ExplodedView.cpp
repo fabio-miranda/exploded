@@ -74,17 +74,21 @@ void ExplodedView::buildPartsGraph(char* modelName){
 
 	//Detect collisions
 	int insertedParts = 0;
+	
+	findBlockedDirections();
 
 	while(insertedParts < m_partsGraph.size()){
+		/*
 		for(int i=0; i<m_partsGraph.size(); i++){
 			if(m_partsGraph[i]->m_inserted == false){
 				m_partsGraph[i]->resetRestrictedMoviments();
 			}
 		}
+		*/
 
 		//Find the directions in which the parts are blocked or not
 		//TODO: only do it once. After one iteration, we already know every possible collision between the parts
-		findBlockedDirections();
+		//findBlockedDirections();
 
 		//Find the distance that the parts have to walk in order to get out of the bounding box
 		//calculateDistancesOutBB();
@@ -92,8 +96,9 @@ void ExplodedView::buildPartsGraph(char* modelName){
 
 		//Find the smallest distance and insert it on the graph
 		Part* aux = findSmallestDistance();
+		//Part* aux = findNodeToInsert();
 		
-		m_vCollide->DeactivateObject(aux->m_vcollideId);
+		//m_vCollide->DeactivateObject(aux->m_vcollideId);
 		insertOnPartsGraph(aux);
 
 		//insertPart(currentPart);
@@ -127,33 +132,26 @@ void ExplodedView::findBlockedDirections(){
 
 
 Part* ExplodedView::findSmallestDistance(){
+	
 	double smallestDistance = std::numeric_limits<double>::infinity();
-	Part* currentPart = NULL;
-	CollisionData* currentCollision = NULL;
-	Part* lastOne = NULL;
+	double currentDistance;
+
+	Part* aux;
+
 	for(int i=0; i<m_partsGraph.size(); i++){
-		if(m_partsGraph[i]->m_inserted == false && m_partsGraph[i]->m_countRestrictedDirections < 6){
-			lastOne = m_partsGraph[i];
-			for(int j=0; j<6; j++){
-				if(m_partsGraph[i]->m_smallestDistanceCollisions[j] != NULL
-					&& m_partsGraph[i]->m_smallestDistanceCollisions[j]->distanceOutBoundingBox < smallestDistance){
-					currentPart = m_partsGraph[i];
-					currentCollision = m_partsGraph[i]->m_smallestDistanceCollisions[j];
-				}
+
+		if(m_partsGraph[i]->m_inserted == false){
+			currentDistance = m_partsGraph[i]->findSmallestDistance();
+
+			if(currentDistance <= smallestDistance && m_partsGraph[i]->m_countRestrictedDirections < 6){
+				aux = m_partsGraph[i];
 			}
 		}
 	}
 
-	if(currentPart == NULL){
-		lastOne->m_explosionDirection = NULL;
-		return lastOne;
-	}
-	else{
-		currentPart->m_explosionDirection = currentCollision;
-		return currentPart;
-
-	}
+	return aux;
 }
+
 
 void ExplodedView::insertOnPartsGraph(Part* part){
 	part->m_inserted = true;
@@ -193,7 +191,7 @@ void ExplodedView::printGraph(){
 
 
 void ExplodedView::explode(){
-	//bfs(m_partsGraph[0]);
+	bfs(m_partsGraph[0]);
 }
 
 void ExplodedView::bfs(Part* v){
@@ -268,7 +266,7 @@ void ExplodedView::loop(){
 	
 	
 	while(!m_viewer->done()){
-		//updateExplodingParts();
+		updateExplodingParts();
 		//verifyExplodingParts();
 		m_viewer->frame();
 	}
