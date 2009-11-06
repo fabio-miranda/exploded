@@ -41,6 +41,7 @@ public:
 	void bfs(Part* v);
 	void updateExplodingParts();
 	void verifyExplodingParts();
+	void findSmallestDistances();
 
 
 	VCollide* m_vCollide;

@@ -13,6 +13,8 @@
 #include <osg/PositionAttitudeTransform>
 #include <osgViewer/Viewer>
 
+#include <limits>
+
 
 class Part {
 
@@ -27,6 +29,7 @@ public:
 	void explode(double stepSize);
 	void setUp(VCollide* vCollide, osg::Group* sceneGraphRoot);
 	double calculateDistanceOutBoundingBox(Part* collidedWith, double* collisionDirection);
+	double findSmallestDistance();
 	
 	void calculateDistancesOutBoundingBox();
 	//void calculateDistancesOutBoundingBox(osgViewer::Viewer* viewer, double stepSize, double minimumDistance, bool visualize);
@@ -48,7 +51,7 @@ public:
 	osg::Node* m_osgNode;
 	osg::PositionAttitudeTransform* m_osgTransform;
 	osg::PositionAttitudeTransform* m_osgOriginalTransform;
-	//osg::BoundingBox* m_boundingBox;
+	osg::BoundingBox* m_boundingBox;
 
 	ProxyPart* m_ptrFirstProxyPart;
 	ProxyPart* m_ptrLastProxyPart;
