@@ -41,7 +41,8 @@ public:
 		//osg::PrimitiveSet::Mode::TRIANGLES
 		
 		int aux = 0;
-		for(int i=0; i< vertexVector->size(); i+=3){
+		int size = vertexVector->size();
+		for(int i=0; i< vertexVector->size()-2; i+=3){
 			vertex1 = vertexVector->at(i);
 			vertex2 = vertexVector->at(i+1);
 			vertex3 = vertexVector->at(i+2);

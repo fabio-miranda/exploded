@@ -4,7 +4,7 @@
 #define MINIMUM_DISTANCE_TO_CONSIDER_CONTACT 0
 #define STEPSIZE 0.1
 #define ITERATIONS 100
-#define VISUALIZE_GRAPH_BUILDING false
+#define VISUALIZE_GRAPH_BUILDING true
 #define PRINT_GRAPH true
 
 
@@ -94,9 +94,11 @@ void ExplodedView::buildPartsGraph(char* modelName){
 		//Find the distance that the parts have to walk in order to get out of the bounding box
 		//calculateDistancesOutBB();
 		//this is done on the findBlockedDirections
+		
+		countBlockedDirections();
 
 		//Find the smallest distance and insert it on the graph
-		Part* aux = findSmallestDistance();
+		Part* aux = findSmallestDistanceOutBoundingBox();
 		//Part* aux = findNodeToInsert();
 		
 		//m_vCollide->DeactivateObject(aux->m_vcollideId);
@@ -140,7 +142,7 @@ void ExplodedView::findBlockedDirections(){
 }
 
 
-Part* ExplodedView::findSmallestDistance(){
+Part* ExplodedView::findSmallestDistanceOutBoundingBox(){
 	
 	double smallestDistance = std::numeric_limits<double>::infinity();
 	double currentDistance;
@@ -151,7 +153,7 @@ Part* ExplodedView::findSmallestDistance(){
 
 		if(m_partsGraph[i]->m_inserted == false){
 			if(m_partsGraph[i]->m_countRestrictedDirections < 6){
-				currentDistance = m_partsGraph[i]->findSmallestDistance();
+				currentDistance = m_partsGraph[i]->findSmallestDistanceOutBoundingBox();
 
 				if(currentDistance <= smallestDistance){
 					aux = m_partsGraph[i];
@@ -162,6 +164,14 @@ Part* ExplodedView::findSmallestDistance(){
 	}
 
 	return aux;
+}
+
+void ExplodedView::countBlockedDirections(){
+
+	for(int i=0; i<m_partsGraph.size(); i++){
+		m_partsGraph[i]->countBlockedDirections();
+	}
+
 }
 
 

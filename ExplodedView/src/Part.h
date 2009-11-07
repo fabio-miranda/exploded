@@ -32,7 +32,8 @@ public:
 	//void setUp(VCollide* vCollide, osg::Group* sceneGraphRoot);
 	void setUp(osg::Group* sceneGraphRoot);
 	double calculateDistanceOutBoundingBox(Part* collidedWith, double* collisionDirection);
-	double findSmallestDistance();
+	double findSmallestDistanceOutBoundingBox();
+	void countBlockedDirections();
 	
 	void calculateDistancesOutBoundingBox();
 	//void calculateDistancesOutBoundingBox(osgViewer::Viewer* viewer, double stepSize, double minimumDistance, bool visualize);
@@ -43,7 +44,7 @@ public:
 	//int m_vcollideId; //equal to the position of the part in the m_partsGraph array
 	bool m_inserted; //nodes already inserted into the collision graph
 	//CollisionData m_collisions[6]; //0,1:x ; 2,3:y; 4,5:z
-	CollisionData* m_smallestDistanceCollisions[6]; //the smallest distances in each direction
+	CollisionData* m_smallestDistanceOutBoundingBox[6]; //the smallest distances out of the bounding box
 	std::vector<CollisionData*> m_allDistanceCollisions[6];//the parts in which the current part is blocked (in each direction)
 															//there can be more than only one part per direction
 

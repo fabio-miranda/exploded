@@ -11,6 +11,7 @@ Part::Part(){
 	m_ptrFirstProxyPart = NULL;
 	m_ptrLastProxyPart = NULL;
 	m_currentDistanceExploded = 0;
+	m_explosionDirection = NULL;
 	
 
 	resetRestrictedMoviments();
@@ -175,17 +176,26 @@ void Part::checkCollisionsAlongAxis(osgViewer::Viewer* viewer, std::vector< Part
 	//If there is a collision on i=0, the whole graph will be messed up
 	for(int i=0; i<numIterations; i++){
 		
-		T1[0] = m_osgTransform->getPosition().x() + i*stepSize*x;
-		T1[1] = m_osgTransform->getPosition().y() + i*stepSize*y;
-		T1[2] = m_osgTransform->getPosition().z() + i*stepSize*z;
+		//T1[0] = m_osgTransform->getPosition().x() + i*stepSize*x;
+		//T1[1] = m_osgTransform->getPosition().y() + i*stepSize*y;
+		//T1[2] = m_osgTransform->getPosition().z() + i*stepSize*z;
+		T1[0] = i*stepSize*x;
+		T1[1] = i*stepSize*y;
+		T1[2] = i*stepSize*z;
 		
 		
 		//PQP:
 		for(int j=0; j<partsGraph.size(); j++){
 			if(partsGraph[j] != this && partsGraph[j]->m_inserted == false){
+
+				//T2[0] = partsGraph[j]->m_osgTransform->getPosition().x();
+				//T2[1] = partsGraph[j]->m_osgTransform->getPosition().y();
+				//T2[2] = partsGraph[j]->m_osgTransform->getPosition().z();
 				
-				PQP_Tolerance(&tres, R1, T1, m_pqpModel, R2, T2, partsGraph[j]->m_pqpModel, minimumDistance);
+				PQP_Tolerance(&tres, R1, T1, m_pqpModel, R2, T2, partsGraph[j]->m_pqpModel, 0);
 				//PQP_Distance(&dres, R1, T1, m_pqpModel, R2, T2, partsGraph[j]->m_pqpModel, 0, 0);
+				
+				//double distance = dres.Distance();
 
 				if(tres.CloserThanTolerance()){
 					CollisionData* aux = new CollisionData();
@@ -291,13 +301,12 @@ void Part::checkCollisionsAlongAxis(osgViewer::Viewer* viewer, std::vector< Part
 
 }
 
-double Part::findSmallestDistance(){
+double Part::findSmallestDistanceOutBoundingBox(){
 	
-	m_countRestrictedDirections = 0;
 	double smallestDistance = std::numeric_limits<double>::infinity();
 	for(int i=0; i<6; i++){
 		double currentSmallestDistance = std::numeric_limits<double>::infinity();
-		m_smallestDistanceCollisions[i] = NULL;
+		m_smallestDistanceOutBoundingBox[i] = NULL;
 
 		for(int j=0; j<m_allDistanceCollisions[i].size(); j++){
 			if(m_allDistanceCollisions[i][j]->collidedWith->m_inserted == false
@@ -305,19 +314,31 @@ double Part::findSmallestDistance(){
 				currentSmallestDistance = m_allDistanceCollisions[i][j]->distanceOutBoundingBox;
 				smallestDistance = currentSmallestDistance;
 				
-				m_smallestDistanceCollisions[i] = m_allDistanceCollisions[i][j];
+				m_smallestDistanceOutBoundingBox[i] = m_allDistanceCollisions[i][j];
 				m_explosionDirection = m_allDistanceCollisions[i][j];
 
 			}
-		}
 
-		if(m_smallestDistanceCollisions[i] == NULL)
-			m_countRestrictedDirections++;
+			
+		}
+			
 
 	}
 
 	return smallestDistance;
+}
 
+void Part::countBlockedDirections(){
+	
+	m_countRestrictedDirections = 0;
+	for(int i=0; i<6; i++){
+		for(int j=0; j<m_allDistanceCollisions[i].size(); j++){
+			if(m_allDistanceCollisions[i][j]->collidedWith->m_inserted == false){
+				m_countRestrictedDirections++;
+				break; //only count one collision per direction
+			}
+		}
+	}
 }
 
 double Part::calculateDistanceOutBoundingBox(Part* collidedWith, double* collisionDirection){
