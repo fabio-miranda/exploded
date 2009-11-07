@@ -34,7 +34,7 @@ public:
 
 	void findBlockedDirections();
 	void calculateDistancesOutBB();
-	Part* findSmallestDistance();
+	Part* findSmallestDistanceOutBoundingBox();
 	void insertOnPartsGraph(Part* part);
 	void printGraph();
 	void explode();
@@ -42,6 +42,7 @@ public:
 	void updateExplodingParts();
 	void verifyExplodingParts();
 	void findSmallestDistances();
+	void countBlockedDirections();
 
 
 	//VCollide* m_vCollide;
