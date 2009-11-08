@@ -13,7 +13,7 @@
 #include <osg/Node>
 #include <osg/PositionAttitudeTransform>
 #include <osgViewer/Viewer>
-#include <osg/TriangleFunctor>
+#include <osg/TriangleIndexFunctor>
 
 #include <limits>
 
