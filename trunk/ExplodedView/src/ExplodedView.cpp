@@ -14,7 +14,7 @@ USE_GRAPHICSWINDOW();
 ExplodedView::ExplodedView(){
 	m_sceneGraphRoot = new osg::Group();
 	m_viewer = new osgViewer::Viewer();
-	//m_vCollide = new VCollide();
+	m_vCollide = new VCollide();
 }
 
  
@@ -66,8 +66,8 @@ void ExplodedView::buildPartsGraph(char* modelName){
 	
 	for (int i=0; i<m_partsGraph.size(); i++) {
 		//m_sceneGraphRoot->addChild(m_partsGraph[i]->getOSGNode());
-		//m_partsGraph[i]->setUp(m_vCollide, m_sceneGraphRoot);
-		m_partsGraph[i]->setUp(m_sceneGraphRoot);
+		m_partsGraph[i]->setUp(m_vCollide, m_sceneGraphRoot);
+		//m_partsGraph[i]->setUp(m_sceneGraphRoot);
 	}
 
 	//Set the scene
@@ -121,20 +121,22 @@ void ExplodedView::findBlockedDirections(){
 	for(int i=0; i<m_partsGraph.size(); i++){
 
 		if(m_partsGraph[i]->m_inserted == false){
-			/*
+			
 			m_partsGraph[i]->checkCollisionsAlongAxis(m_viewer, m_vCollide, m_partsGraph, 1, 0, 0, STEPSIZE, ITERATIONS, MINIMUM_DISTANCE_TO_CONSIDER_CONTACT, VISUALIZE_GRAPH_BUILDING);
 			m_partsGraph[i]->checkCollisionsAlongAxis(m_viewer, m_vCollide, m_partsGraph, -1, 0, 0, STEPSIZE, ITERATIONS, MINIMUM_DISTANCE_TO_CONSIDER_CONTACT, VISUALIZE_GRAPH_BUILDING);
 			m_partsGraph[i]->checkCollisionsAlongAxis(m_viewer, m_vCollide, m_partsGraph, 0, 1, 0, STEPSIZE, ITERATIONS, MINIMUM_DISTANCE_TO_CONSIDER_CONTACT, VISUALIZE_GRAPH_BUILDING);
 			m_partsGraph[i]->checkCollisionsAlongAxis(m_viewer, m_vCollide, m_partsGraph, 0, -1, 0, STEPSIZE, ITERATIONS, MINIMUM_DISTANCE_TO_CONSIDER_CONTACT, VISUALIZE_GRAPH_BUILDING);
 			m_partsGraph[i]->checkCollisionsAlongAxis(m_viewer, m_vCollide, m_partsGraph, 0, 0, 1, STEPSIZE, ITERATIONS, MINIMUM_DISTANCE_TO_CONSIDER_CONTACT, VISUALIZE_GRAPH_BUILDING);
 			m_partsGraph[i]->checkCollisionsAlongAxis(m_viewer, m_vCollide, m_partsGraph, 0, 0, -1, STEPSIZE, ITERATIONS, MINIMUM_DISTANCE_TO_CONSIDER_CONTACT, VISUALIZE_GRAPH_BUILDING);
-			*/
+			
+			/*
 			m_partsGraph[i]->checkCollisionsAlongAxis(m_viewer, m_partsGraph, 1, 0, 0, STEPSIZE, ITERATIONS, MINIMUM_DISTANCE_TO_CONSIDER_CONTACT, VISUALIZE_GRAPH_BUILDING);
 			m_partsGraph[i]->checkCollisionsAlongAxis(m_viewer, m_partsGraph, -1, 0, 0, STEPSIZE, ITERATIONS, MINIMUM_DISTANCE_TO_CONSIDER_CONTACT, VISUALIZE_GRAPH_BUILDING);
 			m_partsGraph[i]->checkCollisionsAlongAxis(m_viewer, m_partsGraph, 0, 1, 0, STEPSIZE, ITERATIONS, MINIMUM_DISTANCE_TO_CONSIDER_CONTACT, VISUALIZE_GRAPH_BUILDING);
 			m_partsGraph[i]->checkCollisionsAlongAxis(m_viewer, m_partsGraph, 0, -1, 0, STEPSIZE, ITERATIONS, MINIMUM_DISTANCE_TO_CONSIDER_CONTACT, VISUALIZE_GRAPH_BUILDING);
 			m_partsGraph[i]->checkCollisionsAlongAxis(m_viewer, m_partsGraph, 0, 0, 1, STEPSIZE, ITERATIONS, MINIMUM_DISTANCE_TO_CONSIDER_CONTACT, VISUALIZE_GRAPH_BUILDING);
 			m_partsGraph[i]->checkCollisionsAlongAxis(m_viewer, m_partsGraph, 0, 0, -1, STEPSIZE, ITERATIONS, MINIMUM_DISTANCE_TO_CONSIDER_CONTACT, VISUALIZE_GRAPH_BUILDING);
+			*/
 		}
 
 		m_partsGraph[i]->m_osgTransform->setPosition(osg::Vec3d(0, 0, 0));
