@@ -1,17 +1,19 @@
 #ifndef PART_H
 #define PART_H
 
-#include "AddTrianglesCollision.h"
+#include "TriangleVisitor.h"
 #include "ProxyPart.h"
 #include "CollisionData.h"
 
 
 //#include "PQP.H"
+#include "VCollide.h"
 
 //osg
 #include <osg/Node>
 #include <osg/PositionAttitudeTransform>
 #include <osgViewer/Viewer>
+#include <osg/TriangleFunctor>
 
 #include <limits>
 
@@ -25,8 +27,7 @@ public:
 	//void setOSGNode(osg::Node* node);
 	//osg::Node* getOSGNode();
 	void resetRestrictedMoviments();
-	//void resetPosition(VCollide* vCollide);
-	//void resetPosition(VCollide* vCollide);
+	void resetPosition(VCollide* vCollide);
 	void insertVertexFrom(Part* vertexToPart);
 	void explode(double stepSize);
 	void setUp(VCollide* vCollide, osg::Group* sceneGraphRoot);
