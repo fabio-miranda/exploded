@@ -43,14 +43,27 @@ void Part::setVCollide(VCollide* vCollide){
 	m_inserted = false;
 
 	//m_pqpModel->BeginModel();
-	vCollide->NewObject(&m_vcollideId);
+	
 
-	AddTrianglesCollision triangles(vCollide);
+	//AddTrianglesCollision triangles(vCollide);
 	//AddTrianglesCollision triangles(m_pqpModel);
+	osg::TriangleFunctor<TriangleVisitor> triangleVisitor;
 
-	m_osgNode->accept(triangles);
+	osg::ref_ptr <osg::Geometry> geometry;
+	geometry = (osg::Geometry *) m_osgNode->asGeode()->getDrawable(0);
+
+	geometry->accept(triangleVisitor);
 
 	//m_pqpModel->EndModel();
+	vCollide->NewObject(&m_vcollideId);
+	/*
+	int index = 0;
+	for(int i=0; i<triangleVisitor.m_VertexList->size(); i+=3){
+		vCollide->AddTri(triangleVisitor.m_VertexList->at(i), triangleVisitor.m_VertexList->at(i+1), triangleVisitor.m_VertexList->at(i+2), index);
+		index++;
+	}
+	*/
+
 	vCollide->EndObject();
 	
 
@@ -79,7 +92,7 @@ void Part::resetRestrictedMoviments(){
 	
 }
 
-/*
+
 void Part::resetPosition(VCollide* vCollide){
 	double trans[4][4];
 
@@ -96,7 +109,7 @@ void Part::resetPosition(VCollide* vCollide){
 
 	m_osgTransform->setPosition(m_osgOriginalTransform->getPosition());
 }
-*/
+
 
 void Part::explode(double stepSize){
 
@@ -274,7 +287,7 @@ void Part::checkCollisionsAlongAxis(osgViewer::Viewer* viewer, VCollide* vCollid
 
 	
 
-	//resetPosition(vCollide);
+	resetPosition(vCollide);
 
 	
 
