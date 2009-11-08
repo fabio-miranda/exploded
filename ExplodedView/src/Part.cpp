@@ -5,7 +5,7 @@ Part::Part(){
 	m_inserted = false;
 	m_visited = false;
 	m_exploded = false;
-	//m_pqpModel = new PQP_Model();
+	m_pqpModel = new PQP_Model();
 	m_osgTransform = new osg::PositionAttitudeTransform();
 	m_osgOriginalTransform = new osg::PositionAttitudeTransform();
 	m_ptrFirstProxyPart = NULL;
@@ -26,45 +26,56 @@ Part::Part(){
 	
 }
 
-void Part::setUp(VCollide* vCollide, osg::Group* sceneGraphRoot){
-//void Part::setUp(osg::Group* sceneGraphRoot){
+//void Part::setUp(VCollide* vCollide, osg::Group* sceneGraphRoot){
+void Part::setUp(osg::Group* sceneGraphRoot){
 	m_osgTransform->addChild(m_osgNode);
 	sceneGraphRoot->addChild(m_osgTransform);
 	m_osgOriginalTransform->setPosition(m_osgTransform->getPosition());
-	setVCollide(vCollide);
-	//setPQP();
+	//setVCollide(vCollide);
+	setPQP();
 
 	m_boundingBox->expandBy(m_osgNode->getBound());
 }
  
 
 //void Part::setVCollide(VCollide* vCollide){
-void Part::setVCollide(VCollide* vCollide){
+void Part::setPQP(){
 	m_inserted = false;
-
-	//m_pqpModel->BeginModel();
-	
 
 	//AddTrianglesCollision triangles(vCollide);
 	//AddTrianglesCollision triangles(m_pqpModel);
-	osg::TriangleIndexFunctor<TriangleIndexVisitor> triangleVisitor;
+	//osg::TriangleIndexFunctor<TriangleIndexVisitor> triangleIndexVisitor;
+	osg::TriangleFunctor<TriangleVertexVisitor> triangleVertexVisitor;
 
-	osg::ref_ptr <osg::Geometry> geometry;
+	osg::Geometry* geometry;
 	geometry = (osg::Geometry *) m_osgNode->asGeode()->getDrawable(0);
 
-	geometry->accept(triangleVisitor);
+	//geometry->accept(triangleIndexVisitor);
+	geometry->accept(triangleVertexVisitor);
 
-	//m_pqpModel->EndModel();
-	vCollide->NewObject(&m_vcollideId);
-	/*
-	int index = 0;
-	for(int i=0; i<triangleVisitor.m_VertexList->size(); i+=3){
-		vCollide->AddTri(triangleVisitor.m_VertexList->at(i), triangleVisitor.m_VertexList->at(i+1), triangleVisitor.m_VertexList->at(i+2), index);
-		index++;
+	//TODO: argh
+	m_pqpModel->BeginModel();
+	int aux = 0;
+	//int index1;
+	//int index2;
+	//int index3;
+	double* v1;
+	double* v2;
+	double* v3;
+	for(int i=0; i<triangleVertexVisitor.m_verticesArray->size()-2; i+=3){
+		//index1 = triangleIndexVisitor.m_indicesArray->at(i);
+		//index2 = triangleIndexVisitor.m_indicesArray->at(i+1);
+		//index3 = triangleIndexVisitor.m_indicesArray->at(i+2);
+		v1 = triangleVertexVisitor.m_verticesArray->at(i);
+		v2 = triangleVertexVisitor.m_verticesArray->at(i+1);
+		v3 = triangleVertexVisitor.m_verticesArray->at(i+2);
+
+
+		m_pqpModel->AddTri(v1, v2, v3, aux);
+		aux++;
 	}
-	*/
 
-	vCollide->EndObject();
+	m_pqpModel->EndModel();
 	
 
 }
@@ -92,7 +103,7 @@ void Part::resetRestrictedMoviments(){
 	
 }
 
-
+/*
 void Part::resetPosition(VCollide* vCollide){
 	double trans[4][4];
 
@@ -109,6 +120,7 @@ void Part::resetPosition(VCollide* vCollide){
 
 	m_osgTransform->setPosition(m_osgOriginalTransform->getPosition());
 }
+*/
 
 
 void Part::explode(double stepSize){
@@ -148,13 +160,14 @@ void Part::insertVertexFrom(Part* vertexFrom){
 
 
 
-void Part::checkCollisionsAlongAxis(osgViewer::Viewer* viewer, VCollide* vCollide, std::vector< Part* > partsGraph, int x, int y, int z, double stepSize, int numIterations, double minimumDistance, bool visualize){
-//void Part::checkCollisionsAlongAxis(osgViewer::Viewer* viewer, std::vector< Part* > partsGraph, int x, int y, int z, double stepSize, int numIterations, double minimumDistance, bool visualize){
+//void Part::checkCollisionsAlongAxis(osgViewer::Viewer* viewer, VCollide* vCollide, std::vector< Part* > partsGraph, int x, int y, int z, double stepSize, int numIterations, double minimumDistance, bool visualize){
+void Part::checkCollisionsAlongAxis(osgViewer::Viewer* viewer, std::vector< Part* > partsGraph, int x, int y, int z, double stepSize, int numIterations, double minimumDistance, bool visualize){
 	double distance;
-	double trans[4][4];
+	//double trans[4][4];
+	double T1[3], T2[3], R1[3][3], R2[3][3];
 	int arrayPosition;
 
-	VCReport report;
+	//VCReport report;
 
 	if(x == 1) arrayPosition = 0;
 	else if(x == -1) arrayPosition = 1;
@@ -162,12 +175,24 @@ void Part::checkCollisionsAlongAxis(osgViewer::Viewer* viewer, VCollide* vCollid
 	else if(y == -1) arrayPosition = 3;
 	else if(z == 1) arrayPosition = 4;
 	else if(z == -1) arrayPosition = 5;
-	
+	/*
 	for(int i=0; i<4; i++)
 		for(int j=0; j<4; j++)
 			if(i==j) trans[i][i] = 1;
 			else trans[i][j] = 0;
+	*/
 	
+	R1[0][0] = R1[1][1] = R1[2][2] = 1.0;
+	R1[0][1] = R1[1][0] = R1[2][0] = 0.0;
+	R1[0][2] = R1[1][2] = R1[2][1] = 0.0;
+
+	R2[0][0] = R2[1][1] = R2[2][2] = 1.0;
+	R2[0][1] = R2[1][0] = R2[2][0] = 0.0;
+	R2[0][2] = R2[1][2] = R2[2][1] = 0.0;
+
+	T1[0] = 0.0;  T1[1] = 0.0; T1[2] = 0.0;
+	T2[0] = 0.0;  T2[1] = 0.0; T2[2] = 0.0;
+
 	double distanceOutBoundingBox = 0;
 
 	//It begins from i = 1. That way, the initial collisions will be ignored.
@@ -178,12 +203,13 @@ void Part::checkCollisionsAlongAxis(osgViewer::Viewer* viewer, VCollide* vCollid
 		//T1[0] = m_osgTransform->getPosition().x() + i*stepSize*x;
 		//T1[1] = m_osgTransform->getPosition().y() + i*stepSize*y;
 		//T1[2] = m_osgTransform->getPosition().z() + i*stepSize*z;
-		//T1[0] = i*stepSize*x;
-		//T1[1] = i*stepSize*y;
-		//T1[2] = i*stepSize*z;
+		T1[0] = i*stepSize*x;
+		T1[1] = i*stepSize*y;
+		T1[2] = i*stepSize*z;
 		
-		/*
+		
 		//PQP:
+		PQP_ToleranceResult tres;
 		for(int j=0; j<partsGraph.size(); j++){
 			if(partsGraph[j] != this && partsGraph[j]->m_inserted == false){
 
@@ -228,11 +254,11 @@ void Part::checkCollisionsAlongAxis(osgViewer::Viewer* viewer, VCollide* vCollid
 
 			}
 		}
-		*/
+		
 
 
 		//VCollide:
-
+		/*
 		trans[0][3] = i*stepSize*x;
 		trans[1][3] = i*stepSize*y;
 		trans[2][3] = i*stepSize*z;
@@ -277,6 +303,7 @@ void Part::checkCollisionsAlongAxis(osgViewer::Viewer* viewer, VCollide* vCollid
 					}
 			}
 		}
+		*/
 		/*
 		//If there is two parts that are originally in contact, then this avoids assigning a collision on every direction
 		if(numCollisions == 0){
@@ -287,7 +314,7 @@ void Part::checkCollisionsAlongAxis(osgViewer::Viewer* viewer, VCollide* vCollid
 
 	
 
-	resetPosition(vCollide);
+	//resetPosition(vCollide);
 
 	
 
