@@ -70,6 +70,16 @@ void ExplodedView::buildPartsGraph(char* modelName){
 		m_partsGraph[i]->setUp(m_sceneGraphRoot);
 	}
 
+	//Temp:
+	//osg::ClipNode* clipnode = new osg::ClipNode;
+	//clipnode->createClipBox(bb);
+    //clipnode->setCullingActive(false);
+
+
+
+
+
+
 	//Set the scene
 	m_viewer->setSceneData(m_sceneGraphRoot);
 

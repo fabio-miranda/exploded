@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "falling", "falling\falling.vcproj", "{816888A2-D266-4C5D-B1C5-076DCDFD8C85}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "sample", "sample\sample.vcproj", "{C313AD5A-9972-48B9-A136-FF4E84E1915A}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "spinning", "spinning\spinning.vcproj", "{036E682F-F755-4EC5-AA70-20710038063F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{816888A2-D266-4C5D-B1C5-076DCDFD8C85}.Debug|Win32.ActiveCfg = Debug|Win32
+		{816888A2-D266-4C5D-B1C5-076DCDFD8C85}.Debug|Win32.Build.0 = Debug|Win32
+		{816888A2-D266-4C5D-B1C5-076DCDFD8C85}.Release|Win32.ActiveCfg = Release|Win32
+		{816888A2-D266-4C5D-B1C5-076DCDFD8C85}.Release|Win32.Build.0 = Release|Win32
+		{C313AD5A-9972-48B9-A136-FF4E84E1915A}.Debug|Win32.ActiveCfg = Debug|Win32
+		{C313AD5A-9972-48B9-A136-FF4E84E1915A}.Debug|Win32.Build.0 = Debug|Win32
+		{C313AD5A-9972-48B9-A136-FF4E84E1915A}.Release|Win32.ActiveCfg = Release|Win32
+		{C313AD5A-9972-48B9-A136-FF4E84E1915A}.Release|Win32.Build.0 = Release|Win32
+		{036E682F-F755-4EC5-AA70-20710038063F}.Debug|Win32.ActiveCfg = Debug|Win32
+		{036E682F-F755-4EC5-AA70-20710038063F}.Debug|Win32.Build.0 = Debug|Win32
+		{036E682F-F755-4EC5-AA70-20710038063F}.Release|Win32.ActiveCfg = Release|Win32
+		{036E682F-F755-4EC5-AA70-20710038063F}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
