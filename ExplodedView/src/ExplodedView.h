@@ -4,7 +4,7 @@
 #include "FindPartVisitor.h"
 #include "Part.h"
 
-#include "PQP.h"
+//#include "PQP.h"
 
 
 #include <iostream>
@@ -45,7 +45,7 @@ public:
 	void countBlockedDirections();
 
 
-	//VCollide* m_vCollide;
+	VCollide* m_vCollide;
 	osgViewer::Viewer* m_viewer;
 	osg::Group* m_sceneGraphRoot;
 	std::vector< Part* > m_partsGraph;

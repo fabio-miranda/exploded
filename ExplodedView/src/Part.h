@@ -6,7 +6,7 @@
 #include "CollisionData.h"
 
 
-#include "PQP.H"
+//#include "PQP.H"
 
 //osg
 #include <osg/Node>
@@ -20,8 +20,8 @@ class Part {
 
 public:
 	Part();
-	//void setVCollide(VCollide* vCollide);
-	void setPQP();
+	void setVCollide(VCollide* vCollide);
+	//void setPQP();
 	//void setOSGNode(osg::Node* node);
 	//osg::Node* getOSGNode();
 	void resetRestrictedMoviments();
@@ -29,16 +29,16 @@ public:
 	//void resetPosition(VCollide* vCollide);
 	void insertVertexFrom(Part* vertexToPart);
 	void explode(double stepSize);
-	//void setUp(VCollide* vCollide, osg::Group* sceneGraphRoot);
-	void setUp(osg::Group* sceneGraphRoot);
+	void setUp(VCollide* vCollide, osg::Group* sceneGraphRoot);
+	//void setUp(osg::Group* sceneGraphRoot);
 	double calculateDistanceOutBoundingBox(Part* collidedWith, double* collisionDirection);
 	double findSmallestDistanceOutBoundingBox();
 	void countBlockedDirections();
 	
 	void calculateDistancesOutBoundingBox();
 	//void calculateDistancesOutBoundingBox(osgViewer::Viewer* viewer, double stepSize, double minimumDistance, bool visualize);
-	//void checkCollisionsAlongAxis(osgViewer::Viewer* viewer, VCollide* vCollide, std::vector< Part* > partsGraph, int x, int y, int z, double stepSize, int numIterations, double minimumDistance, bool visualize);
-	void checkCollisionsAlongAxis(osgViewer::Viewer* viewer, std::vector< Part* > partsGraph, int x, int y, int z, double stepSize, int numIterations, double minimumDistance, bool visualize);
+	void checkCollisionsAlongAxis(osgViewer::Viewer* viewer, VCollide* vCollide, std::vector< Part* > partsGraph, int x, int y, int z, double stepSize, int numIterations, double minimumDistance, bool visualize);
+	//void checkCollisionsAlongAxis(osgViewer::Viewer* viewer, std::vector< Part* > partsGraph, int x, int y, int z, double stepSize, int numIterations, double minimumDistance, bool visualize);
 	//double calculateDistance(Part* compareTo, PQP_REAL translation_x, PQP_REAL translation_y, PQP_REAL translation_z);
 
 	//int m_vcollideId; //equal to the position of the part in the m_partsGraph array
@@ -48,7 +48,8 @@ public:
 	std::vector<CollisionData*> m_allDistanceCollisions[6];//the parts in which the current part is blocked (in each direction)
 															//there can be more than only one part per direction
 
-	PQP_Model* m_pqpModel;
+	//PQP_Model* m_pqpModel;
+	int m_vcollideId;
 
 	int m_countRestrictedDirections;
 	CollisionData* m_explosionDirection;// Pointer to the CollisionData that represents the explosion direction

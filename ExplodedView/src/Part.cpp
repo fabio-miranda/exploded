@@ -26,33 +26,32 @@ Part::Part(){
 	
 }
 
-//void Part::setUp(VCollide* vCollide, osg::Group* sceneGraphRoot){
-void Part::setUp(osg::Group* sceneGraphRoot){
+void Part::setUp(VCollide* vCollide, osg::Group* sceneGraphRoot){
+//void Part::setUp(osg::Group* sceneGraphRoot){
 	m_osgTransform->addChild(m_osgNode);
 	sceneGraphRoot->addChild(m_osgTransform);
 	m_osgOriginalTransform->setPosition(m_osgTransform->getPosition());
-	//setVCollide(vCollide);
-	setPQP();
+	setVCollide(vCollide);
+	//setPQP();
 
 	m_boundingBox->expandBy(m_osgNode->getBound());
 }
  
 
 //void Part::setVCollide(VCollide* vCollide){
-void Part::setPQP(){
-	m_pqpModel = new PQP_Model();
+void Part::setVCollide(VCollide* vCollide){
 	m_inserted = false;
 
-	m_pqpModel->BeginModel();
-	//vCollide->NewObject(&m_vcollideId);
+	//m_pqpModel->BeginModel();
+	vCollide->NewObject(&m_vcollideId);
 
-	//AddTrianglesCollision triangles(vCollide);
-	AddTrianglesCollision triangles(m_pqpModel);
+	AddTrianglesCollision triangles(vCollide);
+	//AddTrianglesCollision triangles(m_pqpModel);
 
 	m_osgNode->accept(triangles);
 
-	m_pqpModel->EndModel();
-	//vCollide->EndObject();
+	//m_pqpModel->EndModel();
+	vCollide->EndObject();
 	
 
 }
@@ -136,26 +135,13 @@ void Part::insertVertexFrom(Part* vertexFrom){
 
 
 
-//void Part::checkCollisionsAlongAxis(osgViewer::Viewer* viewer, VCollide* vCollide, std::vector< Part* > partsGraph, int x, int y, int z, double stepSize, int numIterations, double minimumDistance, bool visualize){
-void Part::checkCollisionsAlongAxis(osgViewer::Viewer* viewer, std::vector< Part* > partsGraph, int x, int y, int z, double stepSize, int numIterations, double minimumDistance, bool visualize){
+void Part::checkCollisionsAlongAxis(osgViewer::Viewer* viewer, VCollide* vCollide, std::vector< Part* > partsGraph, int x, int y, int z, double stepSize, int numIterations, double minimumDistance, bool visualize){
+//void Part::checkCollisionsAlongAxis(osgViewer::Viewer* viewer, std::vector< Part* > partsGraph, int x, int y, int z, double stepSize, int numIterations, double minimumDistance, bool visualize){
 	double distance;
+	double trans[4][4];
 	int arrayPosition;
 
-	PQP_REAL R1[3][3], R2[3][3], T1[3], T2[3];
-	PQP_ToleranceResult tres;
-	PQP_DistanceResult dres;
-
-	R1[0][0] = R1[1][1] = R1[2][2] = 1.0;
-	R1[0][1] = R1[1][0] = R1[2][0] = 0.0;
-	R1[0][2] = R1[1][2] = R1[2][1] = 0.0;
-
-	R2[0][0] = R2[1][1] = R2[2][2] = 1.0;
-	R2[0][1] = R2[1][0] = R2[2][0] = 0.0;
-	R2[0][2] = R2[1][2] = R2[2][1] = 0.0;
-
-	T1[0] = 0.0;  T1[1] = 0.0; T1[2] = 0.0;
-	T2[0] = 0.0;  T2[1] = 0.0; T2[2] = 0.0;
-	//VCReport report;
+	VCReport report;
 
 	if(x == 1) arrayPosition = 0;
 	else if(x == -1) arrayPosition = 1;
@@ -163,12 +149,12 @@ void Part::checkCollisionsAlongAxis(osgViewer::Viewer* viewer, std::vector< Part
 	else if(y == -1) arrayPosition = 3;
 	else if(z == 1) arrayPosition = 4;
 	else if(z == -1) arrayPosition = 5;
-	/*
+	
 	for(int i=0; i<4; i++)
 		for(int j=0; j<4; j++)
 			if(i==j) trans[i][i] = 1;
 			else trans[i][j] = 0;
-	*/
+	
 	double distanceOutBoundingBox = 0;
 
 	//It begins from i = 1. That way, the initial collisions will be ignored.
@@ -179,11 +165,11 @@ void Part::checkCollisionsAlongAxis(osgViewer::Viewer* viewer, std::vector< Part
 		//T1[0] = m_osgTransform->getPosition().x() + i*stepSize*x;
 		//T1[1] = m_osgTransform->getPosition().y() + i*stepSize*y;
 		//T1[2] = m_osgTransform->getPosition().z() + i*stepSize*z;
-		T1[0] = i*stepSize*x;
-		T1[1] = i*stepSize*y;
-		T1[2] = i*stepSize*z;
+		//T1[0] = i*stepSize*x;
+		//T1[1] = i*stepSize*y;
+		//T1[2] = i*stepSize*z;
 		
-		
+		/*
 		//PQP:
 		for(int j=0; j<partsGraph.size(); j++){
 			if(partsGraph[j] != this && partsGraph[j]->m_inserted == false){
@@ -229,36 +215,29 @@ void Part::checkCollisionsAlongAxis(osgViewer::Viewer* viewer, std::vector< Part
 
 			}
 		}
+		*/
 
 
 		//VCollide:
-		/*
-		vCollide->UpdateTrans(m_vcollideId, trans);
-		
-		
-		if(visualize){
-			m_osgTransform->setPosition(osg::Vec3d(trans[0][3], trans[1][3], trans[2][3]));
-			viewer->frame();
-		}
-		
 
+		trans[0][3] = i*stepSize*x;
+		trans[1][3] = i*stepSize*y;
+		trans[2][3] = i*stepSize*z;
+
+		vCollide->UpdateTrans(m_vcollideId, trans);
+
+		
+		
 		vCollide->Collide( &report, VC_ALL_CONTACTS);
 		
 		int numCollisions = 0;
 		//If there is no collision on this direction, then we have a free direction
 		for(int j=0; j<report.numObjPairs(); j++){
 			if(report.obj1ID(j) == m_vcollideId || report.obj2ID(j) == m_vcollideId){
-				numCollisions++;
-
-				int collidedId;
-				double distanceOutBoundingBox;
-
-				report.obj1ID(j) != m_vcollideId ?  collidedId = report.obj1ID(j) : collidedId = report.obj2ID(j);
-
 
 				CollisionData* aux = new CollisionData();
 				aux->collided = true;
-				aux->collidedWith = partsGraph[collidedId];
+				aux->collidedWith = partsGraph[j];
 				aux->collisionDirection[0] = x; 
 				aux->collisionDirection[1] = y; 
 				aux->collisionDirection[2] = z; 
@@ -276,7 +255,7 @@ void Part::checkCollisionsAlongAxis(osgViewer::Viewer* viewer, std::vector< Part
 					m_allDistanceCollisions[arrayPosition].push_back(aux);
 				else
 					for(int k=0; k<m_allDistanceCollisions[arrayPosition].size(); k++){
-						if(m_allDistanceCollisions[arrayPosition][k]->collidedWith->m_vcollideId == aux->collidedWith->m_vcollideId)
+						if(m_allDistanceCollisions[arrayPosition][k]->collidedWith == aux->collidedWith)
 						 //check the distance too and get the closest one
 							if(m_allDistanceCollisions[arrayPosition][k]->distanceOutBoundingBox <= aux->distanceOutBoundingBox){
 								m_allDistanceCollisions[arrayPosition].erase(m_allDistanceCollisions[arrayPosition].begin()+k);
@@ -285,7 +264,7 @@ void Part::checkCollisionsAlongAxis(osgViewer::Viewer* viewer, std::vector< Part
 					}
 			}
 		}
-
+		/*
 		//If there is two parts that are originally in contact, then this avoids assigning a collision on every direction
 		if(numCollisions == 0){
 			//m_allDistanceCollisions[arrayPosition].clear();
