@@ -8,6 +8,7 @@
 #include <osg/Node>
 #include <osg/Geode>
 #include <osg/Geometry>
+#include <osg/TriangleIndexFunctor>
 
 #include <osgSim/DOFTransform>
 #include <iostream>
@@ -16,43 +17,33 @@
 #include <string>
 using namespace std;
 
-class TriangleVisitor
+class TriangleIndexVisitor
 
 {
 public:
 	
-	TriangleVisitor(){
+	TriangleIndexVisitor(){
 		m_VertexList = new vector<double>();
 	}
 
 
-            void operator() (const osg::Vec3d& v1, const osg::Vec3d& v2, const osg::Vec3d& v3, bool)
+            void operator() (int a, int b, int c)
 
             {
-
-						m_VertexList->push_back(v1[0]);
-
-                        m_VertexList->push_back(v1[1]);
-
-                        m_VertexList->push_back(v1[2]);
-
-
-
-                        m_VertexList->push_back(v2[0]);
-
-                        m_VertexList->push_back(v2[1]);
-
-                        m_VertexList->push_back(v2[2]);
-
- 
-
-                        m_VertexList->push_back(v3[0]);
-
-                        m_VertexList->push_back(v3[1]);
-
-                        m_VertexList->push_back(v3[2]);
+				int aux =0;
 
             }
+
+			virtual void setVertexArray(unsigned int index,const osg::Vec3d* vertex){
+				int aux =0;
+				aux++;
+
+				m_VertexList = NULL;
+
+				for(int i=0; i<100; i++)
+					aux++;
+
+			}
 
  
 	vector<double>* m_VertexList;

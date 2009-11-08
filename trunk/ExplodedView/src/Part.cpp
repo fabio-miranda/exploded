@@ -47,7 +47,7 @@ void Part::setVCollide(VCollide* vCollide){
 
 	//AddTrianglesCollision triangles(vCollide);
 	//AddTrianglesCollision triangles(m_pqpModel);
-	osg::TriangleFunctor<TriangleVisitor> triangleVisitor;
+	osg::TriangleIndexFunctor<TriangleIndexVisitor> triangleVisitor;
 
 	osg::ref_ptr <osg::Geometry> geometry;
 	geometry = (osg::Geometry *) m_osgNode->asGeode()->getDrawable(0);
