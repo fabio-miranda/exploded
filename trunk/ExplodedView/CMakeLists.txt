@@ -15,6 +15,7 @@ SET(BUILD_SHARED_LIBS OFF)
 #Includes
 include_directories(${OPENSCENEGRAPH_INCLUDE_DIRS})
 include_directories(${QT_INCLUDE_DIR})
+#include_directories(libs/VCollide201/include)
 
 #Defines
 if(STATIC_OPENSCENEGRAPH)

@@ -1,0 +1,23 @@
+=======Primeira implementação:
+1) Itera =todas= as partes:
+Para cada parte: anda com a parte nas 6 direções e testa se há colisão em cada uma. (PQP)
+
+2) Para as partes com pelo menos =uma= direção livre:
+Para cada direção =bloqueada=, anda até sair do BB (PQP)
+
+3) Insere no grafo a parte com a menor distância para sair do BB.
+
+
+
+=======Segunda implementação:
+1) Itera =todas= as partes:
+Para cada parte: anda com a parte nas 6 direções e testa se há colisão em cada uma. (V-Collision)
+
+2) Para as partes com pelo menos =uma= direção livre:
+Para cada direção =bloqueada=, calcula a distância que tem que percorrer ao longo do eixo para sair do AABB (matemática pura: http://www.metanetsoftware.com/technique/tutorialA.html#section2).
+
+3) Insere no grafo a parte com a menor distância para sair do BB.
+
+
+=======Terceira implementação:
+usar DEEP?
