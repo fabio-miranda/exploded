@@ -21,6 +21,7 @@ ExplodedView::ExplodedView(){
 void ExplodedView::setUp(){
 
     m_viewer->setCameraManipulator( new osgGA::TrackballManipulator() );
+	m_viewer->getCameraManipulator()->setHomePosition(osg::Vec3d(100,100,100), osg::Vec3d(0,0,0), osg::Vec3d(0,0,1));
 
     // add the state manipulator
     m_viewer->addEventHandler( new osgGA::StateSetManipulator(m_viewer->getCamera()->getOrCreateStateSet()) );
@@ -36,6 +37,9 @@ void ExplodedView::setUp(){
 
     // windowed
 	m_viewer->setUpViewInWindow(50, 25, 1024, 768);
+
+	//box
+	buildBox();
 
 }
 
@@ -64,18 +68,32 @@ void ExplodedView::buildPartsGraph(char* modelName){
 	loadedModel->accept(findParts);
 	m_partsGraph = findParts.getPartList();
 	
+	
 	for (int i=0; i<m_partsGraph.size(); i++) {
 		//m_sceneGraphRoot->addChild(m_partsGraph[i]->getOSGNode());
 		//m_partsGraph[i]->setUp(m_vCollide, m_sceneGraphRoot);
 		m_partsGraph[i]->setUp(m_sceneGraphRoot);
 	}
+	
+
 
 	//Temp:
-	//osg::ClipNode* clipnode = new osg::ClipNode;
+	osg::ClipNode* clipnode = new osg::ClipNode;
+	//clipnode->createClipBox(*m_partsGraph[0]->m_boundingBox);
+    
+
+	//osg::BoundingBox bb(-150,-150,25,150,150,150);
 	//clipnode->createClipBox(bb);
-    //clipnode->setCullingActive(false);
+	osg::ClipPlane* clipPlane = new osg::ClipPlane();
+	clipPlane->setClipPlane(osg::Plane(osg::Vec3d(0,0,-1),osg::Vec3d(0,0,50)));
+	clipnode->addClipPlane(clipPlane);
+	clipnode->setCullingActive(false);
+	clipnode->addChild(m_partsGraph[0]->m_osgNode);
+	m_sceneGraphRoot->addChild(clipnode);
 
+	//m_partsGraph[1]->m_osgTransform->addChild(m_partsGraph[1]->m_osgNode);
 
+	
 
 
 
@@ -99,7 +117,7 @@ void ExplodedView::buildPartsGraph(char* modelName){
 
 		//Find the directions in which the parts are blocked or not
 		//TODO: only do it once. After one iteration, we already know every possible collision between the parts
-		//findBlockedDirections();
+		findBlockedDirections();
 
 		//Find the distance that the parts have to walk in order to get out of the bounding box
 		//calculateDistancesOutBB();
@@ -296,11 +314,33 @@ void ExplodedView::verifyExplodingParts(){
 }
 
 
+void ExplodedView::buildBox(){
+	
+	osg::ShapeDrawable* box = new osg::ShapeDrawable(new osg::Box(osg::Vec3d(0,0,0), 200));
+	osg::StateSet* stateset = new osg::StateSet;
+	osg::Geode* geode = new osg::Geode;
+	osg::PolygonMode* polymode = new osg::PolygonMode;
+
+	
+
+	
+	polymode->setMode(osg::PolygonMode::FRONT_AND_BACK,osg::PolygonMode::LINE);
+	stateset->setAttributeAndModes(polymode,osg::StateAttribute::OVERRIDE|osg::StateAttribute::ON);
+	stateset->setMode(GL_LIGHTING,osg::StateAttribute::OVERRIDE|osg::StateAttribute::OFF);
+	box->setStateSet(stateset);
+	
+    geode->addDrawable(box);
+
+	m_sceneGraphRoot->addChild(geode);
+
+}
+
+
 void ExplodedView::loop(){
 	
 	
 	while(!m_viewer->done()){
-		updateExplodingParts();
+		//updateExplodingParts();
 		//verifyExplodingParts();
 		m_viewer->frame();
 	}
