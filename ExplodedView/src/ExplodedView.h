@@ -20,7 +20,9 @@
 #include <osgDB/ReadFile>
 #include <osgUtil/Optimizer>
 #include <osg/Node>
+#include <osg/ClipNode>
 #include <osgSim/MultiSwitch>
+#include <osg/ShapeDrawable>
 
 
 class ExplodedView{
@@ -43,6 +45,7 @@ public:
 	void verifyExplodingParts();
 	void findSmallestDistances();
 	void countBlockedDirections();
+	void buildBox();
 
 
 	//VCollide* m_vCollide;
