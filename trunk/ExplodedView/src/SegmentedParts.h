@@ -15,23 +15,16 @@
 #include <osg/ClipNode>
 
 
-class SegmentedParts {
+class SegmentedPart {
 
 public:
-	SegmentedParts(int, osg::Group* sceneGraphRoot, Part* containerPart, osg::Vec3 normal);
-	void createSegment(int, osg::Group* sceneGraphRoot, osg::PositionAttitudeTransform* transform, osg::Node* node, Part* containerPart, osg::Vec3d* normal, osg::Vec3d bbCenter);
-	double explodeUntilVisible(osgViewer::Viewer* viewer, double stepSize, Part* partToBeVisible);
+	SegmentedPart(int, osg::Group* sceneRoot, Part* containerNode, osg::Vec3 normal);
 	
 
 
 private:
-	osg::PositionAttitudeTransform* m_osgTransform1;
-	osg::Node* m_osgNode1;
-	osg::Vec3d* m_normal1;
-
-	osg::PositionAttitudeTransform* m_osgTransform2;
-	osg::Node* m_osgNode2;
-	osg::Vec3d* m_normal2;
+	osg::PositionAttitudeTransform* m_osgTransform;
+	osg::Node* m_osgNode;
 	
 	
 
