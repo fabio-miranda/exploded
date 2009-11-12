@@ -420,8 +420,9 @@ void Part::split(osg::Group* sceneGraphRoot , osgViewer::Viewer* viewer, double 
 
 	//Test the three possible cutting planes: xy, xz, yz
 	//xy:
-	//SegmentedPart* segParts_xy = new SegmentedPart(0, this, osg::Vec3d(0,0,1));
-	//segParts_xy->explodeUntilVisible(viewer, stepsize, m_partsContained[0]);
+	SegmentedPart* segPart1_xy = new SegmentedPart(0, sceneGraphRoot, this, osg::Vec3d(0,0,1));
+	SegmentedPart* segPart2_xy = new SegmentedPart(1, sceneGraphRoot, this, osg::Vec3d(0,0,-1));
+	//explodeUntilVisible(viewer, stepsize, m_partsContained[0], segPart1_xy, segPart2_xy);
 
 	//xz
 	//SegmentedPart* segPart_xz = new SegmentedPart(2, this, osg::Vec3d(0,1,0));
@@ -429,7 +430,7 @@ void Part::split(osg::Group* sceneGraphRoot , osgViewer::Viewer* viewer, double 
 	
 
 	//yz
-	SegmentedParts* segPart_yz = new SegmentedParts(4, sceneGraphRoot, this, osg::Vec3d(1,0,0));
+	//SegmentedParts* segPart_yz = new SegmentedParts(4, sceneGraphRoot, this, osg::Vec3d(1,0,0));
 	//segPart_yz->explodeUntilVisible(viewer, stepsize, m_partsContained[0]);
 
 	
@@ -464,3 +465,8 @@ void Part::split(osg::Group* sceneGraphRoot , osgViewer::Viewer* viewer, double 
 	//yz:
 	*/
 }
+/*
+double Part::explodeUntilVisible(){
+
+
+}*/
