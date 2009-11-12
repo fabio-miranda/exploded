@@ -13,6 +13,7 @@ Part::Part(){
 	m_ptrFirstProxyPart = NULL;
 	m_ptrLastProxyPart = NULL;
 	m_currentDistanceExploded = 0;
+	m_segmentedParts = NULL;
 	m_explosionDirection = NULL;
 	
 
@@ -39,6 +40,7 @@ void Part::setUp(osg::Group* sceneGraphRoot){
 	//setVCollide(vCollide);
 	setPQP();
 
+	//TODO: Improve the bounding box
 	m_boundingBox->expandBy(m_osgNode->getBound());
 }
  
@@ -132,19 +134,24 @@ void Part::explode(double stepSize){
 
 	if(m_exploded) return;
 
-	osg::Vec3d currentPosition = m_osgTransform->getPosition();
-	double* explosionDirection = m_explosionDirection->collisionDirection;
+	if(m_container){
+		m_segmentedParts->explode(stepSize);
+	}
+	else{
+		osg::Vec3d currentPosition = m_osgTransform->getPosition();
+		double* explosionDirection = m_explosionDirection->collisionDirection;
 
-	osg::Vec3d newPosition = osg::Vec3d(currentPosition.x() - explosionDirection[0]*stepSize,
-										   currentPosition.y() - explosionDirection[1]*stepSize,
-										   currentPosition.z() - explosionDirection[2]*stepSize);
-	
-	m_currentDistanceExploded += (newPosition - currentPosition).length();
+		osg::Vec3d newPosition = osg::Vec3d(currentPosition.x() - explosionDirection[0]*stepSize,
+											   currentPosition.y() - explosionDirection[1]*stepSize,
+											   currentPosition.z() - explosionDirection[2]*stepSize);
+		
+		m_currentDistanceExploded += (newPosition - currentPosition).length();
 
-	if(m_currentDistanceExploded < m_explosionDirection->distanceOutBoundingBox)
-		m_osgTransform->setPosition(newPosition);
-	else
-		m_exploded = true;
+		if(m_currentDistanceExploded < m_explosionDirection->distanceOutBoundingBox)
+			m_osgTransform->setPosition(newPosition);
+		else
+			m_exploded = true;
+	}
 
 }
 
@@ -395,21 +402,24 @@ void Part::findContainer(){
 	if(m_countRestrictedDirections == 6){
 		for(int j=1; j<6; j++){
 			if(m_smallestDistanceOutBoundingBox[j-1]->collidedWith != m_smallestDistanceOutBoundingBox[j]->collidedWith){
-				interlocked = false;
+				if(m_smallestDistanceOutBoundingBox[j-1]->collidedWith->m_inserted == true)
+					interlocked = false;
+			}
+
+		}
+
+		if(interlocked){
+			//Test which part contains which one.
+			//In other words, test to see if it is a container or a interlocked part
+			if(contains(m_smallestDistanceOutBoundingBox[0]->collidedWith->m_boundingBox)){
+				m_container = true;
+				m_partsContained.push_back(m_smallestDistanceOutBoundingBox[0]->collidedWith);
 			}
 
 		}
 	}
 	
-	if(interlocked){
-		//Test which part contains which one.
-		//In other words, test to see if it is a container or a interlocked part
-		if(contains(m_smallestDistanceOutBoundingBox[0]->collidedWith->m_boundingBox)){
-			m_container = true;
-			m_partsContained.push_back(m_smallestDistanceOutBoundingBox[0]->collidedWith);
-		}
-
-	}
+	
 }
 
 void Part::split(osg::Group* sceneGraphRoot , osgViewer::Viewer* viewer, double stepsize){
@@ -420,47 +430,40 @@ void Part::split(osg::Group* sceneGraphRoot , osgViewer::Viewer* viewer, double 
 
 	//Test the three possible cutting planes: xy, xz, yz
 	//xy:
-	//SegmentedPart* segParts_xy = new SegmentedPart(0, this, osg::Vec3d(0,0,1));
-	//segParts_xy->explodeUntilVisible(viewer, stepsize, m_partsContained[0]);
+	SegmentedParts* segPart_xy = new SegmentedParts(0, sceneGraphRoot, this, osg::Vec3d(0,0,1));
+	double distance_xy = segPart_xy->explodeUntilVisible(viewer, stepsize, m_partsContained[0]);
 
 	//xz
-	//SegmentedPart* segPart_xz = new SegmentedPart(2, this, osg::Vec3d(0,1,0));
-	//segParts_xy->explodeUntilVisible(viewer, stepsize, m_partsContained[0]);
+	SegmentedParts* segPart_xz = new SegmentedParts(2, sceneGraphRoot, this, osg::Vec3d(0,1,0));
+	double distance_xz = segPart_xz->explodeUntilVisible(viewer, stepsize, m_partsContained[0]);
 	
 
 	//yz
 	SegmentedParts* segPart_yz = new SegmentedParts(4, sceneGraphRoot, this, osg::Vec3d(1,0,0));
-	segPart_yz->explodeUntilVisible(viewer, stepsize, m_partsContained[0]);
+	double distance_yz = segPart_yz->explodeUntilVisible(viewer, stepsize, m_partsContained[0]);
 
 	
-	//clipnode->addChild(m_osgNode);
-	//parent->replaceChild(m_osgNode, clipnode);
-	
-	//m_osgTransform->addChild(m_osgOcclusionQueryNode);
-	
-	
+	if(distance_xy <= distance_xz && distance_xy <= distance_yz){
+		delete segPart_yz;
+		delete segPart_xz;
 
-	//viewer->frame();
-	/*
-	while(m_partsContained[0]->m_osgOcclusionQueryNode->getPassed() == false){
-		cout << m_partsContained[0]->m_osgOcclusionQueryNode->getPassed();
-		viewer->frame();
+		m_segmentedParts = segPart_xy;
 	}
-	*/
+	else if(distance_xz <= distance_xy && distance_xz <= distance_yz){
+		delete segPart_xy;
+		delete segPart_yz;
 
+		m_segmentedParts = segPart_xz;
+		
+	}
+	else{
+		delete segPart_xz;
+		delete segPart_xy;
 
-	//parent->replaceChild(clipnode, m_osgNode);
+		m_segmentedParts = segPart_yz;
+	}
+	m_segmentedParts->m_osgTransform1->setPosition(m_osgTransform->getPosition());
+	m_segmentedParts->m_osgTransform2->setPosition(m_osgTransform->getPosition());
 
-
-	//Check if the contained parts are visible
-	/*
-	bool aux = m_partsContained[0]->m_osgOcclusionQueryNode->getPassed();
-	cout << aux;
-	*/
-	/*
-	//xz:
-
-
-	//yz:
-	*/
+	
 }

@@ -19,21 +19,29 @@ class SegmentedParts {
 
 public:
 	SegmentedParts(int, osg::Group* sceneGraphRoot, Part* containerPart, osg::Vec3 normal);
+	~SegmentedParts();
 	void createSegment(int, osg::Group* sceneGraphRoot, osg::PositionAttitudeTransform* transform, osg::Node* node, Part* containerPart, osg::Vec3d* normal, osg::Vec3d bbCenter);
 	double explodeUntilVisible(osgViewer::Viewer* viewer, double stepSize, Part* partToBeVisible);
+	void explode(double);
 	
 
 
-private:
+
 	osg::PositionAttitudeTransform* m_osgTransform1;
 	osg::Node* m_osgNode1;
 	osg::Vec3d* m_normal1;
 
+	osg::Group* m_parent;
 	osg::PositionAttitudeTransform* m_osgTransform2;
 	osg::Node* m_osgNode2;
 	osg::Vec3d* m_normal2;
+	double m_currentDistanceExploded;
+	double m_distanceToExplode;
+	bool m_exploded;
+	osg::BoundingBox* m_boundingBox1;
+	osg::BoundingBox* m_boundingBox2;
 	
-	
+private:	
 
 };
 
