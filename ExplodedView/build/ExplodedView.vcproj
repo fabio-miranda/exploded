@@ -427,6 +427,10 @@
 				RelativePath="..\src\Part.cpp"
 				>
 			</File>
+			<File
+				RelativePath="..\src\SegmentedParts.cpp"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Header files"
@@ -445,6 +449,10 @@
 			</File>
 			<File
 				RelativePath="..\src\ProxyPart.h"
+				>
+			</File>
+			<File
+				RelativePath="..\src\SegmentedParts.h"
 				>
 			</File>
 			<Filter
