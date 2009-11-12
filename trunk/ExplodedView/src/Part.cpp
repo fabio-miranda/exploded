@@ -5,9 +5,11 @@ Part::Part(){
 	m_inserted = false;
 	m_visited = false;
 	m_exploded = false;
+	m_container = false;
 	m_pqpModel = new PQP_Model();
 	m_osgTransform = new osg::PositionAttitudeTransform();
 	m_osgOriginalTransform = new osg::PositionAttitudeTransform();
+	m_osgOcclusionQueryNode = new osg::OcclusionQueryNode();
 	m_ptrFirstProxyPart = NULL;
 	m_ptrLastProxyPart = NULL;
 	m_currentDistanceExploded = 0;
@@ -28,7 +30,10 @@ Part::Part(){
 
 //void Part::setUp(VCollide* vCollide, osg::Group* sceneGraphRoot){
 void Part::setUp(osg::Group* sceneGraphRoot){
-	m_osgTransform->addChild(m_osgNode);
+	
+	m_osgTransform->addChild(m_osgOcclusionQueryNode);
+	m_osgOcclusionQueryNode->addChild(m_osgNode);
+	m_osgOcclusionQueryNode->setDebugDisplay(true);
 	sceneGraphRoot->addChild(m_osgTransform);
 	m_osgOriginalTransform->setPosition(m_osgTransform->getPosition());
 	//setVCollide(vCollide);
@@ -62,7 +67,7 @@ void Part::setPQP(){
 	double* v1;
 	double* v2;
 	double* v3;
-	for(int i=0; i<triangleVertexVisitor.m_verticesArray->size()-2; i+=3){
+	for(unsigned int i=0; i < triangleVertexVisitor.m_verticesArray->size()-2; i+=3){
 		//index1 = triangleIndexVisitor.m_indicesArray->at(i);
 		//index2 = triangleIndexVisitor.m_indicesArray->at(i+1);
 		//index3 = triangleIndexVisitor.m_indicesArray->at(i+2);
@@ -162,7 +167,7 @@ void Part::insertVertexFrom(Part* vertexFrom){
 
 //void Part::checkCollisionsAlongAxis(osgViewer::Viewer* viewer, VCollide* vCollide, std::vector< Part* > partsGraph, int x, int y, int z, double stepSize, int numIterations, double minimumDistance, bool visualize){
 void Part::checkCollisionsAlongAxis(osgViewer::Viewer* viewer, std::vector< Part* > partsGraph, int x, int y, int z, double stepSize, int numIterations, double minimumDistance, bool visualize){
-	double distance;
+
 	//double trans[4][4];
 	double T1[3], T2[3], R1[3][3], R2[3][3];
 	int arrayPosition;
@@ -210,7 +215,7 @@ void Part::checkCollisionsAlongAxis(osgViewer::Viewer* viewer, std::vector< Part
 		
 		//PQP:
 		PQP_ToleranceResult tres;
-		for(int j=0; j<partsGraph.size(); j++){
+		for(unsigned int  j=0; j<partsGraph.size(); j++){
 			if(partsGraph[j] != this && partsGraph[j]->m_inserted == false){
 
 				//T2[0] = partsGraph[j]->m_osgTransform->getPosition().x();
@@ -242,7 +247,7 @@ void Part::checkCollisionsAlongAxis(osgViewer::Viewer* viewer, std::vector< Part
 					if(m_allDistanceCollisions[arrayPosition].size() == 0)
 						m_allDistanceCollisions[arrayPosition].push_back(aux);
 					else
-						for(int k=0; k<m_allDistanceCollisions[arrayPosition].size(); k++){
+						for(unsigned int  k=0; k<m_allDistanceCollisions[arrayPosition].size(); k++){
 							if(m_allDistanceCollisions[arrayPosition][k]->collidedWith == aux->collidedWith)
 							 //check the distance too and get the closest one
 								if(m_allDistanceCollisions[arrayPosition][k]->distanceOutBoundingBox <= aux->distanceOutBoundingBox){
@@ -327,7 +332,7 @@ double Part::findSmallestDistanceOutBoundingBox(){
 		double currentSmallestDistance = std::numeric_limits<double>::infinity();
 		m_smallestDistanceOutBoundingBox[i] = NULL;
 
-		for(int j=0; j<m_allDistanceCollisions[i].size(); j++){
+		for(unsigned int j=0; j<m_allDistanceCollisions[i].size(); j++){
 			if(m_allDistanceCollisions[i][j]->collidedWith->m_inserted == false
 				&& m_allDistanceCollisions[i][j]->distanceOutBoundingBox < currentSmallestDistance){
 				currentSmallestDistance = m_allDistanceCollisions[i][j]->distanceOutBoundingBox;
@@ -336,12 +341,8 @@ double Part::findSmallestDistanceOutBoundingBox(){
 				m_smallestDistanceOutBoundingBox[i] = m_allDistanceCollisions[i][j];
 				m_explosionDirection = m_allDistanceCollisions[i][j];
 
-			}
-
-			
+			}	
 		}
-			
-
 	}
 
 	return smallestDistance;
@@ -351,7 +352,7 @@ void Part::countBlockedDirections(){
 	
 	m_countRestrictedDirections = 0;
 	for(int i=0; i<6; i++){
-		for(int j=0; j<m_allDistanceCollisions[i].size(); j++){
+		for(unsigned int j=0; j<m_allDistanceCollisions[i].size(); j++){
 			if(m_allDistanceCollisions[i][j]->collidedWith->m_inserted == false){
 				m_countRestrictedDirections++;
 				break; //only count one collision per direction
@@ -372,4 +373,94 @@ double Part::calculateDistanceOutBoundingBox(Part* collidedWith, double* collisi
 				osg::minimum(bb1->zMax(), bb2->zMax()) - osg::maximum(bb1->zMin(), bb2->zMin()));
 
 	return vector.length();
+}
+
+bool Part::contains(osg::BoundingBox* bb){
+	if(m_boundingBox->contains(bb->corner(0))
+		&& m_boundingBox->contains(bb->corner(1))
+		&& m_boundingBox->contains(bb->corner(2))
+		&& m_boundingBox->contains(bb->corner(3))
+		&& m_boundingBox->contains(bb->corner(4))
+		&& m_boundingBox->contains(bb->corner(5))
+		&& m_boundingBox->contains(bb->corner(6))
+		&& m_boundingBox->contains(bb->corner(7)))
+		return true;
+	else
+		return false;
+}
+
+void Part::findContainer(){
+	
+	bool interlocked = true;
+	if(m_countRestrictedDirections == 6){
+		for(int j=1; j<6; j++){
+			if(m_smallestDistanceOutBoundingBox[j-1]->collidedWith != m_smallestDistanceOutBoundingBox[j]->collidedWith){
+				interlocked = false;
+			}
+
+		}
+	}
+	
+	if(interlocked){
+		//Test which part contains which one.
+		//In other words, test to see if it is a container or a interlocked part
+		if(contains(m_smallestDistanceOutBoundingBox[0]->collidedWith->m_boundingBox)){
+			m_container = true;
+			m_partsContained.push_back(m_smallestDistanceOutBoundingBox[0]->collidedWith);
+		}
+
+	}
+}
+
+void Part::split(osg::Group* sceneGraphRoot , osgViewer::Viewer* viewer, double stepsize){
+	
+	
+	m_osgNode->setNodeMask(0);
+	
+
+	//Test the three possible cutting planes: xy, xz, yz
+	//xy:
+	//SegmentedPart* segParts_xy = new SegmentedPart(0, this, osg::Vec3d(0,0,1));
+	//segParts_xy->explodeUntilVisible(viewer, stepsize, m_partsContained[0]);
+
+	//xz
+	//SegmentedPart* segPart_xz = new SegmentedPart(2, this, osg::Vec3d(0,1,0));
+	//segParts_xy->explodeUntilVisible(viewer, stepsize, m_partsContained[0]);
+	
+
+	//yz
+	SegmentedParts* segPart_yz = new SegmentedParts(4, sceneGraphRoot, this, osg::Vec3d(1,0,0));
+	//segPart_yz->explodeUntilVisible(viewer, stepsize, m_partsContained[0]);
+
+	
+	//clipnode->addChild(m_osgNode);
+	//parent->replaceChild(m_osgNode, clipnode);
+	
+	//m_osgTransform->addChild(m_osgOcclusionQueryNode);
+	
+	
+
+	//viewer->frame();
+	/*
+	while(m_partsContained[0]->m_osgOcclusionQueryNode->getPassed() == false){
+		cout << m_partsContained[0]->m_osgOcclusionQueryNode->getPassed();
+		viewer->frame();
+	}
+	*/
+
+
+	//parent->replaceChild(clipnode, m_osgNode);
+
+
+	//Check if the contained parts are visible
+	/*
+	bool aux = m_partsContained[0]->m_osgOcclusionQueryNode->getPassed();
+	cout << aux;
+	*/
+	/*
+	//xz:
+
+
+	//yz:
+	*/
 }

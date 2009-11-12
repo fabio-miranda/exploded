@@ -3,7 +3,7 @@
 
 #define MINIMUM_DISTANCE_TO_CONSIDER_CONTACT 0
 #define STEPSIZE 0.1
-#define ITERATIONS 100
+#define ITERATIONS 500
 #define VISUALIZE_GRAPH_BUILDING true
 #define PRINT_GRAPH true
 
@@ -18,10 +18,10 @@ ExplodedView::ExplodedView(){
 }
 
  
-void ExplodedView::setUp(){
+void ExplodedView::setUp(char* modelName){
 
     m_viewer->setCameraManipulator( new osgGA::TrackballManipulator() );
-	m_viewer->getCameraManipulator()->setHomePosition(osg::Vec3d(100,100,100), osg::Vec3d(0,0,0), osg::Vec3d(0,0,1));
+	m_viewer->getCameraManipulator()->setHomePosition(osg::Vec3d(400,400,400), osg::Vec3d(0,0,0), osg::Vec3d(0,0,1));
 
     // add the state manipulator
     m_viewer->addEventHandler( new osgGA::StateSetManipulator(m_viewer->getCamera()->getOrCreateStateSet()) );
@@ -41,12 +41,7 @@ void ExplodedView::setUp(){
 	//box
 	buildBox();
 
-}
-
-void ExplodedView::buildPartsGraph(char* modelName){
-
-	
-
+	//model
 	// load the data
     osg::ref_ptr<osg::Node> loadedModel = osgDB::readNodeFile(modelName);
     if (!loadedModel) 
@@ -74,32 +69,19 @@ void ExplodedView::buildPartsGraph(char* modelName){
 		//m_partsGraph[i]->setUp(m_vCollide, m_sceneGraphRoot);
 		m_partsGraph[i]->setUp(m_sceneGraphRoot);
 	}
-	
-
-
-	//Temp:
-	osg::ClipNode* clipnode = new osg::ClipNode;
-	//clipnode->createClipBox(*m_partsGraph[0]->m_boundingBox);
-    
-
-	//osg::BoundingBox bb(-150,-150,25,150,150,150);
-	//clipnode->createClipBox(bb);
-	osg::ClipPlane* clipPlane = new osg::ClipPlane();
-	clipPlane->setClipPlane(osg::Plane(osg::Vec3d(0,0,-1),osg::Vec3d(0,0,50)));
-	clipnode->addClipPlane(clipPlane);
-	clipnode->setCullingActive(false);
-	clipnode->addChild(m_partsGraph[0]->m_osgNode);
-	m_sceneGraphRoot->addChild(clipnode);
-
-	//m_partsGraph[1]->m_osgTransform->addChild(m_partsGraph[1]->m_osgNode);
-
-	
-
-
-
 
 	//Set the scene
 	m_viewer->setSceneData(m_sceneGraphRoot);
+
+}
+
+void ExplodedView::buildPartsGraph(){
+
+	
+
+	
+	
+
 
 	//Detect collisions
 	int insertedParts = 0;
@@ -107,6 +89,7 @@ void ExplodedView::buildPartsGraph(char* modelName){
 	findBlockedDirections();
 
 	while(insertedParts < m_partsGraph.size()){
+		
 		/*
 		for(int i=0; i<m_partsGraph.size(); i++){
 			if(m_partsGraph[i]->m_inserted == false){
@@ -127,13 +110,27 @@ void ExplodedView::buildPartsGraph(char* modelName){
 
 		//Find the smallest distance and insert it on the graph
 		Part* aux = findSmallestDistanceOutBoundingBox();
-		//Part* aux = findNodeToInsert();
+		
+		findContainers();
 		
 		//m_vCollide->DeactivateObject(aux->m_vcollideId);
-		insertOnPartsGraph(aux);
+		if(aux != NULL){
+			insertOnPartsGraph(aux);
+		}
+		else{
+			//Check for interlocked cases
+			for(int i=0; i<m_partsGraph.size(); i++){
+				if(m_partsGraph[i]->m_container){
+					//Interactive explode the container on each of the 6 directions and find the smallest distance
+					//in order to make the interlocked node visible
+					m_partsGraph[i]->split(m_sceneGraphRoot, m_viewer, STEPSIZE);
+				}
 
-		//insertPart(currentPart);
+			}
+		}
+
 		insertedParts++;
+		
 	}
 
 	if(PRINT_GRAPH)
@@ -177,17 +174,15 @@ Part* ExplodedView::findSmallestDistanceOutBoundingBox(){
 	double smallestDistance = std::numeric_limits<double>::infinity();
 	double currentDistance;
 
-	Part* aux;
+	Part* aux = NULL;
 
 	for(int i=0; i<m_partsGraph.size(); i++){
 
 		if(m_partsGraph[i]->m_inserted == false){
-			if(m_partsGraph[i]->m_countRestrictedDirections < 6){
-				currentDistance = m_partsGraph[i]->findSmallestDistanceOutBoundingBox();
+			currentDistance = m_partsGraph[i]->findSmallestDistanceOutBoundingBox();
 
-				if(currentDistance <= smallestDistance){
-					aux = m_partsGraph[i];
-				}
+			if(currentDistance <= smallestDistance && m_partsGraph[i]->m_countRestrictedDirections < 6){
+				aux = m_partsGraph[i];
 			}
 			
 		}
@@ -201,6 +196,16 @@ void ExplodedView::countBlockedDirections(){
 	for(int i=0; i<m_partsGraph.size(); i++){
 		m_partsGraph[i]->countBlockedDirections();
 	}
+
+}
+
+void ExplodedView::findContainers(){
+
+	//Find interlocked parts
+	for(int i=0; i<m_partsGraph.size(); i++){
+		m_partsGraph[i]->findContainer();
+	}
+	
 
 }
 
@@ -316,7 +321,7 @@ void ExplodedView::verifyExplodingParts(){
 
 void ExplodedView::buildBox(){
 	
-	osg::ShapeDrawable* box = new osg::ShapeDrawable(new osg::Box(osg::Vec3d(0,0,0), 200));
+	osg::ShapeDrawable* box = new osg::ShapeDrawable(new osg::Box(osg::Vec3d(0,0,0), 800));
 	osg::StateSet* stateset = new osg::StateSet;
 	osg::Geode* geode = new osg::Geode;
 	osg::PolygonMode* polymode = new osg::PolygonMode;
@@ -336,14 +341,28 @@ void ExplodedView::buildBox(){
 }
 
 
-void ExplodedView::loop(){
+void ExplodedView::run(){
+
+	setUp("test4.3ds");
+	
+	for(int i=0; i<60; i++)
+		m_viewer->frame();
 	
 	
+	buildPartsGraph();
+	explode();
+
+	
+
 	while(!m_viewer->done()){
-		//updateExplodingParts();
+		updateExplodingParts();
 		//verifyExplodingParts();
 		m_viewer->frame();
+
+		
 	}
+
+	
 
 }
 

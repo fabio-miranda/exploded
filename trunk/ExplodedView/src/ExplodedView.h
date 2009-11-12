@@ -30,9 +30,9 @@ class ExplodedView{
 public:
 	ExplodedView();
 
-	void setUp();
-	void buildPartsGraph(char* modelName);
-	void loop();
+	void setUp(char* modelName);
+	void buildPartsGraph();
+	void run();
 
 	void findBlockedDirections();
 	void calculateDistancesOutBB();
@@ -45,7 +45,9 @@ public:
 	void verifyExplodingParts();
 	void findSmallestDistances();
 	void countBlockedDirections();
+	void findContainers();
 	void buildBox();
+
 
 
 	//VCollide* m_vCollide;
