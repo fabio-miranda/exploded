@@ -61,7 +61,7 @@ private:
 
 	
 
-	//TODO:
+	//TODO: use osg::ref_ptr
 	//std::vector< osg::ref_ptr< Part > > m_partsGraph;
 
 

@@ -23,7 +23,7 @@
 
 #include <limits>
 
-class SegmentedPart;
+class SegmentedParts;
 
 class Part {
 
@@ -61,7 +61,7 @@ public:
 	bool m_container;
 	std::vector<Part*> m_partsContained;
 
-	SegmentedPart* m_segmentedParts[2]; //the two segmented parts
+	SegmentedParts* m_segmentedParts; //the two segmented parts
 
 	PQP_Model* m_pqpModel;
 	//int m_vcollideId;

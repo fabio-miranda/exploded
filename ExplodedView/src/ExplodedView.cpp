@@ -120,12 +120,12 @@ void ExplodedView::buildPartsGraph(){
 		else{
 			//Check for interlocked cases
 			for(int i=0; i<m_partsGraph.size(); i++){
-				if(m_partsGraph[i]->m_container){
+				if(m_partsGraph[i]->m_container && m_partsGraph[i]->m_segmentedParts == NULL){
 					//Interactive explode the container on each of the 6 directions and find the smallest distance
 					//in order to make the interlocked node visible
 					m_partsGraph[i]->split(m_sceneGraphRoot, m_viewer, STEPSIZE);
+					insertOnPartsGraph(m_partsGraph[i]);
 				}
-
 			}
 		}
 
@@ -203,7 +203,8 @@ void ExplodedView::findContainers(){
 
 	//Find interlocked parts
 	for(int i=0; i<m_partsGraph.size(); i++){
-		m_partsGraph[i]->findContainer();
+		if(m_partsGraph[i]->m_inserted == false)
+			m_partsGraph[i]->findContainer();
 	}
 	
 
@@ -343,7 +344,7 @@ void ExplodedView::buildBox(){
 
 void ExplodedView::run(){
 
-	setUp("test4.3ds");
+	setUp("test5.3ds");
 	
 	for(int i=0; i<60; i++)
 		m_viewer->frame();
