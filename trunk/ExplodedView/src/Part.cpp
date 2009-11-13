@@ -5,6 +5,9 @@ Part::Part(){
 	m_inserted = false;
 	m_visited = false;
 	m_exploded = false;
+	m_exploding = false;
+	m_inploding = false;
+	m_inploded = true;
 	m_container = false;
 	m_pqpModel = new PQP_Model();
 	m_osgTransform = new osg::PositionAttitudeTransform();
@@ -132,12 +135,14 @@ void Part::resetPosition(VCollide* vCollide){
 
 void Part::explode(double stepSize){
 
-	if(m_exploded) return;
 
 	if(m_container){
 		m_segmentedParts->explode(stepSize);
 	}
 	else{
+
+		if(m_exploded) return;
+
 		osg::Vec3d currentPosition = m_osgTransform->getPosition();
 		double* explosionDirection = m_explosionDirection->collisionDirection;
 
@@ -147,10 +152,50 @@ void Part::explode(double stepSize){
 		
 		m_currentDistanceExploded += (newPosition - currentPosition).length();
 
-		if(m_currentDistanceExploded < m_explosionDirection->distanceOutBoundingBox)
+		if(m_currentDistanceExploded < m_explosionDirection->distanceOutBoundingBox){
 			m_osgTransform->setPosition(newPosition);
-		else
+			m_exploding = true;
+		}
+		else{
 			m_exploded = true;
+			m_inploded = false;
+			m_exploding = false;
+		}
+	}
+
+}
+
+void Part::inplode(double stepSize){
+	
+	//if(m_exploded == false) return;
+	//if(m_inploded == true) return;
+
+	if(m_container)
+		m_segmentedParts->explode(stepSize);
+	else{
+	
+		if(m_inploded == true) return;
+
+		osg::Vec3d currentPosition = m_osgTransform->getPosition();
+		double* explosionDirection = m_explosionDirection->collisionDirection;
+
+		osg::Vec3d newPosition = osg::Vec3d(currentPosition.x() + explosionDirection[0]*stepSize,
+											   currentPosition.y() + explosionDirection[1]*stepSize,
+											   currentPosition.z() + explosionDirection[2]*stepSize);
+		
+		m_currentDistanceExploded -= (newPosition - currentPosition).length();
+
+		if(m_currentDistanceExploded > 0){
+			m_osgTransform->setPosition(newPosition);
+			m_inploding = true;
+		}
+		else{
+			m_inploded = true;
+			m_exploded = false;
+			m_inploding = false;
+			m_currentDistanceExploded = 0;
+			m_osgTransform->setPosition(m_osgOriginalTransform->getPosition());
+		}
 	}
 
 }

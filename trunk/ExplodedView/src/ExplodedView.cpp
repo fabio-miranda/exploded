@@ -3,6 +3,7 @@
 
 #define MINIMUM_DISTANCE_TO_CONSIDER_CONTACT 0
 #define STEPSIZE 0.1
+#define EXPLOSION_STEPSIZE 0.8
 #define ITERATIONS 500
 #define VISUALIZE_GRAPH_BUILDING true
 #define PRINT_GRAPH true
@@ -14,6 +15,8 @@ USE_GRAPHICSWINDOW();
 ExplodedView::ExplodedView(){
 	m_sceneGraphRoot = new osg::Group();
 	m_viewer = new osgViewer::Viewer();
+	m_explodingLevels = new std::vector< std::vector<Part*> >();
+	m_inplodingLevels = new std::vector< std::vector<Part*> >();
 	//m_vCollide = new VCollide();
 }
 
@@ -35,8 +38,12 @@ void ExplodedView::setUp(char* modelName){
     // add the stats handler
     m_viewer->addEventHandler(new osgViewer::StatsHandler);
 
+	//explosion
+	myKeyboardEventHandler* keyboard = new myKeyboardEventHandler(this);
+	m_viewer->addEventHandler(keyboard);
+
     // windowed
-	m_viewer->setUpViewInWindow(50, 25, 1024, 768);
+	m_viewer->setUpViewInWindow(50, 25, 1280, 720);
 
 	//box
 	buildBox();
@@ -247,26 +254,42 @@ void ExplodedView::printGraph(){
 
 }
 
+void ExplodedView::switchExplodeInplode(int index){
+	
+	if(index >= m_partsGraph.size()) return;
 
-void ExplodedView::explode(){
-	bfs(m_partsGraph[0]);
+	if(m_partsGraph[index]->m_inploded == false)
+		inplode(index);
+	else if(m_partsGraph[index]->m_exploded == false)
+		explode(index);
 }
 
-void ExplodedView::bfs(Part* v){
+void ExplodedView::explode(int index){
+	bfs(m_partsGraph[index], &m_explodingLevels);
+}
 
-	m_explodingLevels = new std::vector< std::vector<Part*> >();
+void ExplodedView::inplode(int index){
+	bfs(m_partsGraph[index], &m_inplodingLevels);
+}
+
+void ExplodedView::bfs(Part* v, std::vector< std::vector<Part*> >** levels){
+
+	for(int i=0; i<m_partsGraph.size(); i++)
+		m_partsGraph[i]->m_visited = false;
+
+	*levels = new std::vector< std::vector<Part*> >();
 
 	std::list< Part* > queue;
 	v->m_visited = true;
 	queue.push_back(v);
-	m_explodingLevels->push_back(std::vector<Part*>());
-	m_explodingLevels->back().push_back(v);
+	(*levels)->push_back(std::vector<Part*>());
+	(*levels)->back().push_back(v);
 
 
 	while(queue.size() > 0){
 		Part* v = queue.front();
 		queue.pop_front();
-		m_explodingLevels->push_back(std::vector<Part*>());
+		(*levels)->push_back(std::vector<Part*>());
 		ProxyPart* vNeighbour = v->m_ptrFirstProxyPart;
 
 		while(vNeighbour != NULL){
@@ -274,14 +297,14 @@ void ExplodedView::bfs(Part* v){
 			if(vNeighbour->m_ptrActualPart->m_visited == false){
 				queue.push_back(vNeighbour->m_ptrActualPart);
 				vNeighbour->m_ptrActualPart->m_visited = true;
-				m_explodingLevels->back().push_back(vNeighbour->m_ptrActualPart);
+				(*levels)->back().push_back(vNeighbour->m_ptrActualPart);
 			}
 
 			vNeighbour = vNeighbour->m_ptrNextProxyPart;
 		}
 
-		if(m_explodingLevels->back().size() == 0)
-			m_explodingLevels->pop_back();
+		if((*levels)->back().size() == 0)
+			(*levels)->pop_back();
 	}
 
 }
@@ -291,20 +314,55 @@ void ExplodedView::updateExplodingParts(){
 	bool allFromLevelExploded = true;
 	//Explode the leaf nodes
 	if((*m_explodingLevels).size() > 1){ //do not explode the root node
-		for(int j=0; j<(*m_explodingLevels).back().size(); j++){ 
-			(*m_explodingLevels).back()[j]->explode(0.1);
+		for(int j=0; j<(*m_explodingLevels).back().size(); j++){
+			(*m_explodingLevels).back()[j]->explode(EXPLOSION_STEPSIZE);
+			
 			m_viewer->frame();
 
-			if((*m_explodingLevels).back()[j]->m_exploded == false)
+
+			if((*m_explodingLevels).back()[j]->m_exploding && (*m_explodingLevels).back()[j]->m_exploded == false)
 				allFromLevelExploded = false;
 		}
 
-		if(allFromLevelExploded)
+		if(allFromLevelExploded){
 			(*m_explodingLevels).pop_back();
-		
+		}
 	}
+	else if((*m_explodingLevels).size() == 1){
+		(*m_explodingLevels).back()[0]->m_exploded = true; //mark the root as exploded
+		(*m_explodingLevels).back()[0]->m_inploded = false;
+		m_explodingLevels->clear();
+	}
+	
 }
 
+void ExplodedView::updateInplodingParts(){
+	
+	bool allFromLevelInploded = true;
+	//Explode the leaf nodes
+	if((*m_inplodingLevels).size() > 1){ //do not explode the root node
+		for(int j=0; j<(*m_inplodingLevels).back().size(); j++){
+			(*m_inplodingLevels).back()[j]->inplode(EXPLOSION_STEPSIZE);
+			
+			m_viewer->frame();
+
+
+			if((*m_inplodingLevels).back()[j]->m_inploding && (*m_inplodingLevels).back()[j]->m_inploded == false)
+				allFromLevelInploded = false;
+		}
+
+		if(allFromLevelInploded){
+			(*m_inplodingLevels).pop_back();
+		}
+	}
+	else if((*m_inplodingLevels).size() == 1){
+		(*m_inplodingLevels).back()[0]->m_inploded = true; //mark the root as inploded
+		(*m_inplodingLevels).back()[0]->m_exploded = false;
+		m_inplodingLevels->clear();
+	}
+	
+}
+/*
 void ExplodedView::verifyExplodingParts(){
 	
 	//Verify if the leaf nodes are on their correct positions
@@ -318,6 +376,7 @@ void ExplodedView::verifyExplodingParts(){
 
 	(*m_explodingLevels).pop_back();
 }
+*/
 
 
 void ExplodedView::buildBox(){
@@ -351,12 +410,12 @@ void ExplodedView::run(){
 	
 	
 	buildPartsGraph();
-	explode();
 
 	
 
 	while(!m_viewer->done()){
 		updateExplodingParts();
+		updateInplodingParts();
 		//verifyExplodingParts();
 		m_viewer->frame();
 
