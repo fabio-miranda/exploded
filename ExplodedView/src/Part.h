@@ -37,6 +37,7 @@ public:
 	//void resetPosition(VCollide* vCollide);
 	void insertVertexFrom(Part* vertexToPart);
 	void explode(double stepSize);
+	void inplode(double stepSize);
 	//void setUp(VCollide* vCollide, osg::Group* sceneGraphRoot);
 	void setUp(osg::Group* sceneGraphRoot);
 	double calculateDistanceOutBoundingBox(Part* collidedWith, double* collisionDirection);
@@ -70,6 +71,9 @@ public:
 	CollisionData* m_explosionDirection;// Pointer to the CollisionData that represents the explosion direction
 	double m_currentDistanceExploded;
 	bool m_exploded;
+	bool m_exploding;
+	bool m_inploded;
+	bool m_inploding;
 	
 
 	osg::Node* m_osgNode;

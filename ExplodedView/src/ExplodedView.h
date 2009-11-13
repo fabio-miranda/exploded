@@ -3,6 +3,7 @@
 
 #include "FindPartVisitor.h"
 #include "Part.h"
+#include "keyboardEventHandler.h"
 
 //#include "PQP.h"
 
@@ -25,6 +26,7 @@
 #include <osg/ShapeDrawable>
 
 
+
 class ExplodedView{
 
 public:
@@ -39,9 +41,12 @@ public:
 	Part* findSmallestDistanceOutBoundingBox();
 	void insertOnPartsGraph(Part* part);
 	void printGraph();
-	void explode();
-	void bfs(Part* v);
+	void switchExplodeInplode(int index);
+	void explode(int index);
+	void inplode(int index);
+	void bfs(Part* v, std::vector< std::vector<Part*> >** levels);
 	void updateExplodingParts();
+	void updateInplodingParts();
 	void verifyExplodingParts();
 	void findSmallestDistances();
 	void countBlockedDirections();
@@ -58,6 +63,7 @@ public:
 private:
 	
 	std::vector< std::vector<Part*> >* m_explodingLevels;
+	std::vector< std::vector<Part*> >* m_inplodingLevels;
 
 	
 
