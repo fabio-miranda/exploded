@@ -58,7 +58,9 @@ public:
 	//VCollide* m_vCollide;
 	osgViewer::Viewer* m_viewer;
 	osg::Group* m_sceneGraphRoot;
+	Part* m_ptrCurrentPart; //the current part being inploded or exploded
 	std::vector< Part* > m_partsGraph;
+	osg::Node* m_loadedModel;
 
 private:
 	

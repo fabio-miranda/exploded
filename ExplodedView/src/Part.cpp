@@ -18,6 +18,7 @@ Part::Part(){
 	m_currentDistanceExploded = 0;
 	m_segmentedParts = NULL;
 	m_explosionDirection = NULL;
+	created = false;
 	
 
 	resetRestrictedMoviments();
@@ -138,6 +139,15 @@ void Part::explode(double stepSize){
 
 	if(m_container){
 		m_segmentedParts->explode(stepSize);
+
+		if(m_segmentedParts->m_exploded == false){
+			m_exploding = true;
+			m_exploded = false;
+		}
+		else{
+			m_exploding = false;
+			m_exploded = true;
+		}
 	}
 	else{
 
@@ -170,8 +180,19 @@ void Part::inplode(double stepSize){
 	//if(m_exploded == false) return;
 	//if(m_inploded == true) return;
 
-	if(m_container)
-		m_segmentedParts->explode(stepSize);
+	if(m_container){
+		m_segmentedParts->inplode(stepSize);
+
+		if(m_segmentedParts->m_inploded == false){
+			m_inploding = true;
+			m_inploded = false;
+		}
+		else{
+			m_inploding = false;
+			m_inploded = true;
+		}
+
+	}
 	else{
 	
 		if(m_inploded == true) return;
@@ -420,10 +441,10 @@ double Part::calculateDistanceOutBoundingBox(Part* collidedWith, double* collisi
 	osg::BoundingBox* bb1 = m_boundingBox;
 	osg::BoundingBox* bb2 = collidedWith->m_boundingBox;
 
-	vector.set(osg::minimum(bb1->xMax(), bb2->xMax()) - osg::maximum(bb1->xMin(), bb2->xMin()),
-				osg::minimum(bb1->yMax(), bb2->yMax()) - osg::maximum(bb1->yMin(), bb2->yMin()),
-				osg::minimum(bb1->zMax(), bb2->zMax()) - osg::maximum(bb1->zMin(), bb2->zMin()));
-
+	vector.set(collisionDirection[0] * (osg::minimum(bb1->xMax(), bb2->xMax()) - osg::maximum(bb1->xMin(), bb2->xMin())),
+				collisionDirection[1] * (osg::minimum(bb1->yMax(), bb2->yMax()) - osg::maximum(bb1->yMin(), bb2->yMin())),
+				collisionDirection[2] * (osg::minimum(bb1->zMax(), bb2->zMax()) - osg::maximum(bb1->zMin(), bb2->zMin())));
+	
 	return vector.length();
 }
 
@@ -463,6 +484,7 @@ void Part::findContainer(){
 
 		}
 	}
+	
 	
 	
 }
@@ -511,4 +533,104 @@ void Part::split(osg::Group* sceneGraphRoot , osgViewer::Viewer* viewer, double 
 	m_segmentedParts->m_osgTransform2->setPosition(m_osgTransform->getPosition());
 
 	
+	
+}
+
+
+void Part::turnHighlight(bool turnHighlight){
+	/*
+	osg::Vec4 red(1.0f, 0.0f, 0.0f, 1.0f);
+	m_osgNode->accept(ColorVisitor(red));
+	*/
+	
+
+	
+}
+
+void Part::move(CollisionData* collision, int signal, double stepSize){
+
+	
+
+
+	if(m_currentDistanceExploded <= stepSize && signal == -1){
+		m_currentDistanceExploded = 0;
+		return;
+	}
+
+	if(m_container && m_segmentedParts != NULL){
+		m_segmentedParts->move(collision, signal, stepSize);
+	}
+
+	//Move all its descendents
+	/*
+	ProxyPart* ptrProxyPart = m_ptrFirstProxyPart;
+	while(ptrProxyPart != NULL){
+		ptrProxyPart->m_ptrActualPart->move(ptrProxyPart->m_ptrActualPart->m_explosionDirection, signal, stepSize);
+		ptrProxyPart = ptrProxyPart->m_ptrNextProxyPart;
+	}
+	*/
+	
+
+	
+	osg::Vec3d currentPosition = m_osgTransform->getPosition();
+
+	osg::Vec3d newPosition = osg::Vec3d(currentPosition.x() - signal* collision->collisionDirection[0]*stepSize,
+										   currentPosition.y() - signal* collision->collisionDirection[1]*stepSize,
+										   currentPosition.z() - signal* collision->collisionDirection[2]*stepSize);
+	
+	m_currentDistanceExploded += signal * (newPosition - currentPosition).length();
+	
+	m_osgTransform->setPosition(newPosition);
+
+
+}
+
+
+void Part::checkVisibility(osg::Vec3 eyePosition, std::vector< Part* >* partsGraph){
+
+	
+
+	
+	
+
+	int hitsCount = 0;
+	for(int i=0; i<partsGraph->size(); i++){
+
+		if(this != partsGraph->at(i) && partsGraph->at(i)->m_exploding == false && partsGraph->at(i)->m_inploding == false){
+
+			bool intercepted = false;
+			for(int j=0; j<8; j++){
+				
+				osg::LineSegment* segment = new osg::LineSegment();
+				segment->set(eyePosition,	osg::Vec3(m_boundingBox->corner(j))) ;
+
+				partsGraph->at(i)->m_boundingBox->init();
+				partsGraph->at(i)->m_boundingBox->expandBy(partsGraph->at(i)->m_osgTransform->computeBound());
+				if(segment->intersect(*(partsGraph->at(i)->m_boundingBox))){
+					hitsCount++;
+					partsGraph->at(i)->move(partsGraph->at(i)->m_explosionDirection, 1, 0.1);
+					intercepted = true;
+				}
+			}
+			if(intercepted == false)
+				partsGraph->at(i)->move(partsGraph->at(i)->m_explosionDirection, -1, 0.1);
+
+		}
+	}
+	//cout << hitsCount;
+	//cout << "\n";
+	
+	
+	/*
+	osg::Vec3 aux = osg::Vec3(m_boundingBox->corner(0));
+	cout << aux.x() << aux.y() << aux.z();
+	cout << "\n";
+	cout << eyePosition.x() << eyePosition.y() << eyePosition.z();
+	cout << "\n";
+	*/
+	/*
+	cout << osg::Vec3(eyePosition - osg::Vec3(m_boundingBox->corner(0))).length();
+	cout << "\n";
+	*/
+
 }
