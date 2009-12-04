@@ -416,6 +416,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\src\keyboardEventHandler.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\src\main.cpp"
 				>
 			</File>
@@ -444,6 +448,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\src\keyboardEventHandler.h"
+				>
+			</File>
+			<File
 				RelativePath="..\src\Part.h"
 				>
 			</File>
@@ -458,6 +466,10 @@
 			<Filter
 				Name="Visitors"
 				>
+				<File
+					RelativePath="..\src\ColorVisitor.h"
+					>
+				</File>
 				<File
 					RelativePath="..\src\FindPartVisitor.h"
 					>

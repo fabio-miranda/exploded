@@ -6,6 +6,7 @@
 #include "ProxyPart.h"
 #include "CollisionData.h"
 #include "SegmentedParts.h"
+#include "ColorVisitor.h"
 
 
 #include "PQP.H"
@@ -19,7 +20,9 @@
 #include <osg/TriangleFunctor>
 #include <osg/OcclusionQueryNode>
 #include <osg/ClipPlane>
-#include <osg/ClipNode>
+#include <osg/LineSegment>
+#include <osg/MatrixTransform>
+#include <osgUtil/IntersectVisitor>
 
 #include <limits>
 
@@ -46,6 +49,9 @@ public:
 	void findContainer();
 	bool contains(osg::BoundingBox* bb);
 	void split(osg::Group* sceneGraphRoot , osgViewer::Viewer* viewer, double stepSize);
+	void turnHighlight(bool turnHighlight);
+	void checkVisibility(osg::Vec3 eyePosition, std::vector< Part* >* partsGraph);
+	void move(CollisionData* collision, int signal, double stepSize);
 	
 	//void calculateDistancesOutBoundingBox(osgViewer::Viewer* viewer, double stepSize, double minimumDistance, bool visualize);
 	//void checkCollisionsAlongAxis(osgViewer::Viewer* viewer, VCollide* vCollide, std::vector< Part* > partsGraph, int x, int y, int z, double stepSize, int numIterations, double minimumDistance, bool visualize);
@@ -85,6 +91,8 @@ public:
 	ProxyPart* m_ptrFirstProxyPart;
 	ProxyPart* m_ptrLastProxyPart;
 	bool m_visited;
+
+	bool created;
 	
 
 

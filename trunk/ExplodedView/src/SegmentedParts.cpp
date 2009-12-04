@@ -5,6 +5,7 @@
 SegmentedParts::SegmentedParts(int clipPlaneNum, osg::Group* sceneGraphRoot, Part* containerPart, osg::Vec3 normal){
 
 	m_exploded = false;
+	m_inploded = true;
 	m_currentDistanceExploded = 0;
 	m_parent = sceneGraphRoot;
 	osg::CopyOp copyop = osg::CopyOp();
@@ -108,21 +109,75 @@ void SegmentedParts::explode(double stepSize){
 
 	if(m_exploded) return;
 
-	osg::Vec3d oldPosition1 = m_osgTransform1->getPosition();
-	osg::Vec3d oldPosition2 = m_osgTransform1->getPosition();
-
-	osg::Vec3d newPosition1 = m_osgTransform1->getPosition() + ((*m_normal1) * stepSize);
-	osg::Vec3d newPosition2 = m_osgTransform2->getPosition() + ((*m_normal2) * stepSize);
+	
 
 
 	if(m_currentDistanceExploded < m_distanceToExplode){
-		m_osgTransform1->setPosition(m_osgTransform1->getPosition() + ((*m_normal1) * stepSize));
-		m_osgTransform2->setPosition(m_osgTransform2->getPosition() + ((*m_normal2) * stepSize));
+
+		osg::Vec3d oldPosition1 = m_osgTransform1->getPosition();
+		osg::Vec3d oldPosition2 = m_osgTransform1->getPosition();
+
+		osg::Vec3d newPosition1 = m_osgTransform1->getPosition() + ((*m_normal1) * stepSize);
+		osg::Vec3d newPosition2 = m_osgTransform2->getPosition() + ((*m_normal2) * stepSize);
+
+		m_osgTransform1->setPosition(newPosition1);
+		m_osgTransform2->setPosition(newPosition2);
 	
 		m_currentDistanceExploded += (newPosition1 - oldPosition1).length();
 	}
-	else
+	else{
 		m_exploded = true;
+		m_inploded = false;
+	}
+
+}
+
+void SegmentedParts::inplode(double stepSize){
+
+	if(m_inploded) return;
+
+	
+
+
+	if(m_currentDistanceExploded > 0){
+
+		osg::Vec3d oldPosition1 = m_osgTransform1->getPosition();
+		osg::Vec3d oldPosition2 = m_osgTransform1->getPosition();
+
+		osg::Vec3d newPosition1 = m_osgTransform1->getPosition() - ((*m_normal1) * stepSize);
+		osg::Vec3d newPosition2 = m_osgTransform2->getPosition() - ((*m_normal2) * stepSize);
+
+		m_osgTransform1->setPosition(newPosition1);
+		m_osgTransform2->setPosition(newPosition2);
+	
+		m_currentDistanceExploded -= (newPosition1 - oldPosition1).length();
+	}
+	else{
+		m_currentDistanceExploded = 0;
+
+		m_inploded = true;
+		m_exploded = false;
+	}
+
+
+}
+
+void SegmentedParts::move(CollisionData* collision, int signal, double stepSize){
+
+	if(m_currentDistanceExploded <= stepSize && signal == -1){
+		m_currentDistanceExploded = 0;
+		return;
+	}
+
+	
+	
+	osg::Vec3d newPosition1 = m_osgTransform1->getPosition() +  ((*m_normal1) * stepSize * signal);
+	osg::Vec3d newPosition2 = m_osgTransform2->getPosition() + ((*m_normal2) * stepSize * signal);
+
+	m_currentDistanceExploded += signal * (newPosition1 - m_osgTransform1->getPosition()).length();
+	
+	m_osgTransform1->setPosition(newPosition1);
+	m_osgTransform2->setPosition(newPosition2);
 
 
 }

@@ -4,7 +4,7 @@
 #define MINIMUM_DISTANCE_TO_CONSIDER_CONTACT 0
 #define STEPSIZE 0.1
 #define EXPLOSION_STEPSIZE 0.8
-#define ITERATIONS 500
+#define ITERATIONS 25
 #define VISUALIZE_GRAPH_BUILDING true
 #define PRINT_GRAPH true
 
@@ -17,6 +17,7 @@ ExplodedView::ExplodedView(){
 	m_viewer = new osgViewer::Viewer();
 	m_explodingLevels = new std::vector< std::vector<Part*> >();
 	m_inplodingLevels = new std::vector< std::vector<Part*> >();
+	m_ptrCurrentPart = NULL;
 	//m_vCollide = new VCollide();
 }
 
@@ -50,8 +51,10 @@ void ExplodedView::setUp(char* modelName){
 
 	//model
 	// load the data
-    osg::ref_ptr<osg::Node> loadedModel = osgDB::readNodeFile(modelName);
-    if (!loadedModel) 
+	//osg::ref_ptr<osgDB::ReaderWriter::Options> opt = new osgDB::ReaderWriter::Options; 
+	//opt->setObjectCacheHint(osgDB::ReaderWriter::Options::CACHE_NONE); 
+	m_loadedModel = osgDB::readNodeFile(modelName);
+    if (!m_loadedModel) 
     {
         std::cout << "No data loaded" << std::endl;
 		exit(1);
@@ -60,14 +63,14 @@ void ExplodedView::setUp(char* modelName){
 
     // optimize the scene graph, remove redundant nodes and state etc.
     osgUtil::Optimizer optimizer;
-    optimizer.optimize(loadedModel.get());
+	optimizer.optimize(m_loadedModel);
 
 
 
 	///Find the parts
 	FindNamedPartVisitor findParts("part_");
 
-	loadedModel->accept(findParts);
+	m_loadedModel->accept(findParts);
 	m_partsGraph = findParts.getPartList();
 	
 	
@@ -80,15 +83,10 @@ void ExplodedView::setUp(char* modelName){
 	//Set the scene
 	m_viewer->setSceneData(m_sceneGraphRoot);
 
+
 }
 
 void ExplodedView::buildPartsGraph(){
-
-	
-
-	
-	
-
 
 	//Detect collisions
 	int insertedParts = 0;
@@ -258,17 +256,23 @@ void ExplodedView::switchExplodeInplode(int index){
 	
 	if(index >= m_partsGraph.size()) return;
 
-	if(m_partsGraph[index]->m_inploded == false)
+	if(m_partsGraph[index]->m_inploded == false){
 		inplode(index);
-	else if(m_partsGraph[index]->m_exploded == false)
+	}
+	else if(m_partsGraph[index]->m_exploded == false){
 		explode(index);
+	}
 }
 
 void ExplodedView::explode(int index){
+	m_ptrCurrentPart = m_partsGraph[index];
+	m_partsGraph[index]->turnHighlight(true);
 	bfs(m_partsGraph[index], &m_explodingLevels);
 }
 
 void ExplodedView::inplode(int index){
+	m_ptrCurrentPart = NULL;
+	m_partsGraph[index]->turnHighlight(false);
 	bfs(m_partsGraph[index], &m_inplodingLevels);
 }
 
@@ -339,20 +343,19 @@ void ExplodedView::updateExplodingParts(){
 void ExplodedView::updateInplodingParts(){
 	
 	bool allFromLevelInploded = true;
-	//Explode the leaf nodes
 	if((*m_inplodingLevels).size() > 1){ //do not explode the root node
-		for(int j=0; j<(*m_inplodingLevels).back().size(); j++){
-			(*m_inplodingLevels).back()[j]->inplode(EXPLOSION_STEPSIZE);
+		for(int j=(*m_inplodingLevels)[1].size()-1; j>=0; j--){
+			(*m_inplodingLevels)[1][j]->inplode(EXPLOSION_STEPSIZE);
 			
 			m_viewer->frame();
 
 
-			if((*m_inplodingLevels).back()[j]->m_inploding && (*m_inplodingLevels).back()[j]->m_inploded == false)
+			if((*m_inplodingLevels)[1][j]->m_inploding && (*m_inplodingLevels)[1][j]->m_inploded == false)
 				allFromLevelInploded = false;
 		}
 
 		if(allFromLevelInploded){
-			(*m_inplodingLevels).pop_back();
+			(*m_inplodingLevels).erase((*m_inplodingLevels).begin()+1);
 		}
 	}
 	else if((*m_inplodingLevels).size() == 1){
@@ -403,7 +406,7 @@ void ExplodedView::buildBox(){
 
 void ExplodedView::run(){
 
-	setUp("test5.3ds");
+	setUp("test2.3ds");
 	
 	for(int i=0; i<60; i++)
 		m_viewer->frame();
@@ -419,6 +422,17 @@ void ExplodedView::run(){
 		//verifyExplodingParts();
 		m_viewer->frame();
 
+		if(m_ptrCurrentPart != NULL){
+			
+			osg::Vec3 eye = osg::Vec3();
+			osg::Vec3 center = osg::Vec3();
+			osg::Vec3 up = osg::Vec3();
+			m_viewer->getCamera()->getViewMatrixAsLookAt(eye, center, up);
+			m_ptrCurrentPart->checkVisibility(eye, &m_partsGraph);
+		}
+		
+		
+		
 		
 	}
 
