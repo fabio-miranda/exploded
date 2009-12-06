@@ -1,0 +1,102 @@
+\section{Visão Geral}
+\label{metodologia}
+
+O sistema implementado neste trabalho (e baseado no que foi proposto em \cite{1360700}) recebe como entrada um modelo 3D composto por diversas partes. Com base no modelo, é construído uma estrutura (\emph{grafo de explosão}) que encapsula todas as informações pertinentes a sua explosão. Todo o sistema pode ser então resumido em três partes:
+
+\begin{itemize}
+	\item Representação da explosão na forma de um grafo (Seção \ref{representacao}).
+	\item Geração do grafo (Seção \ref{geracao}).
+	\item Visualização do grafo (Seção \ref{visualizacao}).
+\end{itemize}
+
+\subsection{Grafo de explosão}
+\label{representacao}
+O grafo de explosão nada mais é do que uma estrutura que dita como cada parte deverá ser explodida. O relacionamento entre os nós irá determinar a ordem em que as partes são explodidas, sem que ocorra nenhuma violação das restrições de movimento (ou seja, uma parte atravessar outra).
+
+
+\begin{figure}[h]
+	\center{\includegraphics[height=0.6\linewidth]{img/exview3D-SIG08_2}}
+	\caption[]{\label{fig:grafo} Grafo de explosão (\cite{1360700})}
+\end{figure}
+
+Considerando uma parte \emph{$p_i$} do modelo 3D, e sabendo que esta parte é obstruída pelo modelo \emph{$p_j$}, então temos que esse último será um nó filho de \emph{$p_i$}. No momento da explosão, \emph{$p_j$} será explodido antes de \emph{$p_i$}, garantindo que não haverá nenhuma violação nas restrições de movimento.
+
+O grafo de explosão também será responsável por armazenar a direção em que cada parte deverá ser explodida e a distância que ela deverá percorrer.
+
+
+\subsection{Geração do grafo de explosão}
+\label{geracao}
+A geração do grafo é feita através do seguinte algoritmo iterativo, e que foi originalmente proposto em \cite{882352}:
+
+\begin{algorithm}[H]
+	\SetLine
+	\Dados{S: conjunto com as partes ativas do modelo (ainda não inseridas no grafo)}
+	\Dados{P: sub-conjunto de S de partes que não possuam restrição em pelo menos uma direção}
+	\Enqto{$S \neq \emptyset$}{
+		Determina P\;
+		\ParaCada{$p_i \in P$}{
+			Determina a distância mínima $d_i$ que $p_i$ teria que mover para sair do \emph{bounding box} das partes em contato com $p_i$\;
+		}
+		$p_{min} = Min_{p_i \in P}(d_i)$\;
+		$S = S - p_{min}$\;
+	}
+	\caption{Geração do grafo de explosão}
+	\label{alg:algoritmo}
+\end{algorithm}
+
+As partes do modelo são inicialmente inseridas em um conjunto \emph{S}, de partes ativas, que ainda não foram inseridas no grafo. Um sub-conjunto \emph{P} é então encontrado, com partes que não possuem restrição em pelo menos uma direção. Para cada parte $p_i$ em \emph{P} é determinada a distância mínima para que a parte saia do \emph{bounding box} das partes em que contato. A parte com menor distância é removida de \emph{S} e adicionada ao grafo, junto com arestas ligando ela a todas as outras partes que estão em contato (e que já estavam no grafo). O algoritmo termina quando todas as partes já tiverem sido inseridas no grafo. A maneira com que o algoritmo constrói o grafo de explosão garante que o relacionamento entre os nós respeite as restrições de movimento.
+
+\subsubsection{Partes cercadas}
+Um caso importante que é tratado pelo sistema é quando há "partes cercadas" (como na Figura \ref{fig:partescercadas}).
+
+\begin{figure}[h]
+	\center{\includegraphics[height=0.6\linewidth]{img/exview3D-SIG08_3}}
+	\caption[]{\label{fig:partescercadas} Partes cercadas (\cite{1360700})}
+\end{figure}
+
+Nesses casos, há a necessidade de se partir o recipiente (\emph{container}) em duas partes ($c_1$ e $c_2$). O particionamento ocorrerá em um dos três possíveis eixos de explosão. Para cada eixo de explosão (x, y e z), será determinada uma distância \emph{d} que corresponde ao deslocamento das partes $c_1$ e $c_2$ de tal modo que as seguintes condições sejam respeitadas:
+
+\begin{enumerate}
+	\item $c_1$ e $c_2$ estão fora do \emph{bounding box} das partes cercadas.
+	\item As partes cercadas estão visíveis.
+\end{enumerate}
+
+Das três distâncias calculadas ($d_x$, $d_y$, $d_z$), o eixo de explosão será aquele correspondente à menor distância \emph{d}.
+
+Como se pode perceber através da condição 2, a determinação do eixo de explosão de um recipiente depende da posição da câmera. É necessário então gerar diversos grafos, cada um com uma posição de câmera diferente. O artigo de referência calcula 26 diferentes grafos, correspondentes às faces, arestas e cantos de um cubo, e faz uma troca automática de acordo com a posição da câmera do usuário na hora da visualização.
+
+
+
+\subsection{Visualização}
+\label{visualizacao}
+
+Para visualizar o modelo explodido, o usuário deve escolher uma de suas partes, que estará visível assim que todos os seus descendentes sejam explodidos. Para que as partes não violem restrições, as explosões são feitas seguindo uma ordem topológica reversa, ou seja, os descendentes são explodidos primeiro. O colápso das partes é feita de maneira oposta: os descendentes são colapsados por último.
+
+Um problema que pode surgir durante a visualização é a obstrução da visão de uma determinada parte. As informações de obstrução não são guardadas no grafo de explosão, e são calculadas durante a própria visualização. Para impedir que partes de interesse sejam obstruídas, o seguinte algoritmo é utilizado:
+
+\begin{algorithm}[H]
+	\SetLine
+	\Dados{G: Grafo de explosão}
+	\Dados{T: partes a serem explodidas (escolhidas pelo usuário)}
+	\tcc*[l]{Visita os nós em ordem topológica}
+	\ParaCada{$p_i \in G$ e $p_i \notin T$}{
+		\tcc*[l]{Verifica se $p_i$ obstrui algum nó ascendente}
+		\Enqto{$p_i$ obstrui algum $p_j$, j < i}{
+			Move $p_i$ na sua direção de explosão, e também seus descendentes\;
+		}
+	}
+	\caption{Geração do grafo de explosão}
+	\label{alg:algoritmo}
+\end{algorithm}
+
+
+
+
+
+
+
+
+
+
+
+

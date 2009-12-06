@@ -1,2 +1,55 @@
 \section{Implementação}
-Implementação
+\label{implementacao}
+Para a implementação do sistema, foram utilizados o \emph{OpenSceneGraph}, para a renderização e carregamento dos modelos 3D, e \emph{PQP} para a detecção de colisões entre as partes do modelo. A Figura \ref{fig:arquitetura} apresenta uma visão geral dos módulos implementados, que serão discutidos posteriormente.
+
+\begin{figure}[h]
+	\center{\includegraphics[height=0.8\linewidth]{img/arquitetura.pdf}}
+	\caption[]{\label{fig:arquitetura} Visão geral da arquitetura}
+\end{figure}
+
+\begin{itemize}
+	\item \textbf{ExplodedView}: classe geral, responsável pelo por tratar os dados de entrada (tanto o modelo 3D quanto o \emph{input} do usuário).
+	\item \textbf{Part}textbf: classe que representa as partes do modelo.
+	\item \textbf{SegmentedPart}: classe que herda de \textbf{Part} e representa os recipientes divididos.
+	\item \textbf{CollisionData}: representa os dados de colisão.
+\end{itemize}
+
+A geração do grafo de explosão é feita logo no início da execução do programa. As partes são extraídas do modelo 3D através de um \textbf{NodeVisitor} que procura pelos nomes dos nós através de uma expressão regular. Cada nó (parte) é então associado a um novo objeto do tipo \textbf{Part}.
+
+Para a detecção das direções obstruídas de cada parte, foi empregada duas abordagens. A primeira, explorada em \cite{882352}, constrói um \emph{grafo de bloqueio direcional}
+
+Considerando que o usuário quer explodir o nó $p$, o sistema implementado irá executar uma busca em largura (\emph{BFS}) a partir de $p$ e armazenar o nível de cada nó descendente. A Figura \ref{fig:grafo} mostra os níveis montados pela busca em largura para um modelo simples e a partir da parte $A$.
+
+\begin{figure}[h]
+	\center{\includegraphics[height=0.2\linewidth]{img/grafo.pdf}}
+	\caption[]{\label{fig:grafo} Exemplo de níveis da BFS}
+\end{figure}
+
+A explosão e a implosão do modelo será feita então com base nessas níveis, de forma simples:
+
+\begin{algorithm}[H]
+	\SetLine
+	\Dados{$A_i$: níveis de um grafo, $i < n$}
+	\Para{$i = n..1$}{
+		Explode nós no nível $A_i$\;
+	}
+	\caption{Explosão de uma parte}
+	\label{alg:explosao}
+\end{algorithm}
+
+\begin{algorithm}[H]
+	\SetLine
+	\Dados{$A_i$: níveis de um grafo, $i < n$}
+	\Para{$i = 1..n$}{
+		Implode nós no nível $A_i$\;
+	}
+	\caption{Implosão de uma parte}
+	\label{alg:implosao}
+\end{algorithm}
+
+
+A divisão dos recipientes (\emph{containers}) foi feita com o uso de um \textbf{ClipNode} do \textbf{OSG}, que irá determinar o plano de corte para a parte ser renderizada.
+
+
+\subsection{Características não abordadas}
+Algumas características do sistema proposto em \cite{1360700} não foram implementadas, como ... .
