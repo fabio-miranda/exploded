@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.9 (MiKTeX 2.7) (preloaded format=pdflatex 2009.12.4)  4 DEC 2009 16:35
+This is pdfTeX, Version 3.1415926-1.40.9 (MiKTeX 2.7) (preloaded format=pdflatex 2009.12.6)  6 DEC 2009 04:57
 entering extended mode
 **paper.tex
 (paper.tex
@@ -86,7 +86,90 @@ Package: inputenc 2006/05/05 v1.1b Input encoding file
 ("C:\Program Files\MiKTeX 2.7\tex\latex\base\latin1.def"
 File: latin1.def 2006/05/05 v1.1b Input encoding file
 ))
-("C:\Program Files\MiKTeX 2.7\tex\latex\graphics\graphicx.sty"
+("C:\Program Files\MiKTeX 2.7\tex\latex\tools\multicol.sty"
+Package: multicol 2006/05/18 v1.6g multicolumn formatting (FMi)
+\c@tracingmulticols=\count95
+\mult@box=\box27
+\multicol@leftmargin=\dimen109
+\c@unbalance=\count96
+\c@collectmore=\count97
+\doublecol@number=\count98
+\multicoltolerance=\count99
+\multicolpretolerance=\count100
+\full@width=\dimen110
+\page@free=\dimen111
+\premulticols=\dimen112
+\postmulticols=\dimen113
+\multicolsep=\skip46
+\multicolbaselineskip=\skip47
+\partial@page=\box28
+\last@line=\box29
+\mult@rightbox=\box30
+\mult@grightbox=\box31
+\mult@gfirstbox=\box32
+\mult@firstbox=\box33
+\@tempa=\box34
+\@tempa=\box35
+\@tempa=\box36
+\@tempa=\box37
+\@tempa=\box38
+\@tempa=\box39
+\@tempa=\box40
+\@tempa=\box41
+\@tempa=\box42
+\@tempa=\box43
+\@tempa=\box44
+\@tempa=\box45
+\@tempa=\box46
+\@tempa=\box47
+\@tempa=\box48
+\@tempa=\box49
+\@tempa=\box50
+\c@columnbadness=\count101
+\c@finalcolumnbadness=\count102
+\last@try=\dimen114
+\multicolovershoot=\dimen115
+\multicolundershoot=\dimen116
+\mult@nat@firstbox=\box51
+\colbreak@box=\box52
+)
+("C:\Program Files\MiKTeX 2.7\tex\latex\algorithm2e\algorithm2e.sty"
+Package: algorithm2e 2005/10/04 v3.9 algorithms environments
+\c@AlgoLine=\count103
+
+("C:\Program Files\MiKTeX 2.7\tex\latex\base\ifthen.sty"
+Package: ifthen 2001/05/26 v1.1c Standard LaTeX ifthen package (DPC)
+)
+("C:\Program Files\MiKTeX 2.7\tex\latex\tools\xspace.sty"
+Package: xspace 2006/05/08 v1.12 Space after command names (DPC,MH)
+)
+********************************************************
+Package `algorithm2e' Release 3.9 -- october 04 2005 --
+- algorithm2e-announce@lirmm.fr mailing list for announcement about releases
+- algorithm2e-discussion@lirmm.fr mailing list for discussion about package
+subscribe by emailing sympa@lirmm.fr with 'subscribe <list> <firstname name>'
+- Author: Christophe Fiorio (fiorio@lirmm.fr)
+********************************************************
+\skiptotal=\skip48
+\skiprule=\skip49
+\skiphlne=\skip50
+\skiptext=\skip51
+\skiplength=\skip52
+\algomargin=\skip53
+\skipalgocfslide=\skip54
+\algowidth=\dimen117
+\inoutsize=\dimen118
+\inoutline=\dimen119
+\algocf@inoutbox=\box53
+\algocf@inputbox=\box54
+\AlCapSkip=\skip55
+\AlCapHSkip=\skip56
+\algocf@capbox=\box55
+\c@algocfline=\count104
+\c@algocf=\count105
+\algocf@algoframe=\box56
+\algocf@algobox=\box57
+) ("C:\Program Files\MiKTeX 2.7\tex\latex\graphics\graphicx.sty"
 Package: graphicx 1999/02/16 v1.0f Enhanced LaTeX Graphics (DPC,SPQR)
 
 ("C:\Program Files\MiKTeX 2.7\tex\latex\graphics\graphics.sty"
@@ -102,10 +185,10 @@ Package graphics Info: Driver file: pdftex.def on input line 90.
 
 ("C:\Program Files\MiKTeX 2.7\tex\latex\pdftex-def\pdftex.def"
 File: pdftex.def 2008/09/08 v0.04l Graphics/color for pdfTeX
-\Gread@gobject=\count95
+\Gread@gobject=\count106
 ))
-\Gin@req@height=\dimen109
-\Gin@req@width=\dimen110
+\Gin@req@height=\dimen120
+\Gin@req@width=\dimen121
 )
 ("C:\Program Files\MiKTeX 2.7\tex\latex\ltxmisc\parskip.sty"
 Package: parskip 2001/04/09 non-zero parskip adjustments
@@ -115,105 +198,211 @@ Package: caption 2008/08/24 v3.1j Customizing captions (AR)
 
 ("C:\Program Files\MiKTeX 2.7\tex\latex\caption\caption3.sty"
 Package: caption3 2008/08/24 v3.1j caption3 kernel (AR)
-\captionmargin=\dimen111
-\captionmargin@=\dimen112
-\captionwidth=\dimen113
-\caption@indent=\dimen114
-\caption@parindent=\dimen115
-\caption@hangindent=\dimen116
+\captionmargin=\dimen122
+\captionmargin@=\dimen123
+\captionwidth=\dimen124
+\caption@indent=\dimen125
+\caption@parindent=\dimen126
+\caption@hangindent=\dimen127
 )
-\c@ContinuedFloat=\count96
-) (paper.aux)
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 63.
-LaTeX Font Info:    ... okay on input line 63.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 63.
-LaTeX Font Info:    ... okay on input line 63.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 63.
-LaTeX Font Info:    ... okay on input line 63.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 63.
-LaTeX Font Info:    ... okay on input line 63.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 63.
-LaTeX Font Info:    ... okay on input line 63.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 63.
-LaTeX Font Info:    ... okay on input line 63.
-LaTeX Font Info:    Try loading font information for OT1+ptm on input line 63.
+\c@ContinuedFloat=\count107
+) (paper.aux
 
-("C:\Program Files\MiKTeX 2.7\tex\latex\psnfss\ot1ptm.fd"
+LaTeX Warning: Label `alg:algoritmo' multiply defined.
+
+
+LaTeX Warning: Label `fig:grafo' multiply defined.
+
+)
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 67.
+LaTeX Font Info:    ... okay on input line 67.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 67.
+LaTeX Font Info:    ... okay on input line 67.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 67.
+LaTeX Font Info:    ... okay on input line 67.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 67.
+LaTeX Font Info:    ... okay on input line 67.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 67.
+LaTeX Font Info:    ... okay on input line 67.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 67.
+LaTeX Font Info:    ... okay on input line 67.
+LaTeX Font Info:    Try loading font information for OT1+ptm on input line 67.
+ ("C:\Program Files\MiKTeX 2.7\tex\latex\psnfss\ot1ptm.fd"
 File: ot1ptm.fd 2001/06/04 font definitions for OT1/ptm.
 )
 ("C:\Program Files\MiKTeX 2.7\tex\context\base\supp-pdf.tex"
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count97
-\scratchdimen=\dimen117
-\scratchbox=\box27
-\nofMPsegments=\count98
-\nofMParguments=\count99
+\scratchcounter=\count108
+\scratchdimen=\dimen128
+\scratchbox=\box58
+\nofMPsegments=\count109
+\nofMParguments=\count110
 \everyMPshowfont=\toks19
-\MPscratchCnt=\count100
-\MPscratchDim=\dimen118
-\MPnumerator=\count101
+\MPscratchCnt=\count111
+\MPscratchDim=\dimen129
+\MPnumerator=\count112
 \everyMPtoPDFconversion=\toks20
 )
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: End \AtBeginDocument code.
-LaTeX Font Info:    Try loading font information for OT1+phv on input line 73.
+LaTeX Font Info:    Try loading font information for OT1+phv on input line 77.
  ("C:\Program Files\MiKTeX 2.7\tex\latex\psnfss\ot1phv.fd"
 File: ot1phv.fd 2001/06/04 scalable font definitions for OT1/phv.
 )
 LaTeX Font Info:    Font shape `OT1/phv/m/n' will be
-(Font)              scaled to size 13.24796pt on input line 73.
+(Font)              scaled to size 13.24796pt on input line 77.
 LaTeX Font Info:    Font shape `OT1/phv/bx/n' in size <14.4> not available
-(Font)              Font shape `OT1/phv/b/n' tried instead on input line 73.
-LaTeX Font Info:    Font shape `OT1/phv/b/n' will be
-(Font)              scaled to size 13.24796pt on input line 73.
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <7> on input line 73.
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <5> on input line 73.
-
-<sample.png, id=1, 351.3125pt x 351.3125pt>
-File: sample.png Graphic file (type png)
- <use sample.png>
-LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <9> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 73.
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <8> on input line 73.
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <6> on input line 73.
-LaTeX Font Info:    Font shape `OT1/phv/m/n' will be
-(Font)              scaled to size 11.03998pt on input line 77.
-LaTeX Font Info:    Font shape `OT1/phv/bx/n' in size <12> not available
 (Font)              Font shape `OT1/phv/b/n' tried instead on input line 77.
 LaTeX Font Info:    Font shape `OT1/phv/b/n' will be
-(Font)              scaled to size 11.03998pt on input line 77.
+(Font)              scaled to size 13.24796pt on input line 77.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <7> on input line 77.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <5> on input line 77.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <8> on input line 77.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <6> on input line 77.
+LaTeX Font Info:    Font shape `OT1/phv/m/n' will be
+(Font)              scaled to size 11.03998pt on input line 81.
+LaTeX Font Info:    Font shape `OT1/phv/bx/n' in size <12> not available
+(Font)              Font shape `OT1/phv/b/n' tried instead on input line 81.
+LaTeX Font Info:    Font shape `OT1/phv/b/n' will be
+(Font)              scaled to size 11.03998pt on input line 81.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <9> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 92.
  (introducao.tex)
-(trabalhosrelacionados.tex) (implementacao.tex) (resultados.tex) (conclusao.tex
+(trabalhosrelacionados.tex) (metodologia.tex
+LaTeX Font Info:    Try loading font information for OMS+ptm on input line 7.
+
+("C:\Program Files\MiKTeX 2.7\tex\latex\psnfss\omsptm.fd"
+File: omsptm.fd 
 )
-No file paper.bbl.
-[1{C:/Documents and Settings/All Users/Application Data/MiKTeX/2.7/pdftex/confi
-g/pdftex.map}
+LaTeX Font Info:    Font shape `OMS/ptm/m/n' in size <9> not available
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 7.
+LaTeX Font Info:    Font shape `OT1/phv/m/n' will be
+(Font)              scaled to size 9.19998pt on input line 12.
+LaTeX Font Info:    Font shape `OT1/phv/bx/n' in size <10> not available
+(Font)              Font shape `OT1/phv/b/n' tried instead on input line 12.
+LaTeX Font Info:    Font shape `OT1/phv/b/n' will be
+(Font)              scaled to size 9.19998pt on input line 12.
+
+<img/exview3D-SIG08_2.png, id=1, 347.2975pt x 286.06876pt>
+File: img/exview3D-SIG08_2.png Graphic file (type png)
+
+<use img/exview3D-SIG08_2.png>
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <9> on input line 22.
+[1
+
+{C:/Documents and Settings/All Users/Application Data/MiKTeX/2.7/pdftex/config/
+pdftex.map}]
+Underfull \hbox (badness 10000) detected at line 45
+[][]
+ []
 
 
+Underfull \hbox (badness 10000) in paragraph at lines 31--46
 
- <sample.png (PNG copy)>] (paper.aux) ) 
+ []
+
+LaTeX Font Info:    Font shape `OT1/phv/m/n' will be
+(Font)              scaled to size 8.27998pt on input line 49.
+LaTeX Font Info:    Font shape `OT1/phv/bx/n' in size <9> not available
+(Font)              Font shape `OT1/phv/b/n' tried instead on input line 49.
+LaTeX Font Info:    Font shape `OT1/phv/b/n' will be
+(Font)              scaled to size 8.27998pt on input line 49.
+<img/exview3D-SIG08_3.png, id=15, 175.65625pt x 275.0275pt>
+File: img/exview3D-SIG08_3.png Graphic file (type png)
+
+<use img/exview3D-SIG08_3.png>
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+LaTeX Font Info:    Try loading font information for OT1+pcr on input line 81.
+("C:\Program Files\MiKTeX 2.7\tex\latex\psnfss\ot1pcr.fd"
+File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
+)
+Underfull \hbox (badness 10000) detected at line 90
+[][]
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 77--91
+
+ []
+
+) (implementacao.tex <img/arquitetura.pdf, id=16, 995.72pt x 1422.31375pt>
+File: img/arquitetura.pdf Graphic file (type pdf)
+
+<use img/arquitetura.pdf>
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+[2 <img/exview3D-SIG08_2.png (PNG copy)> <img/exview3D-SIG08_3.png (PNG copy)>]
+<img/grafo.pdf, id=25, 654.445pt x 198.7425pt>
+File: img/grafo.pdf Graphic file (type pdf)
+ <use img/grafo.pdf>
+Underfull \hbox (badness 10000) detected at line 38
+[][]
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 30--39
+
+ []
+
+
+Underfull \hbox (badness 10000) detected at line 48
+[][]
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 40--49
+
+ []
+
+) (resultados.tex) (conclusao.tex) (paper.bbl
+Underfull \hbox (badness 1221) in paragraph at lines 4--10
+[]\OT1/ptm/m/sc/9 Agrawala, M., Phan, D., Hei-ser, J., Hay-ma-ker, J.,
+ []
+
+
+Underfull \hbox (badness 2073) in paragraph at lines 49--55
+[]\OT1/ptm/m/sc/9 Niederauer, C., Hous-ton, M., Agrawala, M., and
+ []
+
+) [3 <img/arquitetura.pdf> <img/grafo.pdf>] (paper.aux)
+
+LaTeX Warning: There were multiply-defined labels.
+
+ ) 
 Here is how much of TeX's memory you used:
- 2625 strings out of 95278
- 37453 string characters out of 1182514
- 105197 words of memory out of 1500000
- 5826 multiletter control sequences out of 110000
- 20034 words of font info for 40 fonts, out of 3000000 for 5000
+ 3850 strings out of 95278
+ 52976 string characters out of 1182514
+ 159154 words of memory out of 1500000
+ 7015 multiletter control sequences out of 110000
+ 27663 words of font info for 53 fonts, out of 3000000 for 5000
  16 hyphenation exceptions out of 8191
- 36i,12n,38p,191b,328s stack positions out of 5000i,500n,10000p,200000b,50000s
-{C:/Program Files/MiKTeX 2.7/fonts/enc/d
-vips/fontname/8r.enc}<C:/Program Files/MiKTeX 2.7/fonts/type1/bluesky/cm/cmsy6.
-pfb><C:/Program Files/MiKTeX 2.7/fonts/type1/bluesky/cm/cmsy7.pfb><C:/Program F
-iles/MiKTeX 2.7/fonts/type1/urw/helvetic/uhvb8a.pfb><C:/Program Files/MiKTeX 2.
-7/fonts/type1/urw/times/utmb8a.pfb><C:/Program Files/MiKTeX 2.7/fonts/type1/urw
-/times/utmr8a.pfb><C:/Program Files/MiKTeX 2.7/fonts/type1/urw/times/utmri8a.pf
-b>
-Output written on paper.pdf (1 page, 51206 bytes).
+ 36i,16n,38p,820b,354s stack positions out of 5000i,500n,10000p,200000b,50000s
+{C:/Program Files/MiKTeX 2.7/fonts/enc/dvips/fontname/8r.enc}<C:/Program File
+s/MiKTeX 2.7/fonts/type1/bluesky/cm/cmmi5.pfb><C:/Program Files/MiKTeX 2.7/font
+s/type1/bluesky/cm/cmmi6.pfb><C:/Program Files/MiKTeX 2.7/fonts/type1/bluesky/c
+m/cmmi9.pfb><C:/Program Files/MiKTeX 2.7/fonts/type1/bluesky/cm/cmr6.pfb><C:/Pr
+ogram Files/MiKTeX 2.7/fonts/type1/bluesky/cm/cmr9.pfb><C:/Program Files/MiKTeX
+ 2.7/fonts/type1/bluesky/cm/cmsy6.pfb><C:/Program Files/MiKTeX 2.7/fonts/type1/
+bluesky/cm/cmsy7.pfb><C:/Program Files/MiKTeX 2.7/fonts/type1/bluesky/cm/cmsy9.
+pfb><C:/Program Files/MiKTeX 2.7/fonts/type1/urw/courier/ucrr8a.pfb><C:/Program
+ Files/MiKTeX 2.7/fonts/type1/urw/helvetic/uhvb8a.pfb><C:/Program Files/MiKTeX 
+2.7/fonts/type1/urw/times/utmb8a.pfb><C:/Program Files/MiKTeX 2.7/fonts/type1/u
+rw/times/utmr8a.pfb><C:/Program Files/MiKTeX 2.7/fonts/type1/urw/times/utmri8a.
+pfb>
+Output written on paper.pdf (3 pages, 181250 bytes).
 PDF statistics:
- 32 PDF objects out of 1000 (max. 8388607)
+ 90 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 131072)
- 6 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 21 words of extra memory for PDF output out of 10000 (max. 10000000)
 

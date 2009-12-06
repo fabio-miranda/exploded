@@ -21,6 +21,10 @@
 \usepackage[brazil]{babel}
 \usepackage[latin1]{inputenc}
 
+
+\usepackage{multicol}
+\usepackage[portugues,boxed]{algorithm2e}
+
 %% The 'graphicx' package allows for the inclusion of EPS figures.
 
 \usepackage{graphicx}
@@ -62,10 +66,10 @@
 
 \begin{document}
 
-\teaser{
-  \includegraphics[width=1.5in]{sample.png}
-  \caption{Lookit! Lookit!}
-}
+%\teaser{
+%  \includegraphics[width=1.5in]{sample.png}
+%  \caption{Lookit! Lookit!}
+%}
 
 %% The ``\maketitle'' command must be the first command after the
 %% ``\begin{document}'' command. It prepares and prints the title block.
@@ -97,6 +101,7 @@ Resumo
 
 \input{introducao}
 \input{trabalhosrelacionados}
+\input{metodologia}
 \input{implementacao}
 \input{resultados}
 \input{conclusao}
@@ -107,6 +112,6 @@ Resumo
 %To Robert, for all the bagels.
 
 \bibliographystyle{acmsiggraph}
-\nocite{*}
+%\nocite{*}
 \bibliography{paper}
 \end{document}
