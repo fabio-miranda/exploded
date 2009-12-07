@@ -32,6 +32,12 @@
 \newblock {\em IEEE Transactions on Visualization and Computer Graphics 14}, 5,
   1095--1109.
 
+\bibitem[\protect\citename{Li et~al\mbox{.} }2007]{2667077}
+{\sc Li, W., Ritter, L., Agrawala, M., Curless, B., and Salesin, D.}
+\newblock 2007.
+\newblock Interactive cutaway illustrations of complex 3d models.
+\newblock {\em ACM Trans. Graph. 26}, 3 (July).
+
 \bibitem[\protect\citename{Li et~al\mbox{.} }2008]{1360700}
 {\sc Li, W., Agrawala, M., Curless, B., and Salesin, D.}
 \newblock 2008.
