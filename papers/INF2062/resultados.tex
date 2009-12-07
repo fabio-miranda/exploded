@@ -1,15 +1,23 @@
 \section{Resultados}
 \label{resultados}
-Os modelos de teste utilizados serão exibidos a seguir, destacando as características do sistema que eles procuravam explorar.
+Durante o desenvolvimento do sistema, alguns modelos 3D foram construídos com o objetivo de testar e expor as principais características do sistema. Dentre eles, cinco modelos cobrem de maneira consistente todos os aspectos desenvolvidos. O resultado dos testes e uma discussão sobre cada modelo pode ser visto nas Seções seguintes.
 
 \subsection{Modelo 1}
-
-
+O primeiro modelo, Figura \ref{fig:test0}, possui apenas quatro partes, dispostos de forma simples. Quando explodido, as partes que obstruem a parte central se movem na mesma direção que a direção de explosão, como visto a direita da Figura \ref{fig:test0}.
 
 \subsection{Modelo 2}
-
+O modelo número dois apresenta uma configuração mais complexa, como visto na Figura \ref{fig:test1}. O objetivo principal foi testar a direção em que duas partes (as tampas inferior e superior) iriam explodir. O mais sensato seria que elas explodissem no eixo Z, o que de fato ocorreu.
 
 \subsection{Modelo 3}
+O modelo três é similar ao modelo anterior, mas as duas tampas foram substituídas foram divididas em seis pedaços. Novamente, o objetivo era notar o comportamento da explosão dessas partes. Como é possível notar na Figura \ref{fig:test2}, as partes se movem ao longo de sua direção de explosão para manter a parte central sempre visível.
 
 
 \subsection{Modelo 4}
+O modelo quatro apresenta uma parte cercada por outra parte, como apresentado na Figura \ref{fig:test4}. O sistema então dividiu a parte envolvente em duas outras partes. A mudança na posição da câmera determina o quanto as duas metades irão se mover ao longo de sua direção de explosão. Obviamente, as metades devem ter direções de explosão opostas.
+
+
+\subsection{Modelo 5}
+O modelo 5 apresenta uma parte central cercada por diferentes partes. A disposição das peças é um pouco mais complexa do que a exibida no modelo 1.
+
+\subsection{Modelo 6}
+O último modelo adiciona uma nova parte ao modelo 5, que encobre todas as partes. Porém, essa parte possui uma abertura lateral. Como há uma direção livre, não há a necessidade de se dividir nenhuma parte de modelo, as partes simplesmente se deslocam ao longo da direção livre, saindo da cobertura.

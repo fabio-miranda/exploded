@@ -9,10 +9,11 @@ Para a implementação do sistema, foram utilizados o \emph{OpenSceneGraph}, para 
 
 \begin{itemize}
 	\item \textbf{ExplodedView}: classe geral, responsável pelo por tratar os dados de entrada (tanto o modelo 3D quanto o \emph{input} do usuário).
-	\item \textbf{Part}textbf: classe que representa as partes do modelo.
+	\item \textbf{Part}: classe que representa as partes do modelo.
 	\item \textbf{SegmentedPart}: classe que herda de \textbf{Part} e representa os recipientes divididos.
 	\item \textbf{CollisionData}: representa os dados de colisão.
 \end{itemize}
+
 
 A geração do grafo de explosão é feita logo no início da execução do programa. As partes são extraídas do modelo 3D através de um \textbf{NodeVisitor} que procura pelos nomes dos nós através de uma expressão regular. Cada nó (parte) é então associado a um novo objeto do tipo \textbf{Part}.
 
@@ -25,31 +26,61 @@ Considerando que o usuário quer explodir o nó $p$, o sistema implementado irá ex
 	\caption[]{\label{fig:grafo} Exemplo de níveis da BFS}
 \end{figure}
 
-A explosão e a implosão do modelo será feita então com base nessas níveis, de forma simples:
-
-\begin{algorithm}[H]
-	\SetLine
-	\Dados{$A_i$: níveis de um grafo, $i < n$}
-	\Para{$i = n..1$}{
-		Explode nós no nível $A_i$\;
-	}
-	\caption{Explosão de uma parte}
-	\label{alg:explosao}
-\end{algorithm}
-
-\begin{algorithm}[H]
-	\SetLine
-	\Dados{$A_i$: níveis de um grafo, $i < n$}
-	\Para{$i = 1..n$}{
-		Implode nós no nível $A_i$\;
-	}
-	\caption{Implosão de uma parte}
-	\label{alg:implosao}
-\end{algorithm}
+A explosão e a implosão do modelo será feita então com base nessas níveis, explodindo os níveis 1 até n, ou então, de forma inversa, implodindo de n até 1.
 
 
 A divisão dos recipientes (\emph{containers}) foi feita com o uso de um \textbf{ClipNode} do \textbf{OSG}, que irá determinar o plano de corte para a parte ser renderizada.
 
 
+
+O \emph{loop} do sistema pode ser resumido da seguinte forma:
+\begin{algorithm}[H]
+	\SetLine
+	\Dados{$G$: grafo de explosão}
+	\Dados{$T$: parte escolhida pelo usuário para observar}
+	\Dados{$A_{i,j}$: níveis de uma BFS}
+	\Enqto{Usuário não saiu do sistema}{
+	
+		\Se{$T \neq \emptyset$}{
+			$A = BFS(T)$
+		}
+		
+		
+		\tcc*[l]{Explode partes}
+		\Se{$T \neq \emptyset$ e $A \neq \emptyset$}{
+			\ParaCada{$p_{i,j} \in A_{i,j}$}{
+				\Se{$deslocamento(p_{i,j}) <$ deslocamento para sair do bounding box}{
+					Desloca $p_{i,j}$ em $\Delta d$ na sua direção de explosão\;
+				}
+			}
+		}
+		
+		\tcc*[l]{Implode partes}
+		\Se{$T = \emptyset$ e $A \neq \emptyset$}{
+			\ParaCada{$p_{i,j} \in A_{i,j}$}{
+				\Se{$deslocamento(p_{i,j}) > 0 $}{
+					Desloca $p_{i,j}$ em $-\Delta d$ na sua direção de explosão\;
+				}
+			}
+		}
+		
+		\tcc*[l]{Verifica visibilidade de T}
+		\Se{Todas as partes em A foram explodidas}{
+			\Se{T não está visível}{
+				\ParaCada{$p_{i,j} \in A_{i,j}$}{
+					Desloca $p_{i,j}$ em $\Delta d$ na sua direção de explosão\;
+				}
+			}
+		}		
+	}
+	\caption{Algoritmo geral do sistema}
+	\label{alg:algoritmogeral}
+\end{algorithm}
+
+
 \subsection{Características não abordadas}
-Algumas características do sistema proposto em \cite{1360700} não foram implementadas, como ... .
+O sistema proposto em \cite{1360700} aborda algumas características que não foram implementadas, como o tratamento de grafos de explosão hierárquicos, que permite a explosão de grupos de partes independentemente. Além disso, os autores também demonstram um modo onde o usuário pode, com o \emph{mouse}, manipular diretamente a explosão das partes. Há também uma integração com outro trabalho (\cite{2667077}) que permite a visualização de modelos explodidos juntamente com técnicas de \emph{cutaways}.
+
+Uma outra simplificação foi o uso de apenas um grafo de explosão. Ao contrário do artigo, que constrói 26 grafos, esta implementação constrói apenas um. Como o ponto de vista só é utilizado para determinar o plano de corte de partes envolventes, a simplificação não afetou o funcionamento geral do sistema. Os cortes continuam ocorrendo, só que não necessariamente no plano que resulta em uma menor distância para sair do \emph{bounding box}.
+
+Apesar de serem características importantes, o trabalho feito aqui se propôs, principalmente, a implementar as características fundamentais do trabalho de referência.

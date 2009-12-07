@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.9 (MiKTeX 2.7) (preloaded format=pdflatex 2009.12.6)  7 DEC 2009 02:11
+This is pdfTeX, Version 3.1415926-1.40.9 (MiKTeX 2.7) (preloaded format=pdflatex 2009.12.6)  7 DEC 2009 18:58
 entering extended mode
 **paper.tex
 (paper.tex
@@ -175,6 +175,9 @@ LaTeX Warning: Label `alg:algoritmo' multiply defined.
 
 LaTeX Warning: Label `fig:grafo' multiply defined.
 
+
+LaTeX Warning: Label `fig:test10' multiply defined.
+
 )
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 68.
 LaTeX Font Info:    ... okay on input line 68.
@@ -217,6 +220,12 @@ LaTeX Font Info:    Font shape `OT1/phv/bx/n' in size <14.4> not available
 (Font)              Font shape `OT1/phv/b/n' tried instead on input line 78.
 LaTeX Font Info:    Font shape `OT1/phv/b/n' will be
 (Font)              scaled to size 13.24796pt on input line 78.
+LaTeX Font Info:    Font shape `OT1/phv/bx/it' in size <14.4> not available
+(Font)              Font shape `OT1/phv/b/it' tried instead on input line 78.
+LaTeX Font Info:    Font shape `OT1/phv/b/it' in size <14.4> not available
+(Font)              Font shape `OT1/phv/b/sl' tried instead on input line 78.
+LaTeX Font Info:    Font shape `OT1/phv/b/sl' will be
+(Font)              scaled to size 13.24796pt on input line 78.
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <7> on input line 78.
 LaTeX Font Info:    External font `cmex10' loaded for size
@@ -238,7 +247,11 @@ LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <9> not available
 <img/trabalhosrelacionados.png, id=1, 1435.3625pt x 176.66pt>
 File: img/trabalhosrelacionados.png Graphic file (type png)
 
-<use img/trabalhosrelacionados.png>) (metodologia.tex
+<use img/trabalhosrelacionados.png>) (metodologia.tex [1{C:/Documents and Setti
+ngs/All Users/Application Data/MiKTeX/2.7/pdftex/config/pdftex.map}
+
+
+]
 LaTeX Font Info:    Try loading font information for OMS+ptm on input line 7.
 
 ("C:\Program Files\MiKTeX 2.7\tex\latex\psnfss\omsptm.fd"
@@ -253,20 +266,13 @@ LaTeX Font Info:    Font shape `OT1/phv/bx/n' in size <10> not available
 LaTeX Font Info:    Font shape `OT1/phv/b/n' will be
 (Font)              scaled to size 9.19998pt on input line 12.
 
-<img/exview3D-SIG08_2.png, id=2, 347.2975pt x 286.06876pt>
+<img/exview3D-SIG08_2.png, id=13, 347.2975pt x 286.06876pt>
 File: img/exview3D-SIG08_2.png Graphic file (type png)
 
 <use img/exview3D-SIG08_2.png>
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <9> on input line 22.
-[1{C:/Documents and Settings/All Users/Application Data/MiKTeX/2.7/pdftex/confi
-g/pdftex.map}
 
-
-]
 Underfull \hbox (badness 10000) detected at line 45
 [][]
  []
@@ -276,20 +282,21 @@ Underfull \hbox (badness 10000) in paragraph at lines 31--46
 
  []
 
+
+Underfull \vbox (badness 6268) has occurred while \output is active []
+
 LaTeX Font Info:    Font shape `OT1/phv/m/n' will be
 (Font)              scaled to size 8.27998pt on input line 49.
 LaTeX Font Info:    Font shape `OT1/phv/bx/n' in size <9> not available
 (Font)              Font shape `OT1/phv/b/n' tried instead on input line 49.
 LaTeX Font Info:    Font shape `OT1/phv/b/n' will be
 (Font)              scaled to size 8.27998pt on input line 49.
-<img/exview3D-SIG08_3.png, id=16, 175.65625pt x 275.0275pt>
+
+<img/exview3D-SIG08_3.png, id=14, 175.65625pt x 275.0275pt>
 File: img/exview3D-SIG08_3.png Graphic file (type png)
 
-<use img/exview3D-SIG08_3.png>
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [2 <img/trabalhosrelacionados.png (PNG copy)> <img/exview3D-SIG08_2.png (PNG c
-opy)> <img/exview3D-SIG08_3.png (PNG copy)>]
+<use img/exview3D-SIG08_3.png> [2 <img/trabalhosrelacionados.png (PNG copy)> <i
+mg/exview3D-SIG08_2.png (PNG copy)> <img/exview3D-SIG08_3.png (PNG copy)>]
 LaTeX Font Info:    Try loading font information for OT1+pcr on input line 81.
 
 ("C:\Program Files\MiKTeX 2.7\tex\latex\psnfss\ot1pcr.fd"
@@ -304,110 +311,122 @@ Underfull \hbox (badness 10000) in paragraph at lines 77--91
 
  []
 
-) (implementacao.tex <img/arquitetura.pdf, id=23, 995.72pt x 1422.31375pt>
+) (implementacao.tex <img/arquitetura.pdf, id=24, 995.72pt x 1422.31375pt>
 File: img/arquitetura.pdf Graphic file (type pdf)
 
-<use img/arquitetura.pdf> <img/grafo.pdf, id=25, 654.445pt x 198.7425pt>
+<use img/arquitetura.pdf>
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+<img/grafo.pdf, id=26, 654.445pt x 198.7425pt>
 File: img/grafo.pdf Graphic file (type pdf)
-
-<use img/grafo.pdf>
-Underfull \hbox (badness 10000) detected at line 38
+ <use img/grafo.pdf>
+Underfull \hbox (badness 10000) detected at line 78
 [][]
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 30--39
+Underfull \hbox (badness 3138) in paragraph at lines 36--79
+[]\OT1/ptm/m/n/9 O \OT1/ptm/m/it/9 loop \OT1/ptm/m/n/9 do sis-tema pode ser re-
+su-mido da se-guinte forma:
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 36--79
 
  []
 
 
-Underfull \hbox (badness 10000) detected at line 48
-[][]
- []
+Underfull \vbox (badness 10000) has occurred while \output is active []
 
+ [3 <img/arquitetura.pdf> <img/grafo.pdf>]) (resultados.tex
+Underfull \vbox (badness 10000) has occurred while \output is active []
 
-Underfull \hbox (badness 10000) in paragraph at lines 40--49
-
- []
-
-) (resultados.tex) (conclusao.tex) [3 <img/arquitetura.pdf> <img/grafo.pdf>]
-(imagens.tex <img/caps/test0_1.png, id=50, 963.6pt x 542.025pt>
-File: img/caps/test0_1.png Graphic file (type png)
-
-<use img/caps/test0_1.png> <img/caps/test0_2.png, id=51, 963.6pt x 542.025pt>
-File: img/caps/test0_2.png Graphic file (type png)
-
-<use img/caps/test0_2.png> <img/caps/test1_1.png, id=52, 963.6pt x 542.025pt>
-File: img/caps/test1_1.png Graphic file (type png)
-
-<use img/caps/test1_1.png> <img/caps/test1_2.png, id=53, 963.6pt x 542.025pt>
-File: img/caps/test1_2.png Graphic file (type png)
-
-<use img/caps/test1_2.png> <img/caps/test1_3.png, id=54, 963.6pt x 542.025pt>
-File: img/caps/test1_3.png Graphic file (type png)
-
-<use img/caps/test1_3.png> <img/caps/test2_1.png, id=55, 963.6pt x 542.025pt>
-File: img/caps/test2_1.png Graphic file (type png)
-
-<use img/caps/test2_1.png> <img/caps/test2_2.png, id=56, 963.6pt x 542.025pt>
-File: img/caps/test2_2.png Graphic file (type png)
-
-<use img/caps/test2_2.png> <img/caps/test2_3.png, id=57, 963.6pt x 542.025pt>
-File: img/caps/test2_3.png Graphic file (type png)
-
-<use img/caps/test2_3.png> <img/caps/test2_4.png, id=58, 963.6pt x 542.025pt>
-File: img/caps/test2_4.png Graphic file (type png)
-
-<use img/caps/test2_4.png> <img/caps/test4_1.png, id=59, 963.6pt x 542.025pt>
-File: img/caps/test4_1.png Graphic file (type png)
-
-<use img/caps/test4_1.png> <img/caps/test4_2.png, id=60, 963.6pt x 542.025pt>
-File: img/caps/test4_2.png Graphic file (type png)
-
-<use img/caps/test4_2.png> <img/caps/test4_3.png, id=61, 963.6pt x 542.025pt>
-File: img/caps/test4_3.png Graphic file (type png)
-
-<use img/caps/test4_3.png> <img/caps/test4_4.png, id=62, 963.6pt x 542.025pt>
-File: img/caps/test4_4.png Graphic file (type png)
-
-<use img/caps/test4_4.png> <img/caps/test10_1.png, id=63, 963.6pt x 542.025pt>
-File: img/caps/test10_1.png Graphic file (type png)
-
-<use img/caps/test10_1.png>
-<img/caps/test10_2.png, id=64, 963.6pt x 542.025pt>
-File: img/caps/test10_2.png Graphic file (type png)
-
-<use img/caps/test10_2.png>) (paper.bbl
+)
+(conclusao.tex [4]) (paper.bbl
 Underfull \hbox (badness 1221) in paragraph at lines 4--10
 []\OT1/ptm/m/sc/9 Agrawala, M., Phan, D., Hei-ser, J., Hay-ma-ker, J.,
  []
 
 
-Underfull \hbox (badness 2073) in paragraph at lines 49--55
+Underfull \hbox (badness 2073) in paragraph at lines 55--61
 []\OT1/ptm/m/sc/9 Niederauer, C., Hous-ton, M., Agrawala, M., and
  []
 
-) [4
+) (figuras.tex <img/caps/test0_1.png, id=54, 963.6pt x 542.025pt>
+File: img/caps/test0_1.png Graphic file (type png)
 
-] [5 <img/caps/test0_1.png (PNG copy)> <img/caps/test0_2.png (PNG copy)> <img/c
+<use img/caps/test0_1.png> <img/caps/test0_2.png, id=55, 963.6pt x 542.025pt>
+File: img/caps/test0_2.png Graphic file (type png)
+
+<use img/caps/test0_2.png> <img/caps/test1_1.png, id=56, 963.6pt x 542.025pt>
+File: img/caps/test1_1.png Graphic file (type png)
+
+<use img/caps/test1_1.png> <img/caps/test1_2.png, id=57, 963.6pt x 542.025pt>
+File: img/caps/test1_2.png Graphic file (type png)
+
+<use img/caps/test1_2.png> <img/caps/test1_3.png, id=58, 963.6pt x 542.025pt>
+File: img/caps/test1_3.png Graphic file (type png)
+
+<use img/caps/test1_3.png> <img/caps/test2_1.png, id=59, 963.6pt x 542.025pt>
+File: img/caps/test2_1.png Graphic file (type png)
+
+<use img/caps/test2_1.png> <img/caps/test2_2.png, id=60, 963.6pt x 542.025pt>
+File: img/caps/test2_2.png Graphic file (type png)
+
+<use img/caps/test2_2.png> <img/caps/test2_3.png, id=61, 963.6pt x 542.025pt>
+File: img/caps/test2_3.png Graphic file (type png)
+
+<use img/caps/test2_3.png> <img/caps/test2_4.png, id=62, 963.6pt x 542.025pt>
+File: img/caps/test2_4.png Graphic file (type png)
+
+<use img/caps/test2_4.png> <img/caps/test4_1.png, id=63, 963.6pt x 542.025pt>
+File: img/caps/test4_1.png Graphic file (type png)
+
+<use img/caps/test4_1.png> <img/caps/test4_2.png, id=64, 963.6pt x 542.025pt>
+File: img/caps/test4_2.png Graphic file (type png)
+
+<use img/caps/test4_2.png> <img/caps/test4_3.png, id=65, 963.6pt x 542.025pt>
+File: img/caps/test4_3.png Graphic file (type png)
+
+<use img/caps/test4_3.png> <img/caps/test4_4.png, id=66, 963.6pt x 542.025pt>
+File: img/caps/test4_4.png Graphic file (type png)
+
+<use img/caps/test4_4.png> <img/caps/test9_1.png, id=67, 963.6pt x 542.025pt>
+File: img/caps/test9_1.png Graphic file (type png)
+
+<use img/caps/test9_1.png> <img/caps/test9_2.png, id=68, 963.6pt x 542.025pt>
+File: img/caps/test9_2.png Graphic file (type png)
+
+<use img/caps/test9_2.png> <img/caps/test10_1.png, id=69, 963.6pt x 542.025pt>
+File: img/caps/test10_1.png Graphic file (type png)
+
+<use img/caps/test10_1.png>
+<img/caps/test10_2.png, id=70, 963.6pt x 542.025pt>
+File: img/caps/test10_2.png Graphic file (type png)
+
+<use img/caps/test10_2.png>) [5
+
+] [6 <img/caps/test0_1.png (PNG copy)> <img/caps/test0_2.png (PNG copy)> <img/c
 aps/test1_1.png (PNG copy)> <img/caps/test1_2.png (PNG copy)> <img/caps/test1_3
 .png (PNG copy)> <img/caps/test2_1.png (PNG copy)> <img/caps/test2_2.png (PNG c
-opy)> <img/caps/test2_3.png (PNG copy)> <img/caps/test2_4.png (PNG copy)>]
-[6 <img/caps/test4_1.png (PNG copy)> <img/caps/test4_2.png (PNG copy)> <img/cap
-s/test4_3.png (PNG copy)> <img/caps/test4_4.png (PNG copy)> <img/caps/test10_1.
-png (PNG copy)> <img/caps/test10_2.png (PNG copy)>] (paper.aux)
+opy)> <img/caps/test2_3.png (PNG copy)> <img/caps/test2_4.png (PNG copy)>] [7 <
+img/caps/test4_1.png (PNG copy)> <img/caps/test4_2.png (PNG copy)> <img/caps/te
+st4_3.png (PNG copy)> <img/caps/test4_4.png (PNG copy)> <img/caps/test9_1.png (
+PNG copy)> <img/caps/test9_2.png (PNG copy)> <img/caps/test10_1.png (PNG copy)>
+ <img/caps/test10_2.png (PNG copy)>] (paper.aux)
 
 LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 3911 strings out of 95278
- 54377 string characters out of 1182514
- 156637 words of memory out of 1500000
- 7057 multiletter control sequences out of 110000
- 27663 words of font info for 53 fonts, out of 3000000 for 5000
+ 3925 strings out of 95278
+ 54647 string characters out of 1182514
+ 157637 words of memory out of 1500000
+ 7067 multiletter control sequences out of 110000
+ 29422 words of font info for 55 fonts, out of 3000000 for 5000
  16 hyphenation exceptions out of 8191
- 36i,16n,38p,820b,354s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 36i,22n,38p,820b,373s stack positions out of 5000i,500n,10000p,200000b,50000s
 {C:/Program Files/MiKTeX 2.7/fonts/enc/dvips/fontname/8r.enc}<C:/Program File
 s/MiKTeX 2.7/fonts/type1/bluesky/cm/cmmi5.pfb><C:/Program Files/MiKTeX 2.7/font
 s/type1/bluesky/cm/cmmi6.pfb><C:/Program Files/MiKTeX 2.7/fonts/type1/bluesky/c
@@ -417,12 +436,12 @@ ogram Files/MiKTeX 2.7/fonts/type1/bluesky/cm/cmr9.pfb><C:/Program Files/MiKTeX
 bluesky/cm/cmsy7.pfb><C:/Program Files/MiKTeX 2.7/fonts/type1/bluesky/cm/cmsy9.
 pfb><C:/Program Files/MiKTeX 2.7/fonts/type1/urw/courier/ucrr8a.pfb><C:/Program
  Files/MiKTeX 2.7/fonts/type1/urw/helvetic/uhvb8a.pfb><C:/Program Files/MiKTeX 
-2.7/fonts/type1/urw/times/utmb8a.pfb><C:/Program Files/MiKTeX 2.7/fonts/type1/u
-rw/times/utmr8a.pfb><C:/Program Files/MiKTeX 2.7/fonts/type1/urw/times/utmri8a.
-pfb>
-Output written on paper.pdf (6 pages, 599396 bytes).
+2.7/fonts/type1/urw/helvetic/uhvbo8a.pfb><C:/Program Files/MiKTeX 2.7/fonts/typ
+e1/urw/times/utmb8a.pfb><C:/Program Files/MiKTeX 2.7/fonts/type1/urw/times/utmr
+8a.pfb><C:/Program Files/MiKTeX 2.7/fonts/type1/urw/times/utmri8a.pfb>
+Output written on paper.pdf (7 pages, 639434 bytes).
 PDF statistics:
- 115 PDF objects out of 1000 (max. 8388607)
+ 126 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 131072)
- 101 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 111 words of extra memory for PDF output out of 10000 (max. 10000000)
 
