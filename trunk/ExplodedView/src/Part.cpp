@@ -25,7 +25,7 @@ Part::Part(){
 
 
 	//Calculate bounding box
-	m_boundingBox = new osg::BoundingBox();
+	//m_boundingBox = new osg::BoundingBox();
 	//const osg::BoundingBox& bb1 = m_osgNode->getBound();
 	
 	//TODO: optimized this. The bounding box is bigger than it needs to be (it is the bounding box of the bounding sphere)
@@ -45,7 +45,9 @@ void Part::setUp(osg::Group* sceneGraphRoot){
 	setPQP();
 
 	//TODO: Improve the bounding box
-	m_boundingBox->expandBy(m_osgNode->getBound());
+	osg::ComputeBoundsVisitor cbbv;
+	m_osgNode->accept(cbbv);
+	m_boundingBox = new osg::BoundingBox(cbbv.getBoundingBox());
 }
  
 
@@ -272,6 +274,8 @@ void Part::checkCollisionsAlongAxis(osgViewer::Viewer* viewer, std::vector< Part
 	T2[0] = 0.0;  T2[1] = 0.0; T2[2] = 0.0;
 
 	double distanceOutBoundingBox = 0;
+	bool itsFreeDirection = true;
+	CollisionData* freeDirection = new CollisionData();
 
 	//It begins from i = 1. That way, the initial collisions will be ignored.
 	//So, that way, we won't have to bother about the initials collisions messing the whole parts graph
@@ -299,9 +303,9 @@ void Part::checkCollisionsAlongAxis(osgViewer::Viewer* viewer, std::vector< Part
 				//PQP_Distance(&dres, R1, T1, m_pqpModel, R2, T2, partsGraph[j]->m_pqpModel, 0, 0);
 				
 				//double distance = dres.Distance();
-
+				CollisionData* aux = new CollisionData();
+				
 				if(tres.CloserThanTolerance()){
-					CollisionData* aux = new CollisionData();
 					aux->collided = true;
 					aux->collidedWith = partsGraph[j];
 					aux->collisionDirection[0] = x; 
@@ -315,23 +319,70 @@ void Part::checkCollisionsAlongAxis(osgViewer::Viewer* viewer, std::vector< Part
 					aux->distanceOutBoundingBox = distanceOutBoundingBox;
 
 
-					//Check if the collision with this part has been added before
-					//TODO: improve that
+					itsFreeDirection = false;
+
+
+					
+				}
+				//free direction
+				else if(itsFreeDirection){
+					if(partsGraph[j]->contains(m_boundingBox) || contains(partsGraph[j]->m_boundingBox)){
+						
+						freeDirection->collided = false;
+						freeDirection->collidedWith = partsGraph[j];
+						freeDirection->collisionDirection[0] = -x; 
+						freeDirection->collisionDirection[1] = -y; 
+						freeDirection->collisionDirection[2] = -z; 
+
+						
+
+						//if(m_smallestDistanceCollisions[arrayPosition] == NULL) m_countRestrictedDirections++;
+						distanceOutBoundingBox = calculateDistanceOutBoundingBox(freeDirection->collidedWith, freeDirection->collisionDirection);
+						freeDirection->distanceOutBoundingBox = distanceOutBoundingBox;
+
+					}
+					
+					
+				}
+
+				//Check if the collision with this part has been added before
+				//TODO: improve that
+				if(aux->collidedWith != NULL)
 					if(m_allDistanceCollisions[arrayPosition].size() == 0)
 						m_allDistanceCollisions[arrayPosition].push_back(aux);
 					else
 						for(unsigned int  k=0; k<m_allDistanceCollisions[arrayPosition].size(); k++){
-							if(m_allDistanceCollisions[arrayPosition][k]->collidedWith == aux->collidedWith)
+							if(m_allDistanceCollisions[arrayPosition][k]->collidedWith == aux->collidedWith
+								&& aux->collided == true)
 							 //check the distance too and get the closest one
 								if(m_allDistanceCollisions[arrayPosition][k]->distanceOutBoundingBox <= aux->distanceOutBoundingBox){
 									m_allDistanceCollisions[arrayPosition].erase(m_allDistanceCollisions[arrayPosition].begin()+k);
 									m_allDistanceCollisions[arrayPosition].push_back(aux);
 								}
 						}
-				}
+
 
 			}
 		}
+	}
+
+	if(itsFreeDirection){
+		if(freeDirection->collidedWith != NULL)
+				if(m_allDistanceCollisions[arrayPosition].size() == 0)
+					m_allDistanceCollisions[arrayPosition].push_back(freeDirection);
+				else
+					for(unsigned int  k=0; k<m_allDistanceCollisions[arrayPosition].size(); k++){
+						if(m_allDistanceCollisions[arrayPosition][k]->collidedWith == freeDirection->collidedWith
+							&& freeDirection->collided == true)
+						 //check the distance too and get the closest one
+							if(m_allDistanceCollisions[arrayPosition][k]->distanceOutBoundingBox <= freeDirection->distanceOutBoundingBox){
+								m_allDistanceCollisions[arrayPosition].erase(m_allDistanceCollisions[arrayPosition].begin()+k);
+								m_allDistanceCollisions[arrayPosition].push_back(freeDirection);
+							}
+					}
+
+
+	}
 		
 
 
@@ -388,7 +439,6 @@ void Part::checkCollisionsAlongAxis(osgViewer::Viewer* viewer, std::vector< Part
 			//m_allDistanceCollisions[arrayPosition].clear();
 		}
 		*/
-	}
 
 	
 
@@ -398,17 +448,34 @@ void Part::checkCollisionsAlongAxis(osgViewer::Viewer* viewer, std::vector< Part
 
 }
 
-double Part::findSmallestDistanceOutBoundingBox(){
+CollisionData* Part::findSmallestDistanceOutBoundingBox(){
 	
 	double smallestDistance = std::numeric_limits<double>::infinity();
+	CollisionData* currentCollisionData = NULL;
 	for(int i=0; i<6; i++){
 		double currentSmallestDistance = std::numeric_limits<double>::infinity();
+		
+		
 		m_smallestDistanceOutBoundingBox[i] = NULL;
-
 		for(unsigned int j=0; j<m_allDistanceCollisions[i].size(); j++){
-			if(m_allDistanceCollisions[i][j]->collidedWith->m_inserted == false
-				&& m_allDistanceCollisions[i][j]->distanceOutBoundingBox < currentSmallestDistance){
+
+
+			//Found a clear direction
+			//TODO: this is not necessarily the shortest distance
+			if(m_allDistanceCollisions[i][j]->collided == false){
 				currentSmallestDistance = m_allDistanceCollisions[i][j]->distanceOutBoundingBox;
+				smallestDistance = currentSmallestDistance;
+				
+				m_smallestDistanceOutBoundingBox[i] = m_allDistanceCollisions[i][j];
+				m_explosionDirection = m_allDistanceCollisions[i][j];
+
+				return  m_allDistanceCollisions[i][j];
+			}
+			
+			if((m_allDistanceCollisions[i][j]->collidedWith->m_inserted == false
+				&& m_allDistanceCollisions[i][j]->distanceOutBoundingBox < currentSmallestDistance)){
+				currentSmallestDistance = m_allDistanceCollisions[i][j]->distanceOutBoundingBox;
+				currentCollisionData = m_allDistanceCollisions[i][j];
 				smallestDistance = currentSmallestDistance;
 				
 				m_smallestDistanceOutBoundingBox[i] = m_allDistanceCollisions[i][j];
@@ -418,7 +485,7 @@ double Part::findSmallestDistanceOutBoundingBox(){
 		}
 	}
 
-	return smallestDistance;
+	return currentCollisionData;
 }
 
 void Part::countBlockedDirections(){
@@ -426,7 +493,8 @@ void Part::countBlockedDirections(){
 	m_countRestrictedDirections = 0;
 	for(int i=0; i<6; i++){
 		for(unsigned int j=0; j<m_allDistanceCollisions[i].size(); j++){
-			if(m_allDistanceCollisions[i][j]->collidedWith->m_inserted == false){
+			if(m_allDistanceCollisions[i][j]->collidedWith->m_inserted == false
+				&& m_allDistanceCollisions[i][j]->collided == true){
 				m_countRestrictedDirections++;
 				break; //only count one collision per direction
 			}
@@ -467,10 +535,11 @@ void Part::findContainer(){
 	bool interlocked = true;
 	if(m_countRestrictedDirections == 6){
 		for(int j=1; j<6; j++){
-			if(m_smallestDistanceOutBoundingBox[j-1]->collidedWith != m_smallestDistanceOutBoundingBox[j]->collidedWith){
-				if(m_smallestDistanceOutBoundingBox[j-1]->collidedWith->m_inserted == true)
-					interlocked = false;
-			}
+			if(m_smallestDistanceOutBoundingBox[j-1] != NULL && m_smallestDistanceOutBoundingBox[j] != NULL)
+				if(m_smallestDistanceOutBoundingBox[j-1]->collidedWith != m_smallestDistanceOutBoundingBox[j]->collidedWith){
+					if(m_smallestDistanceOutBoundingBox[j-1]->collidedWith->m_inserted == true)
+						interlocked = false;
+				}
 
 		}
 
@@ -538,10 +607,10 @@ void Part::split(osg::Group* sceneGraphRoot , osgViewer::Viewer* viewer, double 
 
 
 void Part::turnHighlight(bool turnHighlight){
-	/*
+	
 	osg::Vec4 red(1.0f, 0.0f, 0.0f, 1.0f);
 	m_osgNode->accept(ColorVisitor(red));
-	*/
+	
 	
 
 	
@@ -588,15 +657,10 @@ void Part::move(CollisionData* collision, int signal, double stepSize){
 
 void Part::checkVisibility(osg::Vec3 eyePosition, std::vector< Part* >* partsGraph){
 
-	
-
-	
-	
-
 	int hitsCount = 0;
 	for(int i=0; i<partsGraph->size(); i++){
 
-		if(this != partsGraph->at(i) && partsGraph->at(i)->m_exploding == false && partsGraph->at(i)->m_inploding == false){
+		if(this != partsGraph->at(i) && partsGraph->at(i)->m_exploded == true){
 
 			bool intercepted = false;
 			for(int j=0; j<8; j++){

@@ -10,6 +10,9 @@ class CollisionData{
 	
 public:
 	CollisionData(){
+		collidedWith = NULL;
+		collided = false;
+		distanceOutBoundingBox = 0;
 	}
 
 	bool collided;

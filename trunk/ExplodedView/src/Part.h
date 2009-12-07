@@ -14,6 +14,7 @@
 
 //osg
 #include <osg/Node>
+#include <osg/ComputeBoundsVisitor>
 #include <osg/PositionAttitudeTransform>
 #include <osgViewer/Viewer>
 #include <osg/TriangleIndexFunctor>
@@ -44,7 +45,7 @@ public:
 	//void setUp(VCollide* vCollide, osg::Group* sceneGraphRoot);
 	void setUp(osg::Group* sceneGraphRoot);
 	double calculateDistanceOutBoundingBox(Part* collidedWith, double* collisionDirection);
-	double findSmallestDistanceOutBoundingBox();
+	CollisionData* findSmallestDistanceOutBoundingBox();
 	void countBlockedDirections();
 	void findContainer();
 	bool contains(osg::BoundingBox* bb);

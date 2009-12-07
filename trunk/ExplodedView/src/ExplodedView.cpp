@@ -2,9 +2,9 @@
 
 
 #define MINIMUM_DISTANCE_TO_CONSIDER_CONTACT 0
-#define STEPSIZE 0.1
+#define STEPSIZE 0.5
 #define EXPLOSION_STEPSIZE 0.8
-#define ITERATIONS 25
+#define ITERATIONS 50
 #define VISUALIZE_GRAPH_BUILDING true
 #define PRINT_GRAPH true
 
@@ -23,6 +23,8 @@ ExplodedView::ExplodedView(){
 
  
 void ExplodedView::setUp(char* modelName){
+
+	m_viewer->getCamera()->setClearColor(osg::Vec4(1,1,1,1));
 
     m_viewer->setCameraManipulator( new osgGA::TrackballManipulator() );
 	m_viewer->getCameraManipulator()->setHomePosition(osg::Vec3d(400,400,400), osg::Vec3d(0,0,0), osg::Vec3d(0,0,1));
@@ -45,6 +47,7 @@ void ExplodedView::setUp(char* modelName){
 
     // windowed
 	m_viewer->setUpViewInWindow(50, 25, 1280, 720);
+	m_viewer->getCamera()->setClearColor(osg::Vec4(1,1,1,1));
 
 	//box
 	buildBox();
@@ -105,7 +108,7 @@ void ExplodedView::buildPartsGraph(){
 
 		//Find the directions in which the parts are blocked or not
 		//TODO: only do it once. After one iteration, we already know every possible collision between the parts
-		findBlockedDirections();
+		//findBlockedDirections();
 
 		//Find the distance that the parts have to walk in order to get out of the bounding box
 		//calculateDistancesOutBB();
@@ -177,17 +180,29 @@ void ExplodedView::findBlockedDirections(){
 Part* ExplodedView::findSmallestDistanceOutBoundingBox(){
 	
 	double smallestDistance = std::numeric_limits<double>::infinity();
-	double currentDistance;
+	CollisionData* currentCollisionData;
 
 	Part* aux = NULL;
 
 	for(int i=0; i<m_partsGraph.size(); i++){
-
 		if(m_partsGraph[i]->m_inserted == false){
-			currentDistance = m_partsGraph[i]->findSmallestDistanceOutBoundingBox();
 
-			if(currentDistance <= smallestDistance && m_partsGraph[i]->m_countRestrictedDirections < 6){
-				aux = m_partsGraph[i];
+			currentCollisionData = m_partsGraph[i]->findSmallestDistanceOutBoundingBox();
+			
+
+			//if(currentCollisionData->collided == false)
+				//return m_partsGraph[i];
+
+			if(currentCollisionData != NULL
+				&& currentCollisionData->distanceOutBoundingBox <= smallestDistance
+				&& m_partsGraph[i]->m_countRestrictedDirections < 6){
+
+				if((currentCollisionData->collided && currentCollisionData->collidedWith->m_inserted)
+					|| (currentCollisionData->collided == false)){
+
+					aux = m_partsGraph[i];
+					smallestDistance = currentCollisionData->distanceOutBoundingBox;
+				}
 			}
 			
 		}
@@ -266,13 +281,13 @@ void ExplodedView::switchExplodeInplode(int index){
 
 void ExplodedView::explode(int index){
 	m_ptrCurrentPart = m_partsGraph[index];
-	m_partsGraph[index]->turnHighlight(true);
+	//m_partsGraph[index]->turnHighlight(true);
 	bfs(m_partsGraph[index], &m_explodingLevels);
 }
 
 void ExplodedView::inplode(int index){
 	m_ptrCurrentPart = NULL;
-	m_partsGraph[index]->turnHighlight(false);
+	//m_partsGraph[index]->turnHighlight(false);
 	bfs(m_partsGraph[index], &m_inplodingLevels);
 }
 
@@ -406,7 +421,7 @@ void ExplodedView::buildBox(){
 
 void ExplodedView::run(){
 
-	setUp("test2.3ds");
+	setUp("test4.3ds");
 	
 	for(int i=0; i<60; i++)
 		m_viewer->frame();
