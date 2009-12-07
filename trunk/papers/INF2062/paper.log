@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.9 (MiKTeX 2.7) (preloaded format=pdflatex 2009.12.6)  6 DEC 2009 04:57
+This is pdfTeX, Version 3.1415926-1.40.9 (MiKTeX 2.7) (preloaded format=pdflatex 2009.12.6)  7 DEC 2009 02:11
 entering extended mode
 **paper.tex
 (paper.tex
@@ -86,56 +86,17 @@ Package: inputenc 2006/05/05 v1.1b Input encoding file
 ("C:\Program Files\MiKTeX 2.7\tex\latex\base\latin1.def"
 File: latin1.def 2006/05/05 v1.1b Input encoding file
 ))
-("C:\Program Files\MiKTeX 2.7\tex\latex\tools\multicol.sty"
-Package: multicol 2006/05/18 v1.6g multicolumn formatting (FMi)
-\c@tracingmulticols=\count95
-\mult@box=\box27
-\multicol@leftmargin=\dimen109
-\c@unbalance=\count96
-\c@collectmore=\count97
-\doublecol@number=\count98
-\multicoltolerance=\count99
-\multicolpretolerance=\count100
-\full@width=\dimen110
-\page@free=\dimen111
-\premulticols=\dimen112
-\postmulticols=\dimen113
-\multicolsep=\skip46
-\multicolbaselineskip=\skip47
-\partial@page=\box28
-\last@line=\box29
-\mult@rightbox=\box30
-\mult@grightbox=\box31
-\mult@gfirstbox=\box32
-\mult@firstbox=\box33
-\@tempa=\box34
-\@tempa=\box35
-\@tempa=\box36
-\@tempa=\box37
-\@tempa=\box38
-\@tempa=\box39
-\@tempa=\box40
-\@tempa=\box41
-\@tempa=\box42
-\@tempa=\box43
-\@tempa=\box44
-\@tempa=\box45
-\@tempa=\box46
-\@tempa=\box47
-\@tempa=\box48
-\@tempa=\box49
-\@tempa=\box50
-\c@columnbadness=\count101
-\c@finalcolumnbadness=\count102
-\last@try=\dimen114
-\multicolovershoot=\dimen115
-\multicolundershoot=\dimen116
-\mult@nat@firstbox=\box51
-\colbreak@box=\box52
+("C:\Program Files\MiKTeX 2.7\tex\latex\wrapfig\wrapfig.sty"
+\wrapoverhang=\dimen109
+\WF@size=\dimen110
+\c@WF@wrappedlines=\count95
+\WF@box=\box27
+\WF@everypar=\toks19
+Package: wrapfig 2003/01/31  v 3.6
 )
 ("C:\Program Files\MiKTeX 2.7\tex\latex\algorithm2e\algorithm2e.sty"
 Package: algorithm2e 2005/10/04 v3.9 algorithms environments
-\c@AlgoLine=\count103
+\c@AlgoLine=\count96
 
 ("C:\Program Files\MiKTeX 2.7\tex\latex\base\ifthen.sty"
 Package: ifthen 2001/05/26 v1.1c Standard LaTeX ifthen package (DPC)
@@ -150,25 +111,25 @@ Package `algorithm2e' Release 3.9 -- october 04 2005 --
 subscribe by emailing sympa@lirmm.fr with 'subscribe <list> <firstname name>'
 - Author: Christophe Fiorio (fiorio@lirmm.fr)
 ********************************************************
-\skiptotal=\skip48
-\skiprule=\skip49
-\skiphlne=\skip50
-\skiptext=\skip51
-\skiplength=\skip52
-\algomargin=\skip53
-\skipalgocfslide=\skip54
-\algowidth=\dimen117
-\inoutsize=\dimen118
-\inoutline=\dimen119
-\algocf@inoutbox=\box53
-\algocf@inputbox=\box54
-\AlCapSkip=\skip55
-\AlCapHSkip=\skip56
-\algocf@capbox=\box55
-\c@algocfline=\count104
-\c@algocf=\count105
-\algocf@algoframe=\box56
-\algocf@algobox=\box57
+\skiptotal=\skip46
+\skiprule=\skip47
+\skiphlne=\skip48
+\skiptext=\skip49
+\skiplength=\skip50
+\algomargin=\skip51
+\skipalgocfslide=\skip52
+\algowidth=\dimen111
+\inoutsize=\dimen112
+\inoutline=\dimen113
+\algocf@inoutbox=\box28
+\algocf@inputbox=\box29
+\AlCapSkip=\skip53
+\AlCapHSkip=\skip54
+\algocf@capbox=\box30
+\c@algocfline=\count97
+\c@algocf=\count98
+\algocf@algoframe=\box31
+\algocf@algobox=\box32
 ) ("C:\Program Files\MiKTeX 2.7\tex\latex\graphics\graphicx.sty"
 Package: graphicx 1999/02/16 v1.0f Enhanced LaTeX Graphics (DPC,SPQR)
 
@@ -185,10 +146,10 @@ Package graphics Info: Driver file: pdftex.def on input line 90.
 
 ("C:\Program Files\MiKTeX 2.7\tex\latex\pdftex-def\pdftex.def"
 File: pdftex.def 2008/09/08 v0.04l Graphics/color for pdfTeX
-\Gread@gobject=\count106
+\Gread@gobject=\count99
 ))
-\Gin@req@height=\dimen120
-\Gin@req@width=\dimen121
+\Gin@req@height=\dimen114
+\Gin@req@width=\dimen115
 )
 ("C:\Program Files\MiKTeX 2.7\tex\latex\ltxmisc\parskip.sty"
 Package: parskip 2001/04/09 non-zero parskip adjustments
@@ -198,14 +159,15 @@ Package: caption 2008/08/24 v3.1j Customizing captions (AR)
 
 ("C:\Program Files\MiKTeX 2.7\tex\latex\caption\caption3.sty"
 Package: caption3 2008/08/24 v3.1j caption3 kernel (AR)
-\captionmargin=\dimen122
-\captionmargin@=\dimen123
-\captionwidth=\dimen124
-\caption@indent=\dimen125
-\caption@parindent=\dimen126
-\caption@hangindent=\dimen127
+\captionmargin=\dimen116
+\captionmargin@=\dimen117
+\captionwidth=\dimen118
+\caption@indent=\dimen119
+\caption@parindent=\dimen120
+\caption@hangindent=\dimen121
 )
-\c@ContinuedFloat=\count107
+\c@ContinuedFloat=\count100
+Package caption Info: wrapfig package is loaded.
 ) (paper.aux
 
 LaTeX Warning: Label `alg:algoritmo' multiply defined.
@@ -214,65 +176,69 @@ LaTeX Warning: Label `alg:algoritmo' multiply defined.
 LaTeX Warning: Label `fig:grafo' multiply defined.
 
 )
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 67.
-LaTeX Font Info:    ... okay on input line 67.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 67.
-LaTeX Font Info:    ... okay on input line 67.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 67.
-LaTeX Font Info:    ... okay on input line 67.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 67.
-LaTeX Font Info:    ... okay on input line 67.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 67.
-LaTeX Font Info:    ... okay on input line 67.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 67.
-LaTeX Font Info:    ... okay on input line 67.
-LaTeX Font Info:    Try loading font information for OT1+ptm on input line 67.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 68.
+LaTeX Font Info:    ... okay on input line 68.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 68.
+LaTeX Font Info:    ... okay on input line 68.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 68.
+LaTeX Font Info:    ... okay on input line 68.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 68.
+LaTeX Font Info:    ... okay on input line 68.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 68.
+LaTeX Font Info:    ... okay on input line 68.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 68.
+LaTeX Font Info:    ... okay on input line 68.
+LaTeX Font Info:    Try loading font information for OT1+ptm on input line 68.
  ("C:\Program Files\MiKTeX 2.7\tex\latex\psnfss\ot1ptm.fd"
 File: ot1ptm.fd 2001/06/04 font definitions for OT1/ptm.
 )
 ("C:\Program Files\MiKTeX 2.7\tex\context\base\supp-pdf.tex"
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count108
-\scratchdimen=\dimen128
-\scratchbox=\box58
-\nofMPsegments=\count109
-\nofMParguments=\count110
-\everyMPshowfont=\toks19
-\MPscratchCnt=\count111
-\MPscratchDim=\dimen129
-\MPnumerator=\count112
-\everyMPtoPDFconversion=\toks20
+\scratchcounter=\count101
+\scratchdimen=\dimen122
+\scratchbox=\box33
+\nofMPsegments=\count102
+\nofMParguments=\count103
+\everyMPshowfont=\toks20
+\MPscratchCnt=\count104
+\MPscratchDim=\dimen123
+\MPnumerator=\count105
+\everyMPtoPDFconversion=\toks21
 )
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: End \AtBeginDocument code.
-LaTeX Font Info:    Try loading font information for OT1+phv on input line 77.
+LaTeX Font Info:    Try loading font information for OT1+phv on input line 78.
  ("C:\Program Files\MiKTeX 2.7\tex\latex\psnfss\ot1phv.fd"
 File: ot1phv.fd 2001/06/04 scalable font definitions for OT1/phv.
 )
 LaTeX Font Info:    Font shape `OT1/phv/m/n' will be
-(Font)              scaled to size 13.24796pt on input line 77.
+(Font)              scaled to size 13.24796pt on input line 78.
 LaTeX Font Info:    Font shape `OT1/phv/bx/n' in size <14.4> not available
-(Font)              Font shape `OT1/phv/b/n' tried instead on input line 77.
+(Font)              Font shape `OT1/phv/b/n' tried instead on input line 78.
 LaTeX Font Info:    Font shape `OT1/phv/b/n' will be
-(Font)              scaled to size 13.24796pt on input line 77.
+(Font)              scaled to size 13.24796pt on input line 78.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <7> on input line 77.
+(Font)              <7> on input line 78.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <5> on input line 77.
+(Font)              <5> on input line 78.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <8> on input line 77.
+(Font)              <8> on input line 78.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <6> on input line 77.
+(Font)              <6> on input line 78.
 LaTeX Font Info:    Font shape `OT1/phv/m/n' will be
-(Font)              scaled to size 11.03998pt on input line 81.
+(Font)              scaled to size 11.03998pt on input line 82.
 LaTeX Font Info:    Font shape `OT1/phv/bx/n' in size <12> not available
-(Font)              Font shape `OT1/phv/b/n' tried instead on input line 81.
+(Font)              Font shape `OT1/phv/b/n' tried instead on input line 82.
 LaTeX Font Info:    Font shape `OT1/phv/b/n' will be
-(Font)              scaled to size 11.03998pt on input line 81.
+(Font)              scaled to size 11.03998pt on input line 82.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <9> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 92.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 93.
  (introducao.tex)
-(trabalhosrelacionados.tex) (metodologia.tex
+(trabalhosrelacionados.tex
+<img/trabalhosrelacionados.png, id=1, 1435.3625pt x 176.66pt>
+File: img/trabalhosrelacionados.png Graphic file (type png)
+
+<use img/trabalhosrelacionados.png>) (metodologia.tex
 LaTeX Font Info:    Try loading font information for OMS+ptm on input line 7.
 
 ("C:\Program Files\MiKTeX 2.7\tex\latex\psnfss\omsptm.fd"
@@ -287,7 +253,7 @@ LaTeX Font Info:    Font shape `OT1/phv/bx/n' in size <10> not available
 LaTeX Font Info:    Font shape `OT1/phv/b/n' will be
 (Font)              scaled to size 9.19998pt on input line 12.
 
-<img/exview3D-SIG08_2.png, id=1, 347.2975pt x 286.06876pt>
+<img/exview3D-SIG08_2.png, id=2, 347.2975pt x 286.06876pt>
 File: img/exview3D-SIG08_2.png Graphic file (type png)
 
 <use img/exview3D-SIG08_2.png>
@@ -296,10 +262,11 @@ LaTeX Warning: `h' float specifier changed to `ht'.
 
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <9> on input line 22.
-[1
+[1{C:/Documents and Settings/All Users/Application Data/MiKTeX/2.7/pdftex/confi
+g/pdftex.map}
 
-{C:/Documents and Settings/All Users/Application Data/MiKTeX/2.7/pdftex/config/
-pdftex.map}]
+
+]
 Underfull \hbox (badness 10000) detected at line 45
 [][]
  []
@@ -315,14 +282,16 @@ LaTeX Font Info:    Font shape `OT1/phv/bx/n' in size <9> not available
 (Font)              Font shape `OT1/phv/b/n' tried instead on input line 49.
 LaTeX Font Info:    Font shape `OT1/phv/b/n' will be
 (Font)              scaled to size 8.27998pt on input line 49.
-<img/exview3D-SIG08_3.png, id=15, 175.65625pt x 275.0275pt>
+<img/exview3D-SIG08_3.png, id=16, 175.65625pt x 275.0275pt>
 File: img/exview3D-SIG08_3.png Graphic file (type png)
 
 <use img/exview3D-SIG08_3.png>
+Underfull \vbox (badness 10000) has occurred while \output is active []
 
-LaTeX Warning: `h' float specifier changed to `ht'.
-
+ [2 <img/trabalhosrelacionados.png (PNG copy)> <img/exview3D-SIG08_2.png (PNG c
+opy)> <img/exview3D-SIG08_3.png (PNG copy)>]
 LaTeX Font Info:    Try loading font information for OT1+pcr on input line 81.
+
 ("C:\Program Files\MiKTeX 2.7\tex\latex\psnfss\ot1pcr.fd"
 File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
 )
@@ -335,17 +304,13 @@ Underfull \hbox (badness 10000) in paragraph at lines 77--91
 
  []
 
-) (implementacao.tex <img/arquitetura.pdf, id=16, 995.72pt x 1422.31375pt>
+) (implementacao.tex <img/arquitetura.pdf, id=23, 995.72pt x 1422.31375pt>
 File: img/arquitetura.pdf Graphic file (type pdf)
 
-<use img/arquitetura.pdf>
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-[2 <img/exview3D-SIG08_2.png (PNG copy)> <img/exview3D-SIG08_3.png (PNG copy)>]
-<img/grafo.pdf, id=25, 654.445pt x 198.7425pt>
+<use img/arquitetura.pdf> <img/grafo.pdf, id=25, 654.445pt x 198.7425pt>
 File: img/grafo.pdf Graphic file (type pdf)
- <use img/grafo.pdf>
+
+<use img/grafo.pdf>
 Underfull \hbox (badness 10000) detected at line 38
 [][]
  []
@@ -365,7 +330,54 @@ Underfull \hbox (badness 10000) in paragraph at lines 40--49
 
  []
 
-) (resultados.tex) (conclusao.tex) (paper.bbl
+) (resultados.tex) (conclusao.tex) [3 <img/arquitetura.pdf> <img/grafo.pdf>]
+(imagens.tex <img/caps/test0_1.png, id=50, 963.6pt x 542.025pt>
+File: img/caps/test0_1.png Graphic file (type png)
+
+<use img/caps/test0_1.png> <img/caps/test0_2.png, id=51, 963.6pt x 542.025pt>
+File: img/caps/test0_2.png Graphic file (type png)
+
+<use img/caps/test0_2.png> <img/caps/test1_1.png, id=52, 963.6pt x 542.025pt>
+File: img/caps/test1_1.png Graphic file (type png)
+
+<use img/caps/test1_1.png> <img/caps/test1_2.png, id=53, 963.6pt x 542.025pt>
+File: img/caps/test1_2.png Graphic file (type png)
+
+<use img/caps/test1_2.png> <img/caps/test1_3.png, id=54, 963.6pt x 542.025pt>
+File: img/caps/test1_3.png Graphic file (type png)
+
+<use img/caps/test1_3.png> <img/caps/test2_1.png, id=55, 963.6pt x 542.025pt>
+File: img/caps/test2_1.png Graphic file (type png)
+
+<use img/caps/test2_1.png> <img/caps/test2_2.png, id=56, 963.6pt x 542.025pt>
+File: img/caps/test2_2.png Graphic file (type png)
+
+<use img/caps/test2_2.png> <img/caps/test2_3.png, id=57, 963.6pt x 542.025pt>
+File: img/caps/test2_3.png Graphic file (type png)
+
+<use img/caps/test2_3.png> <img/caps/test2_4.png, id=58, 963.6pt x 542.025pt>
+File: img/caps/test2_4.png Graphic file (type png)
+
+<use img/caps/test2_4.png> <img/caps/test4_1.png, id=59, 963.6pt x 542.025pt>
+File: img/caps/test4_1.png Graphic file (type png)
+
+<use img/caps/test4_1.png> <img/caps/test4_2.png, id=60, 963.6pt x 542.025pt>
+File: img/caps/test4_2.png Graphic file (type png)
+
+<use img/caps/test4_2.png> <img/caps/test4_3.png, id=61, 963.6pt x 542.025pt>
+File: img/caps/test4_3.png Graphic file (type png)
+
+<use img/caps/test4_3.png> <img/caps/test4_4.png, id=62, 963.6pt x 542.025pt>
+File: img/caps/test4_4.png Graphic file (type png)
+
+<use img/caps/test4_4.png> <img/caps/test10_1.png, id=63, 963.6pt x 542.025pt>
+File: img/caps/test10_1.png Graphic file (type png)
+
+<use img/caps/test10_1.png>
+<img/caps/test10_2.png, id=64, 963.6pt x 542.025pt>
+File: img/caps/test10_2.png Graphic file (type png)
+
+<use img/caps/test10_2.png>) (paper.bbl
 Underfull \hbox (badness 1221) in paragraph at lines 4--10
 []\OT1/ptm/m/sc/9 Agrawala, M., Phan, D., Hei-ser, J., Hay-ma-ker, J.,
  []
@@ -375,16 +387,24 @@ Underfull \hbox (badness 2073) in paragraph at lines 49--55
 []\OT1/ptm/m/sc/9 Niederauer, C., Hous-ton, M., Agrawala, M., and
  []
 
-) [3 <img/arquitetura.pdf> <img/grafo.pdf>] (paper.aux)
+) [4
+
+] [5 <img/caps/test0_1.png (PNG copy)> <img/caps/test0_2.png (PNG copy)> <img/c
+aps/test1_1.png (PNG copy)> <img/caps/test1_2.png (PNG copy)> <img/caps/test1_3
+.png (PNG copy)> <img/caps/test2_1.png (PNG copy)> <img/caps/test2_2.png (PNG c
+opy)> <img/caps/test2_3.png (PNG copy)> <img/caps/test2_4.png (PNG copy)>]
+[6 <img/caps/test4_1.png (PNG copy)> <img/caps/test4_2.png (PNG copy)> <img/cap
+s/test4_3.png (PNG copy)> <img/caps/test4_4.png (PNG copy)> <img/caps/test10_1.
+png (PNG copy)> <img/caps/test10_2.png (PNG copy)>] (paper.aux)
 
 LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 3850 strings out of 95278
- 52976 string characters out of 1182514
- 159154 words of memory out of 1500000
- 7015 multiletter control sequences out of 110000
+ 3911 strings out of 95278
+ 54377 string characters out of 1182514
+ 156637 words of memory out of 1500000
+ 7057 multiletter control sequences out of 110000
  27663 words of font info for 53 fonts, out of 3000000 for 5000
  16 hyphenation exceptions out of 8191
  36i,16n,38p,820b,354s stack positions out of 5000i,500n,10000p,200000b,50000s
@@ -400,9 +420,9 @@ pfb><C:/Program Files/MiKTeX 2.7/fonts/type1/urw/courier/ucrr8a.pfb><C:/Program
 2.7/fonts/type1/urw/times/utmb8a.pfb><C:/Program Files/MiKTeX 2.7/fonts/type1/u
 rw/times/utmr8a.pfb><C:/Program Files/MiKTeX 2.7/fonts/type1/urw/times/utmri8a.
 pfb>
-Output written on paper.pdf (3 pages, 181250 bytes).
+Output written on paper.pdf (6 pages, 599396 bytes).
 PDF statistics:
- 90 PDF objects out of 1000 (max. 8388607)
+ 115 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 131072)
- 21 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 101 words of extra memory for PDF output out of 10000 (max. 10000000)
 
