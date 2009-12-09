@@ -44,6 +44,14 @@
 \newblock Automated generation of interactive 3d exploded view diagrams.
 \newblock {\em ACM Trans. Graph. 27}, 3, 1--7.
 
+\bibitem[\protect\citename{Luboschik and Schumann }2007]{1271635}
+{\sc Luboschik, M., and Schumann, H.}
+\newblock 2007.
+\newblock Explode to explain - illustrative information visualization.
+\newblock In {\em IV '07: Proceedings of the 11th International Conference
+  Information Visualization}, IEEE Computer Society, Washington, DC, USA,
+  301--307.
+
 \bibitem[\protect\citename{McGuffin et~al\mbox{.} }2003]{1081497}
 {\sc McGuffin, M.~J., Tancau, L., and Balakrishnan, R.}
 \newblock 2003.
@@ -58,6 +66,14 @@
   environments.
 \newblock In {\em I3D '03: Proceedings of the 2003 symposium on Interactive 3D
   graphics}, ACM, New York, NY, USA, 55--58.
+
+\bibitem[\protect\citename{osg }]{osg}
+Openscenegraph.
+\newblock \url{http://www.openscenegraph.org/}.
+
+\bibitem[\protect\citename{pqp }]{pqp}
+Pqp - the proximity query package.
+\newblock \url{http://gamma.cs.unc.edu/SSV/}.
 
 \bibitem[\protect\citename{Viola and Gr{\"o}ller }2005]{Viola-05-Smart}
 {\sc Viola, I., and Gr{\"o}ller, M.~E.}

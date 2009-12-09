@@ -1,6 +1,6 @@
 \section{Implementação}
 \label{implementacao}
-Para a implementação do sistema, foram utilizados o \emph{OpenSceneGraph}, para a renderização e carregamento dos modelos 3D, e \emph{PQP} para a detecção de colisões entre as partes do modelo. A Figura \ref{fig:arquitetura} apresenta uma visão geral dos módulos implementados, que serão discutidos posteriormente.
+Para a implementação do sistema, foi utilizado o \emph{OpenSceneGraph} \cite{osg}, para a renderização e carregamento dos modelos 3D, e \emph{PQP} \cite{pqp} para a detecção de colisões entre as partes do modelo. A Figura \ref{fig:arquitetura} apresenta uma visão geral dos módulos implementados, que serão discutidos posteriormente.
 
 \begin{figure}[h]
 	\center{\includegraphics[height=0.8\linewidth]{img/arquitetura.pdf}}
@@ -17,20 +17,19 @@ Para a implementação do sistema, foram utilizados o \emph{OpenSceneGraph}, para 
 
 A geração do grafo de explosão é feita logo no início da execução do programa. As partes são extraídas do modelo 3D através de um \textbf{NodeVisitor} que procura pelos nomes dos nós através de uma expressão regular. Cada nó (parte) é então associado a um novo objeto do tipo \textbf{Part}.
 
-Para a detecção das direções obstruídas de cada parte, foi empregada duas abordagens. A primeira, explorada em \cite{882352}, constrói um \emph{grafo de bloqueio direcional}
+Para a detecção das direções obstruídas de cada parte, foi empregada uma simplificação do que é proposto em \cite{882352}, mas que não altera a geração do grafo de explosão. Na implementação, para detectar direções bloqueadas, as partes são deslocadas em um $\Delta d$.
 
-Considerando que o usuário quer explodir o nó $p$, o sistema implementado irá executar uma busca em largura (\emph{BFS}) a partir de $p$ e armazenar o nível de cada nó descendente. A Figura \ref{fig:grafo} mostra os níveis montados pela busca em largura para um modelo simples e a partir da parte $A$.
+A interação com o usuário é feita através de um \emph{menu} onde é possível selecionar a parte que se deseja ter uma melhor visualização. Considerando que o usuário quer visualizar o nó $p$, o sistema implementado irá executar uma busca em largura (\emph{BFS}) a partir de $p$ e armazenar o nível de cada nó descendente. A Figura \ref{fig:grafo} mostra os níveis montados pela busca em largura para um modelo simples e a partir da parte $A$.
 
 \begin{figure}[h]
 	\center{\includegraphics[height=0.2\linewidth]{img/grafo.pdf}}
 	\caption[]{\label{fig:grafo} Exemplo de níveis da BFS}
 \end{figure}
 
-A explosão e a implosão do modelo será feita então com base nessas níveis, explodindo os níveis 1 até n, ou então, de forma inversa, implodindo de n até 1.
+A explosão e a implosão do modelo serão feitas então com base nesses níveis, explodindo os níveis 1 até n, ou então, de forma inversa, implodindo de n até 1.
 
 
-A divisão dos recipientes (\emph{containers}) foi feita com o uso de um \textbf{ClipNode} do \textbf{OSG}, que irá determinar o plano de corte para a parte ser renderizada.
-
+A divisão dos recipientes (\emph{containers}) foi feita com o uso de um \textbf{ClipNode} do \textbf{OSG}, que irá determinar o plano de corte para a parte ser renderizada. Quando uma parte é caracterizada como recipiente, ele será dividido por um \textbf{ClipNode} ao longo dos três eixos; as duas partes resultantes da divisão serão explodidas. O eixo com a menor distância de explosão e que permita a visualização das partes contidas será escolhido como o eixo de explosão.
 
 
 O \emph{loop} do sistema pode ser resumido da seguinte forma:
@@ -77,10 +76,10 @@ O \emph{loop} do sistema pode ser resumido da seguinte forma:
 	\label{alg:algoritmogeral}
 \end{algorithm}
 
+Quando o usuário seleciona uma parte T a ser visualizada, o sistema irá executar a busca em largura no grafo de explosão, que retornará os níveis contendo as peças filhas do nó T. Essas serão então deslocadas em $\Delta d$ na sua direção de explosão a cada iteração do \emph{loop}; quanto todas as peças de um determinado nível forem explodidas, o próximo nível será explodido. Quando todas as peças já estiverem explodidas, será verificado se a peça escolhida pelo usuário está visível ou não; caso não esteja visível, todas as peças filhas de T serão deslocadas novamente em $\Delta d$.
+
 
 \subsection{Características não abordadas}
 O sistema proposto em \cite{1360700} aborda algumas características que não foram implementadas, como o tratamento de grafos de explosão hierárquicos, que permite a explosão de grupos de partes independentemente. Além disso, os autores também demonstram um modo onde o usuário pode, com o \emph{mouse}, manipular diretamente a explosão das partes. Há também uma integração com outro trabalho (\cite{2667077}) que permite a visualização de modelos explodidos juntamente com técnicas de \emph{cutaways}.
 
-Uma outra simplificação foi o uso de apenas um grafo de explosão. Ao contrário do artigo, que constrói 26 grafos, esta implementação constrói apenas um. Como o ponto de vista só é utilizado para determinar o plano de corte de partes envolventes, a simplificação não afetou o funcionamento geral do sistema. Os cortes continuam ocorrendo, só que não necessariamente no plano que resulta em uma menor distância para sair do \emph{bounding box}.
-
-Apesar de serem características importantes, o trabalho feito aqui se propôs, principalmente, a implementar as características fundamentais do trabalho de referência.
+Além disso, ao contrário do artigo, que constrói 26 grafos, esta implementação constrói apenas um, levando em consideração apenas um ponto de vista. Como o ponto de vista só é utilizado para determinar o plano de corte de partes envolventes, a simplificação não afetou o funcionamento geral do sistema. Os cortes continuam ocorrendo, só que não necessariamente no plano que resulta em uma menor distância para sair do \emph{bounding box}.

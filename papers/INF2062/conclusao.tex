@@ -1,16 +1,13 @@
 \section{Conclusão e Trabalhos Futuros}
 \label{conclusao}
-As principais características propostas em \cite{1360700} foram implementadas neste trabalho. Algumas características menos importantes foram deixadas de lado, mas isso não comprometeu o resultado final atingido.
+O artigo \cite{1360700}, com sua proposta de grafos de explosão, apresenta uma boa maneira para a visualização de modelos 3D, uma vez que essa representação é uma forma ideal e bastante intuitiva de relacionar diferentes partes e o bloqueio existente entre cada uma delas. As principais características foram implementadas neste trabalho; alguns pontos foram simplificados, mas isso não comprometeu o resultado final, já que o principal ponto, a explosão das partes, foi implementado satisfatoriamente, com bons resultados para os modelos de teste.
 
-Um grande problema durante o desenvolvimento foi a falta de modelos 3D para o teste do sistema. Apesar dos modelos criados representarem bem as características e recursos do sistema, eles certamente possuem uma complexidade bem inferior aos modelos 3D reais, seja na quantidade de partes ou na disposição das mesmas.
+Além do estudo do artigo citado, este trabalho se mostrou muito útil para adquirir um conhecimento maior na área de técnicas de visibilidade inteligente e os problemas que cada técnica busca solucionar.
 
-Um problema que pode ser explorado é a explosão de peças ao longo de mais de um eixo, possibilitando que modelos mais complexos sejam explodidos.
+Um grande problema durante o desenvolvimento foi a falta de modelos 3D para o teste do sistema. Apesar dos modelos criados representarem bem as características e recursos do sistema, eles certamente possuem uma complexidade bem inferior aos modelos 3D reais, seja na quantidade de partes ou na disposição das mesmas. O próprio artigo cita que o sistema pode ter resultados insatisfatórios para modelos com superfícies com algum tipo de irregularidade.
 
-Na visão explodida, há outros problemas que também podem ser explorados, além da disposição das peças. Como um dos principais objetivos da vista explodida é dar ao usuário um senso global das disposições das peças, certos \emph{features} gráficos podem ser utilizados, como linhas ligando a posição original da parte até o seu destino.
+Um problema que pode ser explorado é a explosão de peças ao longo de um conjunto de eixos, possibilitando que modelos mais complexos sejam explodidos. Como a reconstrução mental do modelo por parte do usuário pode ficar comprometida, outros recursos gráficos poderiam ser estudados, como linhas ligando a posição original da parte até o seu destino. Outro aspecto é a divisão do modelo 3D em partes. O artigo que este trabalho implementou já considera que o modelo de entrada está bem dividido, algo que não ocorre necessariamente.
 
-Finalmente, um outro aspecto a ser explorado é a divisão do modelo 3D em partes. O artigo de referência já considera que o modelo de entrada está bem dividido, algo que não ocorre necessariamente.
+Além disso, o uso de vista explodida para a visualização de dados e informação (como \cite{1271635}), e não só para modelos 3D convencionais, parece ser promissor.
 
-
-Conclusão e trabalhos futuros
-- Falar sobre vistas explodidas na visão de informação, como nós da internet, etc.
-- Falar da tese que utiliza realidade aumentada.
+Finalmente, poucos trabalhos buscam unir diferentes técnicas de visualização inteligente e avaliar os resultados e a facilidade de interpretação do modelo. Um caminho seria avaliar se tal união realmente é vantajosa e como ela poderia ser feita. O uso de realidade aumentada também poderia ser estudado, como forma de auxiliar a interação do usuário com as diversas partes que formam um modelo 3D.

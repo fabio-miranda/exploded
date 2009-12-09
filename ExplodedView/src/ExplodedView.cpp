@@ -421,7 +421,7 @@ void ExplodedView::buildBox(){
 
 void ExplodedView::run(){
 
-	setUp("test4.3ds");
+	setUp("test10.3ds");
 	
 	for(int i=0; i<60; i++)
 		m_viewer->frame();

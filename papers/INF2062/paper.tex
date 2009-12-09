@@ -16,6 +16,9 @@
 %% is used for mathematics typesetting. The scale factor is set to .92
 %% to bring the sans-serif type in line with the serif type.
 
+
+\usepackage{hyperref}
+
 \usepackage[scaled=.92]{helvet}
 \usepackage{times}
 \usepackage[brazil]{babel}
@@ -23,8 +26,10 @@
 
 
 %\usepackage{multicol}
+\usepackage{url}
 \usepackage{wrapfig}
 \usepackage[portugues,boxed]{algorithm2e}
+
 
 %% The 'graphicx' package allows for the inclusion of EPS figures.
 
@@ -61,7 +66,7 @@
 
 %% Keywords that describe your work.
 
-\keywords{exploded view illustration, interactive visualization}
+\keywords{exploded view, visualization}
 
 %%%%%% START OF THE PAPER %%%%%%
 
@@ -79,22 +84,21 @@
 
 %% Abstract section.
 
-\section*{Abstract}
-Um problema típico na visualização de modelos 3D complexos é que as características mais interessantes podem estar obstruídas por outras partes menos importantes. Para minimizar esse problema, várias técnicas de ilustração foram desenvolvidas ao longo dos anos, e alteram o nível de abstração visual ou então a disposição espacial de partes do modelo. Técnicas de visibilidade inteligente \cite{Viola-05-Smart} levam em consideração a relevância dos objetos e suas características, e não apenas o seu posicionamento no espaço. Além disso, espera-se uma familiaridade do observador com os objetos; com base em sua experiência, o observador pode completá-lo mentalmente.
-
 \begin{abstract}
-Um problema típico na visualização de modelos 3D complexos é que as características mais interessantes podem estar obstruídas por outras partes menos importantes. Para minimizar esse problema, várias técnicas de ilustração foram desenvolvidas ao longo dos anos, e alteram o nível de abstração visual ou então a disposição espacial de partes do modelo. Técnicas de visibilidade inteligente \cite{Viola-05-Smart} levam em consideração a relevância dos objetos e suas características, e não apenas o seu posicionamento no espaço. Além disso, espera-se uma familiaridade do observador com os objetos; com base em sua experiência, o observador pode completá-lo mentalmente.
+Este trabalho implementa a proposta descrita em \emph{Automated generation of interactive 3D exploded view diagrams} para a visualização de modelos 3D complexos com a utilização da técnica de vista explodida. Com ela, é possível ter uma visão global do modelo e entender a relação entre as diversas partes que o compõe, sem perda de nenhum detalhe, como ocorre em outras técnicas.
+
+A base do trabalho é a geração de um \emph{grafo de explosão} que irá ditar como as diferentes partes que compõe um modelo 3D se relacionam, qual a direção de explosão de cada uma e em qual ordem se dará a explosão. Uma discussão é feita ao final do trabalho, mostrando diferentes modelos de teste explodidos.
 \end{abstract}
 
 %% ACM Computing Review (CR) categories. 
 %% See <http://www.acm.org/class/1998/> for details.
 %% The ``\CRcat'' command takes four arguments.
 
-\CRcatlist{
-  \CRcat{I.3.5}{Computer Graphics}
-  {Computational Geometry \& Object Modeling}{};
-  \CRcat{I.3.8}{Computer Graphics}{Applications}{};
-}
+%\CRcatlist{
+%  \CRcat{I.3.5}{Computer Graphics}
+%  {Computational Geometry \& Object Modeling}{};
+%  \CRcat{I.3.8}{Computer Graphics}{Applications}{};
+%}
 
 
 %% The ``\keywordlist'' command prints out the keywords.
