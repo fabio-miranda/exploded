@@ -1,7 +1,7 @@
 \section{Visão Geral}
 \label{metodologia}
 
-O sistema implementado neste trabalho (e baseado no que foi proposto em \cite{1360700}) recebe como entrada um modelo 3D composto por diversas partes. Com base no modelo, é construído uma estrutura (\emph{grafo de explosão}) que encapsula todas as informações pertinentes a sua explosão. Todo o sistema pode ser então resumido em três partes:
+O sistema proposto em \cite{1360700} recebe como entrada um modelo 3D composto por diversas partes, que deverão ser explodidas. Com base no modelo, é construído uma estrutura (\emph{grafo de explosão}) que encapsula todas as informações pertinentes a sua explosão. Todo o sistema pode ser então resumido em três partes:
 
 \begin{itemize}
 	\item Representação da explosão na forma de um grafo (Seção \ref{representacao}).
@@ -44,7 +44,9 @@ A geração do grafo é feita através do seguinte algoritmo iterativo, e que foi or
 	\label{alg:algoritmo}
 \end{algorithm}
 
-As partes do modelo são inicialmente inseridas em um conjunto \emph{S}, de partes ativas, que ainda não foram inseridas no grafo. Um sub-conjunto \emph{P} é então encontrado, com partes que não possuem restrição em pelo menos uma direção. Para cada parte $p_i$ em \emph{P} é determinada a distância mínima para que a parte saia do \emph{bounding box} das partes em que contato. A parte com menor distância é removida de \emph{S} e adicionada ao grafo, junto com arestas ligando ela a todas as outras partes que estão em contato (e que já estavam no grafo). O algoritmo termina quando todas as partes já tiverem sido inseridas no grafo. A maneira com que o algoritmo constrói o grafo de explosão garante que o relacionamento entre os nós respeite as restrições de movimento.
+As partes do modelo são inicialmente inseridas em um conjunto \emph{S}, de partes ativas, que ainda não foram inseridas no grafo. Um sub-conjunto \emph{P} é então encontrado, com partes que não possuem restrição em pelo menos uma direção. Para facilitar a reconstrução mental do modelo por parte do usuário, as partes só poderão explodir em seis direções, correspondentes aos eixos x, y e z.
+
+Para cada parte $p_i$ em \emph{P} é determinada a distância mínima para que a parte saia do \emph{bounding box} das partes em que contato. A parte com menor distância é removida de \emph{S} e adicionada ao grafo, junto com arestas ligando ela a todas as outras partes que estão em contato (e que já estavam no grafo). O algoritmo termina quando todas as partes já tiverem sido inseridas no grafo. A maneira com que o algoritmo constrói o grafo de explosão garante que o relacionamento entre os nós respeite as restrições de movimento.
 
 \subsubsection{Partes cercadas}
 Um caso importante que é tratado pelo sistema é quando há "partes cercadas" (como na Figura \ref{fig:partescercadas}).
@@ -88,13 +90,6 @@ Um problema que pode surgir durante a visualização é a obstrução da visão de uma
 	\caption{Deslocamento das partes que obstruem uma parte de interesse}
 	\label{alg:algoritmo}
 \end{algorithm}
-
-
-
-
-
-
-
 
 
 
