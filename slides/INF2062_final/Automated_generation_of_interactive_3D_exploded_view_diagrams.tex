@@ -1,0 +1,71 @@
+\subsection{Automated generation of interactive 3D exploded view diagrams}
+
+\begin{frame}\frametitle{\emph{Automated generation of interactive 3D exploded view diagrams} \cite{1360700}} 
+\begin{itemize}
+	\item O algoritmo proposto pelos autores tem como entrada um modelo 3D em que as partes são representadas como objetos geométricos separados. Grupos de partes também podem ser passados como parâmetros.
+	\item O modelo é então organizado em um grafo acíclico dirigido:
+	\begin{center}
+		\includegraphics[height=125.0px]{img/exview3D-SIG08_2}
+	\end{center}
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}\frametitle{\emph{Automated generation of interactive 3D exploded view diagrams} \cite{1360700}} 
+\begin{itemize}
+	\item Construindo o grafo de explosão (\cite{882352}):
+	\begin{itemize}
+		\item S: conjunto com as partes ativas do modelo (ou seja, ainda não inseridas no grafo).
+		\item P: sub-conjunto de S de partes que não possuam restrição em pelo menos uma direção.
+		\begin{enumerate}
+			\item Determina P.
+			\item Para cada parte $p \in P$: determina a distância mínima que \emph{p} teria que mover para sair do \emph{bounding box} das partes em contato com \emph{p}.
+			\item \emph{p} com a menor distância é adicionado ao grafo. Arestas são adicionadas ligando \emph{p} a todas as outras partes que estão em contato (e que já estão no grafo).
+		\end{enumerate}
+	\end{itemize}
+\end{itemize}
+\end{frame}
+
+
+
+
+\begin{frame}\frametitle{\emph{Automated generation of interactive 3D exploded view diagrams} \cite{1360700}} 
+\begin{columns}[T]
+\begin{column}{8cm}
+\begin{itemize}
+	\item Partes "cercadas":
+	\begin{enumerate}
+		\item Escolher uma direção de explosão possível do \emph{container} \emph{c}.
+		\item Partir \emph{c} em $c_1$ e $c_2$ ao longo de um plano que passa no centro do \emph{bounding box} de \emph{c} e cuja normal é paralela a direção da explosão escolhida no passo anterior.
+		\item Determinar a distância necessária para mover $c_1$ e $c_2$ de modo a desobistruir a visão das partes em P, e também para que não haja colisão entre os \emph{bounding boxes}. $\Longrightarrow$ Dependente da posição do observador
+		\item \emph{c} será partido na direção que necessitar de uma menor distância.
+	\end{enumerate}
+\end{itemize}
+\vspace{1cm} 
+\end{column}
+\begin{column}{5cm}
+\begin{overprint}
+	\includegraphics[height=125.0px]{img/exview3D-SIG08_3}
+\end{overprint}
+\end{column}
+\end{columns}
+\end{frame}
+
+
+\begin{frame}\frametitle{\emph{Automated generation of interactive 3D exploded view diagrams} \cite{1360700}} 
+\begin{itemize}
+	\item Como o cálculo de $c_1$ e $c_2$ é dependente da visão do observador, o grafo de explosão também é dependente. Logo, é pré-computado 26 grafos de explosão, correspondentes às faces, arestas e vértices de um cubo. Em tempo de execução, o grafo utilizado será aquele correspondente à posição mais próxima do observador.
+\end{itemize}
+\end{frame}
+
+\begin{frame}\frametitle{\emph{Automated generation of interactive 3D exploded view diagrams} \cite{1360700}} 
+\begin{itemize}
+	\item Com o grafo de explosão montado, o próximo passo é utilizá-lo para visualizar o modelo explodido:
+	\begin{itemize}
+		\item Considerando um alvo \emph{T}, ele poderá ser visualizado quando todos seus descendentes forem explodidos.
+		\item Para que as partes não violem restrições, as explosões são feitas seguindo uma ordem topológica reversa. Ou seja, os descendentes são explodidos primeiro.
+		\item O colapso das partes é feita de maneira oposta: os descendentes são colapsados por último.
+		\item Caso algum alvo esteja obstruído por outra parte, essa última é movida na sua direção de explosão, até que o alvo fique totalmente visível.
+	\end{itemize}
+\end{itemize}
+\end{frame}

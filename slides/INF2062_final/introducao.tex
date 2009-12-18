@@ -1,0 +1,55 @@
+\section{Introdução}
+
+\begin{frame}\frametitle{Introdução}
+\begin{itemize}
+	\item Um problema típico na visualização de modelos 3D é que as características (\emph{features}) mais interessantes podem estar obstruídas por outras partes menos importentes.
+	\item Ilustrações técnicas e médicas resolvem este problema alterando o nível de abstração visual ou alterando a disposição espacial:
+	\begin{columns}[T]
+	\begin{column}{5cm}
+	\begin{itemize}
+		\item \alert<1,5>{Cut-away view}
+		\item \alert<2,5>{Ghosted view}
+		\item \alert<3,5>{Section view}
+		\item \alert<4,5>{Exploded view}
+	\end{itemize}
+	\vspace{3cm} 
+	\end{column}
+	\begin{column}{5cm}
+	\begin{overprint}
+		\includegraphics<1>[height=100.0px]{img/IllustrativeVisualization1}
+		\includegraphics<2>[height=100.0px]{img/IllustrativeVisualization2}
+		\includegraphics<3>[height=100.0px]{img/IllustrativeVisualization3}
+		\includegraphics<4>[height=100.0px]{img/IllustrativeVisualization4}
+	\end{overprint}
+	\only<5>{Smart Visibility Techniques \cite{Viola-05-Smart}}
+	\end{column}
+	\end{columns}
+\end{itemize}
+\end{frame}
+
+\begin{frame}\frametitle{\emph{Smart visibility}}
+\begin{itemize}
+	\item Uma "visibilidade inteligente" leva em consideração:
+	\begin{itemize}
+		\item A \textbf{relevância dos objetos e suas características}, e não apenas o seu posicionamento no espaço. Um objeto importante pode ser visualizado apesar de estar sendo obstruído por algum outro objeto mais próximo do observador.
+		\item A \textbf{familiaridade do observador com os objetos}. A partir de um objeto parcialmente visível, o observador pode completá-lo mentalmente, com base em sua experiência.
+	\end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}\frametitle{Vistas explodidas}
+\begin{itemize}
+	\item Vistas explodidas modificam o posicionamento espacial dos componentes de um objeto para que os mais "interessantes" estejam visíveis.
+	\item Permitem o entendimento da estrutura global do objeto e a relação espacial entre os componentes.
+\end{itemize}
+\begin{center}
+	\includegraphics[height=100.0px]{img/engine}
+\end{center}	
+\end{frame}
+
+
+%Definir vista explodida de acordo com o artigo 1
+%Falar do artigo 2 e situar a vista explodida em relação a outras visualizações inteligentes
+%Criar seção "Trabalhos relacionados a vista explodida"
+
+
