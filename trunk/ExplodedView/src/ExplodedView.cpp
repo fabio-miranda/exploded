@@ -2,9 +2,9 @@
 
 
 #define MINIMUM_DISTANCE_TO_CONSIDER_CONTACT 0
-#define STEPSIZE 0.5
-#define EXPLOSION_STEPSIZE 0.8
-#define ITERATIONS 50
+#define STEPSIZE 0.1
+#define EXPLOSION_STEPSIZE 2.0
+#define ITERATIONS 100
 #define VISUALIZE_GRAPH_BUILDING true
 #define PRINT_GRAPH true
 
@@ -24,10 +24,7 @@ ExplodedView::ExplodedView(){
  
 void ExplodedView::setUp(char* modelName){
 
-	m_viewer->getCamera()->setClearColor(osg::Vec4(1,1,1,1));
-
-    m_viewer->setCameraManipulator( new osgGA::TrackballManipulator() );
-	m_viewer->getCameraManipulator()->setHomePosition(osg::Vec3d(400,400,400), osg::Vec3d(0,0,0), osg::Vec3d(0,0,1));
+	
 
     // add the state manipulator
     m_viewer->addEventHandler( new osgGA::StateSetManipulator(m_viewer->getCamera()->getOrCreateStateSet()) );
@@ -62,6 +59,7 @@ void ExplodedView::setUp(char* modelName){
         std::cout << "No data loaded" << std::endl;
 		exit(1);
     }
+	m_loadedModel->setCullingActive (false);
 
 
     // optimize the scene graph, remove redundant nodes and state etc.
@@ -83,8 +81,23 @@ void ExplodedView::setUp(char* modelName){
 		m_partsGraph[i]->setUp(m_sceneGraphRoot);
 	}
 
+	m_viewer->setCameraManipulator( new osgGA::TrackballManipulator() );
+	m_viewer->getCameraManipulator()->setHomePosition(osg::Vec3d(400,400,400), osg::Vec3d(0,0,0), osg::Vec3d(0,0,1));
+
 	//Set the scene
 	m_viewer->setSceneData(m_sceneGraphRoot);
+
+
+	//Disable small feature culling
+	/*
+	osg::CullStack::CullingMode cullingMode = m_viewer->getCamera()->getCullingMode();
+	cullingMode &= ~(osg::CullStack::SMALL_FEATURE_CULLING);
+	m_viewer->getCamera()->setCullingMode( cullingMode );
+	m_viewer->getCamera()->setComputeNearFarMode(osg::CullSettings::COMPUTE_NEAR_FAR_USING_BOUNDING_VOLUMES);
+	*/
+	m_viewer->getCamera()->setClearColor(osg::Vec4(1,1,1,1));
+
+    
 
 
 }
@@ -197,12 +210,13 @@ Part* ExplodedView::findSmallestDistanceOutBoundingBox(){
 				&& currentCollisionData->distanceOutBoundingBox <= smallestDistance
 				&& m_partsGraph[i]->m_countRestrictedDirections < 6){
 
-				if((currentCollisionData->collided && currentCollisionData->collidedWith->m_inserted)
-					|| (currentCollisionData->collided == false)){
+				//Gambi here
+				//if((currentCollisionData->collided && currentCollisionData->collidedWith->m_inserted)
+					//|| (currentCollisionData->collided == false)){
 
 					aux = m_partsGraph[i];
 					smallestDistance = currentCollisionData->distanceOutBoundingBox;
-				}
+				//}
 			}
 			
 		}
@@ -336,7 +350,7 @@ void ExplodedView::updateExplodingParts(){
 		for(int j=0; j<(*m_explodingLevels).back().size(); j++){
 			(*m_explodingLevels).back()[j]->explode(EXPLOSION_STEPSIZE);
 			
-			m_viewer->frame();
+			//m_viewer->frame();
 
 
 			if((*m_explodingLevels).back()[j]->m_exploding && (*m_explodingLevels).back()[j]->m_exploded == false)
@@ -345,6 +359,7 @@ void ExplodedView::updateExplodingParts(){
 
 		if(allFromLevelExploded){
 			(*m_explodingLevels).pop_back();
+			//return;
 		}
 	}
 	else if((*m_explodingLevels).size() == 1){
@@ -362,7 +377,7 @@ void ExplodedView::updateInplodingParts(){
 		for(int j=(*m_inplodingLevels)[1].size()-1; j>=0; j--){
 			(*m_inplodingLevels)[1][j]->inplode(EXPLOSION_STEPSIZE);
 			
-			m_viewer->frame();
+			//m_viewer->frame();
 
 
 			if((*m_inplodingLevels)[1][j]->m_inploding && (*m_inplodingLevels)[1][j]->m_inploded == false)
@@ -421,7 +436,7 @@ void ExplodedView::buildBox(){
 
 void ExplodedView::run(){
 
-	setUp("test10.3ds");
+	setUp("test9.3ds");
 	
 	for(int i=0; i<60; i++)
 		m_viewer->frame();
@@ -436,8 +451,8 @@ void ExplodedView::run(){
 		updateInplodingParts();
 		//verifyExplodingParts();
 		m_viewer->frame();
-
-		if(m_ptrCurrentPart != NULL){
+		
+		if(m_ptrCurrentPart != NULL && (*m_explodingLevels).size() == 0){
 			
 			osg::Vec3 eye = osg::Vec3();
 			osg::Vec3 center = osg::Vec3();
