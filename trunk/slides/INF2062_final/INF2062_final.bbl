@@ -1,0 +1,57 @@
+\begin{thebibliography}{}
+
+\bibitem[Agrawala et~al., 2003]{882352}
+Agrawala, M., Phan, D., Heiser, J., Haymaker, J., Klingner, J., Hanrahan, P.,
+  and Tversky, B. (2003).
+\newblock Designing effective step-by-step assembly instructions.
+\newblock In {\em SIGGRAPH '03: ACM SIGGRAPH 2003 Papers}, pages 828--837, New
+  York, NY, USA. ACM.
+
+\bibitem[Bruckner, 2006]{1187828}
+Bruckner, S. (2006).
+\newblock Exploded views for volume data.
+\newblock {\em IEEE Transactions on Visualization and Computer Graphics},
+  12(5):1077--1084.
+\newblock Member-Groller, M. Eduard.
+
+\bibitem[Carpendale et~al., 1996]{857608}
+Carpendale, M. S.~T., Carpendale, T., Cowperthwaite, D.~J., and Fracchia, F.~D.
+  (1996).
+\newblock Distortion viewing techniques for 3-dimensional data.
+\newblock In {\em INFOVIS '96: Proceedings of the 1996 IEEE Symposium on
+  Information Visualization (INFOVIS '96)}, page~46, Washington, DC, USA. IEEE
+  Computer Society.
+
+\bibitem[H.~Sonnet, 2004]{23}
+H.~Sonnet, M.S.T.~Carpendale, T.~S. (2004).
+\newblock Integrating expanding annotations with a 3d explosion probe.
+\newblock In {\em ACM Conference on Advanced Visual Interfaces}, pages 61--70.
+  ACM Press.
+
+\bibitem[Li et~al., 2008]{1360700}
+Li, W., Agrawala, M., Curless, B., and Salesin, D. (2008).
+\newblock Automated generation of interactive 3d exploded view diagrams.
+\newblock {\em ACM Trans. Graph.}, 27(3):1--7.
+
+\bibitem[Luboschik and Schumann, 2007]{1271635}
+Luboschik, M. and Schumann, H. (2007).
+\newblock Explode to explain - illustrative information visualization.
+\newblock In {\em IV '07: Proceedings of the 11th International Conference
+  Information Visualization}, pages 301--307, Washington, DC, USA. IEEE
+  Computer Society.
+
+\bibitem[Niederauer et~al., 2003]{641493}
+Niederauer, C., Houston, M., Agrawala, M., and Humphreys, G. (2003).
+\newblock Non-invasive interactive visualization of dynamic architectural
+  environments.
+\newblock In {\em I3D '03: Proceedings of the 2003 symposium on Interactive 3D
+  graphics}, pages 55--58, New York, NY, USA. ACM.
+
+\bibitem[Viola and Gr{\"o}ller, 2005]{Viola-05-Smart}
+Viola, I. and Gr{\"o}ller, M.~E. (2005).
+\newblock Smart visibility in visualization.
+\newblock In L.~Neumann, M.~Sbert, B.~G. and Purgathofer, W., editors, {\em
+  Proceedings of EG Workshop on Computational Aesthetics Computational
+  Aesthetics in Graphics, Visualization and Imaging}, pages 209--216.
+
+\end{thebibliography}

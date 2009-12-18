@@ -1,0 +1,36 @@
+\section{Implementação}
+
+\begin{frame}\frametitle{Implementação}
+\begin{itemize}
+	\item OpenSceneGraph para a renderização e carregamento dos modelos.
+	\item PQP para a detecção de colisão entre as partes.
+\end{itemize}
+\end{frame}
+
+
+
+\begin{frame}\frametitle{Implementação}
+\begin{itemize}
+	\item Visão geral:
+	\begin{columns}[T]
+	\begin{column}{2cm}
+	\begin{overprint}
+		\includegraphics[height=150.0px]{img/arquitetura}
+	\end{overprint}
+	\vspace{3cm} 
+	\end{column}
+	\begin{column}{5cm}
+	\begin{itemize}
+		\item \footnotesize \textbf{ExplodedView}: classe geral, responsável pelo por tratar os dados de entrada (tanto o modelo 3D quanto o \emph{input} do usuário).
+		\item \footnotesize \textbf{Part}: classe que representa as partes do modelo.
+		\item \footnotesize \textbf{SegmentedPart}: classe que herda de \textbf{Part} e representa os recipientes divididos. A divisão dos modelos é feita através de um \textbf{ClipNode} do \textbf{OSG}.
+		\item \footnotesize \textbf{CollisionData}: representa os dados de colisão.
+	\end{itemize}
+	\end{column}
+	\end{columns}
+\end{itemize}
+\end{frame}
+
+\begin{frame}\frametitle{Implementação}
+\center \includegraphics[height=200.0px]{img/algoritmo}
+\end{frame}
