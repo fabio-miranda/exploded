@@ -513,6 +513,7 @@ double Part::calculateDistanceOutBoundingBox(Part* collidedWith, double* collisi
 				collisionDirection[1] * (osg::minimum(bb1->yMax(), bb2->yMax()) - osg::maximum(bb1->yMin(), bb2->yMin())),
 				collisionDirection[2] * (osg::minimum(bb1->zMax(), bb2->zMax()) - osg::maximum(bb1->zMin(), bb2->zMin())));
 	
+	//Gambi here
 	return vector.length();
 }
 
