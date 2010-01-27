@@ -1,0 +1,29 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "UserInterface", "UserInterface\UserInterface.vcproj", "{A5940BCA-D21A-408F-927B-652E6A894229}"
+	ProjectSection(ProjectDependencies) = postProject
+		{E4287086-4028-4B9F-BDCF-2FE7A41411F8} = {E4287086-4028-4B9F-BDCF-2FE7A41411F8}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "VolumeRenderer", "VolumeRenderer\VolumeRenderer.vcproj", "{E4287086-4028-4B9F-BDCF-2FE7A41411F8}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A5940BCA-D21A-408F-927B-652E6A894229}.Debug|Win32.ActiveCfg = Debug|Win32
+		{A5940BCA-D21A-408F-927B-652E6A894229}.Debug|Win32.Build.0 = Debug|Win32
+		{A5940BCA-D21A-408F-927B-652E6A894229}.Release|Win32.ActiveCfg = Release|Win32
+		{A5940BCA-D21A-408F-927B-652E6A894229}.Release|Win32.Build.0 = Release|Win32
+		{E4287086-4028-4B9F-BDCF-2FE7A41411F8}.Debug|Win32.ActiveCfg = Debug|Win32
+		{E4287086-4028-4B9F-BDCF-2FE7A41411F8}.Debug|Win32.Build.0 = Debug|Win32
+		{E4287086-4028-4B9F-BDCF-2FE7A41411F8}.Release|Win32.ActiveCfg = Release|Win32
+		{E4287086-4028-4B9F-BDCF-2FE7A41411F8}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
