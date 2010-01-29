@@ -4,6 +4,7 @@
 	Version="9,00"
 	Name="VolumeRenderer"
 	ProjectGUID="{E4287086-4028-4B9F-BDCF-2FE7A41411F8}"
+	RootNamespace="VolumeRenderer"
 	Keyword="Qt4VSv1.0"
 	TargetFrameworkVersion="0"
 	>
@@ -17,7 +18,8 @@
 	<Configurations>
 		<Configuration
 			Name="Release|Win32"
-			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
+			OutputDirectory="$(SolutionDir)\bin\$(ConfigurationName)"
+			IntermediateDirectory="$(ConfigurationName)"
 			ConfigurationType="4"
 			>
 			<Tool
@@ -37,8 +39,8 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories=".\GeneratedFiles;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);.\"
-				PreprocessorDefinitions=",UNICODE,WIN32,QT_LARGEFILE_SUPPORT,QT_THREAD_SUPPORT,QT_NO_DEBUG,NDEBUG,VOLUMERENDERER_LIB"
+				AdditionalIncludeDirectories="&quot;$(SolutionDir)\libs\glew\include&quot;;&quot;$(SolutionDir)\libs\glfw\include&quot;"
+				PreprocessorDefinitions="UNICODE;WIN32;NDEBUG;VOLUMERENDERER_LIB;GLEW_STATIC"
 				RuntimeLibrary="2"
 				TreatWChar_tAsBuiltInType="false"
 				DebugInformationFormat="0"
@@ -54,7 +56,8 @@
 			/>
 			<Tool
 				Name="VCLibrarianTool"
-				OutputFile="$(OutDir)\$(ProjectName).lib QtOpenGL4.lib"
+				AdditionalDependencies="$(SolutionDir)/libs/glew/lib/$(ConfigurationName)/glew.lib $(SolutionDir)/libs/glfw/lib/$(ConfigurationName)/glfw.lib opengl32.lib glu32.lib"
+				OutputFile="$(OutDir)\$(ProjectName).lib"
 				AdditionalLibraryDirectories="$(QTDIR)\lib"
 			/>
 			<Tool
@@ -75,7 +78,7 @@
 		</Configuration>
 		<Configuration
 			Name="Debug|Win32"
-			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
+			OutputDirectory="$(SolutionDir)\bin\$(ConfigurationName)"
 			IntermediateDirectory="$(ConfigurationName)"
 			ConfigurationType="4"
 			>
@@ -97,8 +100,8 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories=".\GeneratedFiles;&quot;$(QTDIR)\include&quot;;&quot;.\GeneratedFiles\$(ConfigurationName)&quot;;.\;&quot;$(QTDIR)\include\QtOpenGL&quot;"
-				PreprocessorDefinitions=",UNICODE,WIN32,QT_LARGEFILE_SUPPORT,QT_THREAD_SUPPORT,VOLUMERENDERER_LIB"
+				AdditionalIncludeDirectories="&quot;$(SolutionDir)\libs\glew\include&quot;;&quot;$(SolutionDir)\libs\glfw\include&quot;;&quot;$(SolutionDir)\libs\devil\include&quot;"
+				PreprocessorDefinitions="UNICODE;WIN32;VOLUMERENDERER_LIB;GLEW_STATIC"
 				RuntimeLibrary="3"
 				TreatWChar_tAsBuiltInType="false"
 				DebugInformationFormat="3"
@@ -114,8 +117,9 @@
 			/>
 			<Tool
 				Name="VCLibrarianTool"
-				OutputFile="$(OutDir)\$(ProjectName).lib QtOpenGL4d.lib"
-				AdditionalLibraryDirectories="$(QTDIR)\lib"
+				AdditionalDependencies="$(SolutionDir)/libs/glew/lib/$(ConfigurationName)/glew.lib $(SolutionDir)/libs/glfw/lib/$(ConfigurationName)/glfw.lib $(SolutionDir)/libs/devil/lib/DevIL.lib $(SolutionDir)/libs/devil/lib/ILU.lib $(SolutionDir)/libs/devil/lib/ILUT.lib opengl32.lib glu32.lib"
+				OutputFile="$(OutDir)\$(ProjectName).lib"
+				AdditionalLibraryDirectories=""
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -143,9 +147,37 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
+				RelativePath=".\main.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\VolumeRenderer.cpp"
 				>
 			</File>
+			<Filter
+				Name="Util"
+				>
+				<File
+					RelativePath=".\Cube.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\FBO.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Shader.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Square.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\textfile.cpp"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="Header Files"
@@ -156,26 +188,42 @@
 				RelativePath=".\VolumeRenderer.h"
 				>
 			</File>
+			<Filter
+				Name="Util"
+				>
+				<File
+					RelativePath=".\Cube.h"
+					>
+				</File>
+				<File
+					RelativePath=".\FBO.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Shader.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Square.h"
+					>
+				</File>
+				<File
+					RelativePath=".\textfile.h"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
-			Name="Form Files"
-			Filter="ui"
-			UniqueIdentifier="{99349809-55BA-4b9d-BF79-8FDBB0286EB3}"
+			Name="Shaders"
 			>
-		</Filter>
-		<Filter
-			Name="Resource Files"
-			Filter="qrc;*"
-			UniqueIdentifier="{D9D6E242-F8AF-46E4-B9FD-80ECBC20BA3E}"
-			ParseFiles="false"
-			>
-		</Filter>
-		<Filter
-			Name="Generated Files"
-			Filter="moc;h;cpp"
-			UniqueIdentifier="{71ED8ED8-ACB9-4CE9-BBE1-E00B30144E11}"
-			SourceControlFiles="false"
-			>
+			<File
+				RelativePath="..\bin\Resources\raycast.frag"
+				>
+			</File>
+			<File
+				RelativePath="..\bin\Resources\raycast.vert"
+				>
+			</File>
 		</Filter>
 	</Files>
 	<Globals>
