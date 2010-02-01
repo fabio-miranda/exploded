@@ -6,6 +6,7 @@ FBO::FBO(short width, short height){
 	glGenFramebuffersEXT(1, &mFrameBufferId);
 	glBindFramebufferEXT(GL_FRAMEBUFFER_EXT,mFrameBufferId);
 
+	glEnable(GL_TEXTURE_2D);
 	glGenTextures(1, &mTextureId);
 	glBindTexture(GL_TEXTURE_2D, mTextureId);
 	glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
@@ -18,12 +19,14 @@ FBO::FBO(short width, short height){
 
 	glBindTexture(GL_TEXTURE_2D, 0);
 	glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, 0);
+	glDisable(GL_TEXTURE_2D);
 
 
 }
 
 
 void FBO::Enable(){
+	glBindTexture(GL_TEXTURE_2D, 0);
 	glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, mFrameBufferId);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
 

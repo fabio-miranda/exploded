@@ -57,12 +57,13 @@ void Square::render(){
 	//glDrawElements(GL_LINES, 24, GL_UNSIGNED_BYTE, mIndices);
 	glDrawArrays(GL_QUADS, 0, 4);
 
+	glBindBufferARB(GL_ARRAY_BUFFER_ARB, 0);
+	glBindBufferARB(GL_TEXTURE_BUFFER_ARB, 0);
 
 	glDisableClientState(GL_VERTEX_ARRAY);  // disable vertex arrays
 	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 
-	glBindBufferARB(GL_ARRAY_BUFFER_ARB, 0);
-	glBindBufferARB(GL_TEXTURE_BUFFER_ARB, 0);
+	
 
 
 }

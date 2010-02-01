@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'UserInterface.ui'
 **
-** Created: Wed 27. Jan 02:45:38 2010
+** Created: Thu 28. Jan 23:55:55 2010
 **      by: Qt User Interface Compiler version 4.6.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -39,6 +39,11 @@ public:
         if (UserInterfaceClass->objectName().isEmpty())
             UserInterfaceClass->setObjectName(QString::fromUtf8("UserInterfaceClass"));
         UserInterfaceClass->resize(1280, 720);
+        QSizePolicy sizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
+        sizePolicy.setHorizontalStretch(0);
+        sizePolicy.setVerticalStretch(0);
+        sizePolicy.setHeightForWidth(UserInterfaceClass->sizePolicy().hasHeightForWidth());
+        UserInterfaceClass->setSizePolicy(sizePolicy);
         UserInterfaceClass->setMinimumSize(QSize(1280, 720));
         UserInterfaceClass->setMaximumSize(QSize(1280, 720));
         actionOpen = new QAction(UserInterfaceClass);
@@ -47,16 +52,16 @@ public:
         actionQuit->setObjectName(QString::fromUtf8("actionQuit"));
         centralWidget = new QWidget(UserInterfaceClass);
         centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
-        QSizePolicy sizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-        sizePolicy.setHorizontalStretch(0);
-        sizePolicy.setVerticalStretch(0);
-        sizePolicy.setHeightForWidth(centralWidget->sizePolicy().hasHeightForWidth());
-        centralWidget->setSizePolicy(sizePolicy);
+        QSizePolicy sizePolicy1(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
+        sizePolicy1.setHorizontalStretch(0);
+        sizePolicy1.setVerticalStretch(0);
+        sizePolicy1.setHeightForWidth(centralWidget->sizePolicy().hasHeightForWidth());
+        centralWidget->setSizePolicy(sizePolicy1);
         centralWidget->setMinimumSize(QSize(1280, 720));
         centralWidget->setMaximumSize(QSize(1280, 720));
         layoutWidget = new QWidget(centralWidget);
         layoutWidget->setObjectName(QString::fromUtf8("layoutWidget"));
-        layoutWidget->setGeometry(QRect(0, 0, 1282, 1282));
+        layoutWidget->setGeometry(QRect(0, 0, 1281, 701));
         glWidget = new QVBoxLayout(layoutWidget);
         glWidget->setSpacing(0);
         glWidget->setContentsMargins(11, 11, 11, 11);

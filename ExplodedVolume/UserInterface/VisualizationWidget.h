@@ -1,8 +1,12 @@
 #ifndef VISUALIZATIONWIDGET_H
 #define VISUALIZATIONWIDGET_H
 
-#include "qgl.h"
+
 #include "VolumeRenderer.h"
+#include <QGLWidget>
+#include <iostream>
+#include <fstream>
+
 
 class VisualizationWidget : public QGLWidget
 {
@@ -11,8 +15,13 @@ public:
   VisualizationWidget( QWidget* parent);
   ~VisualizationWidget();
 
+  void loadFile(QString);
+
 protected:
     void paintGL();
+	void initializeGL();
+	void resizeGL(int w, int h);
+	
 
 	VolumeRenderer* volumeRenderer;
 };
