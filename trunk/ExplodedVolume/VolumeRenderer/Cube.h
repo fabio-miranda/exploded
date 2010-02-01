@@ -14,7 +14,7 @@ public:
 
 private:
 	GLuint mVboVertices;
-	GLuint mVboIndices;
+	GLuint mVboTexCoord;
 
 
 };

@@ -61,5 +61,25 @@ void Shader::LoadFiles(char* vertexShaderFile, char* fragShaderFile){
 		printInfoLog(m_shaderProg);
 
 	}
+	else if(fs == NULL){
+		const char * vv = vs;
+		const char * ff = fs;
+
+		glShaderSourceARB(m_shaderVert, 1, &vv,NULL);
+
+		free(vs);
+
+		glCompileShaderARB(m_shaderVert);
+
+		printInfoLog(m_shaderVert);
+
+		m_shaderProg = glCreateProgramObjectARB();
+		
+		glAttachObjectARB(m_shaderProg,m_shaderVert);
+
+		glLinkProgramARB(m_shaderProg);
+		printInfoLog(m_shaderProg);
+
+	}
 
 }

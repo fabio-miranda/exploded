@@ -3,8 +3,6 @@
 VisualizationWidget::VisualizationWidget( QWidget* parent)
   : QGLWidget( parent )
 {
-	
-	volumeRenderer = new VolumeRenderer();
 
 }
 
@@ -12,10 +10,25 @@ VisualizationWidget::~VisualizationWidget(void)
 {
 }
 
+void VisualizationWidget::initializeGL(){
+
+	volumeRenderer = new VolumeRenderer();
+}
+
 void VisualizationWidget::paintGL()
 {
 	volumeRenderer->render();
-	//glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	//glEnable( GL_DEPTH_TEST ); 
-	//glLoadIdentity();
+}
+
+void VisualizationWidget::resizeGL(int w, int h)
+{
+	volumeRenderer->resize(w, h);
+}
+
+void VisualizationWidget::loadFile(QString fileName){
+
+	//Load file
+	volumeRenderer->loadFile(fileName.toLatin1().data());
+
+
 }

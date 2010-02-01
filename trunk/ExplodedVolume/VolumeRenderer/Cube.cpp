@@ -11,6 +11,13 @@ Cube::Cube(){
                       -1,1,1,  -1,1,-1,  -1,-1,-1,  -1,-1,1,    // v1-v6-v7-v2
                       -1,-1,-1,  1,-1,-1,  1,-1,1,  -1,-1,1,    // v7-v4-v3-v2
                       1,-1,-1,  -1,-1,-1,  -1,1,-1,  1,1,-1};   // v4-v7-v6-v5
+
+	GLfloat texCoords[] = {0,0,  1,0,  1,1,  0,1,
+						   0,0,  1,0,  1,1,  0,1,
+						   0,0,  1,0,  1,1,  0,1,
+						   0,0,  1,0,  1,1,  0,1,
+						   0,0,  1,0,  1,1,  0,1,
+						   0,0,  1,0,  1,1,  0,1};
 	
 
 
@@ -21,11 +28,11 @@ Cube::Cube(){
     glBufferDataARB(GL_ARRAY_BUFFER_ARB, 24*3*sizeof(GLfloat), vertices, GL_STATIC_DRAW_ARB);
 	glBindBufferARB(GL_ARRAY_BUFFER_ARB, 0);
 
-	/*
-	glGenBuffersARB( 1, &mVboIndices );					// Get A Valid Name
-	glBindBufferARB( GL_ARRAY_BUFFER_ARB, mVboIndices );			// Bind The Buffer
-    glBufferDataARB(GL_ARRAY_BUFFER_ARB, 24*sizeof(GLubyte), mIndices, GL_STATIC_DRAW_ARB);
-	*/
+	// Generate And Bind The TextureCoord Buffer
+	glGenBuffersARB( 1, &mVboTexCoord );					// Get A Valid Name
+	glBindBufferARB( GL_ARRAY_BUFFER_ARB, mVboTexCoord );			// Bind The Buffer
+    glBufferDataARB(GL_ARRAY_BUFFER_ARB, 24*2*sizeof(GLfloat), texCoords, GL_STATIC_DRAW_ARB);
+	glBindBufferARB(GL_ARRAY_BUFFER_ARB, 0);
 
 }
 
@@ -36,24 +43,23 @@ Cube::~Cube(){
 
 void Cube::render(){
 
-	glBindBufferARB(GL_ARRAY_BUFFER_ARB, mVboVertices);
-
-	//glEnableClientState(GL_INDEX_ARRAY);
-    glEnableClientState(GL_VERTEX_ARRAY);
-
-
 	glEnableClientState(GL_VERTEX_ARRAY);
-	glVertexPointer(3, GL_FLOAT, 0, 0);
+	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 
+	glBindBufferARB(GL_ARRAY_BUFFER_ARB, mVboVertices);
+	glVertexPointer(3, GL_FLOAT, 0, 0);
+	glBindBufferARB(GL_ARRAY_BUFFER_ARB, mVboTexCoord);
+	glTexCoordPointer(2,GL_FLOAT,0,0);
 
 
 	//glDrawElements(GL_LINES, 24, GL_UNSIGNED_BYTE, mIndices);
 	glDrawArrays(GL_QUADS, 0, 24);
 
+	glBindBufferARB(GL_ARRAY_BUFFER_ARB, 0);
+	glBindBufferARB(GL_TEXTURE_BUFFER_ARB, 0);
 
 	glDisableClientState(GL_VERTEX_ARRAY);  // disable vertex arrays
-
-	glBindBufferARB(GL_ARRAY_BUFFER_ARB, 0);
+	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 	
 
 /*

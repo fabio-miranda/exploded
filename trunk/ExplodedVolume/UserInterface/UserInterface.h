@@ -3,8 +3,6 @@
 
 #include <QtGui/QMainWindow>
 #include <QFileDialog>
-#include <iostream>
-#include <fstream>
 #include "ui_UserInterface.h"
 #include "VisualizationWidget.h"
 
