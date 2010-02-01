@@ -2,7 +2,6 @@ cmake_minimum_required(VERSION 2.6.4)
 
 PROJECT(ExplodedView)
 
-find_package(Qt4 COMPONENTS QtCore QtGui QtOpenGL)
 find_package(OpenSceneGraph COMPONENTS osgViewer osgUtil osgGa osgDB osgText)
 find_package(OpenGL)
 
