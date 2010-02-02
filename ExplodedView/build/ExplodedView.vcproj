@@ -4,6 +4,7 @@
 	Version="9,00"
 	Name="ExplodedView"
 	ProjectGUID="{7D5809F0-998E-424B-B4ED-3A7B344EB51E}"
+	RootNamespace="ExplodedView"
 	Keyword="Win32Proj"
 	TargetFrameworkVersion="0"
 	>
@@ -54,7 +55,7 @@
 				AdditionalOptions=" /Zm1000"
 				Optimization="0"
 				InlineFunctionExpansion="0"
-				AdditionalIncludeDirectories="&quot;E:\study\Exploded\ExplodedView\libs\OpenSceneGraph-2.8.2\build\include&quot;;C:\SDK\Qt\2009.03\qt\include;E:\study\Exploded\ExplodedView\libs\PQP_v1.3\include"
+				AdditionalIncludeDirectories="..\libs\PQP_v1.3\include;&quot;..\libs\OpenSceneGraph-2.8.2\include&quot;"
 				PreprocessorDefinitions="WIN32,_WINDOWS,_DEBUG,OSG_LIBRARY_STATIC,CMAKE_INTDIR=\&quot;Debug\&quot;"
 				ExceptionHandling="1"
 				BasicRuntimeChecks="3"
@@ -81,8 +82,8 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalOptions=" /STACK:10000000 /machine:I386 /debug"
-				AdditionalDependencies="kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib ..\libs\OpenSceneGraph-2.8.2\build\lib\osg55-osgViewerd.lib ..\libs\OpenSceneGraph-2.8.2\build\lib\osg55-osgUtild.lib ..\libs\OpenSceneGraph-2.8.2\build\lib\osg55-osgGAd.lib ..\libs\OpenSceneGraph-2.8.2\build\lib\osg55-osgDBd.lib ..\libs\OpenSceneGraph-2.8.2\build\lib\osg55-osgTextd.lib ..\libs\OpenSceneGraph-2.8.2\build\lib\osg55-osgd.lib ..\libs\OpenSceneGraph-2.8.2\build\lib\ot11-OpenThreadsd.lib glu32.lib opengl32.lib ..\libs\OpenSceneGraph-2.8.2\build\include\..\lib\osgPlugins-2.8.2\osgdb_3dsd.lib ..\libs\PQP_v1.3\lib\PQP.lib $(NOINHERIT)"
-				OutputFile="E:\study\Exploded\ExplodedView\build\bin\Windows-5.1\Debug\ExplodedView.exe"
+				AdditionalDependencies="kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib ..\libs\OpenSceneGraph-2.8.2\bin\osg55-osgViewerd.lib ..\libs\OpenSceneGraph-2.8.2\bin\osg55-osgUtild.lib ..\libs\OpenSceneGraph-2.8.2\bin\osg55-osgGAd.lib ..\libs\OpenSceneGraph-2.8.2\bin\osg55-osgDBd.lib ..\libs\OpenSceneGraph-2.8.2\bin\osg55-osgTextd.lib ..\libs\OpenSceneGraph-2.8.2\bin\osg55-osgd.lib ..\libs\OpenSceneGraph-2.8.2\bin\ot11-OpenThreadsd.lib glu32.lib opengl32.lib ..\libs\OpenSceneGraph-2.8.2\lib\osgPlugins-2.8.2\osgdb_3dsd.lib ..\libs\PQP_v1.3\lib\PQP.lib $(NOINHERIT)"
+				OutputFile="$(SolutionDir)\bin\$(PlatformName)\$(ConfigurationName)\ExplodedView.exe"
 				Version="0.0"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories=""
@@ -153,7 +154,7 @@
 				AdditionalOptions=" /Zm1000"
 				Optimization="2"
 				InlineFunctionExpansion="2"
-				AdditionalIncludeDirectories="E:\study\Exploded\ExplodedView\libs\OpenSceneGraph-2.8.2\build\include;C:\SDK\Qt\2009.03\qt\include;E:\study\Exploded\ExplodedView\libs\VCollide201\include;"
+				AdditionalIncludeDirectories="..\libs\PQP_v1.3\include;&quot;..\libs\OpenSceneGraph-2.8.2\include&quot;"
 				PreprocessorDefinitions="WIN32,_WINDOWS,NDEBUG,OSG_LIBRARY_STATIC,CMAKE_INTDIR=\&quot;Release\&quot;"
 				ExceptionHandling="1"
 				RuntimeLibrary="2"
@@ -179,7 +180,7 @@
 				Name="VCLinkerTool"
 				AdditionalOptions=" /STACK:10000000 /machine:I386"
 				AdditionalDependencies="$(NOINHERIT) kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib  ..\libs\OpenSceneGraph-2.8.2\build\lib\osg55-osgViewer.lib ..\libs\OpenSceneGraph-2.8.2\build\lib\osg55-osgUtil.lib ..\libs\OpenSceneGraph-2.8.2\build\lib\\osg55-osgGA.lib ..\libs\OpenSceneGraph-2.8.2\build\lib\osg55-osgDB.lib ..\libs\OpenSceneGraph-2.8.2\build\lib\osg55-osgText.lib ..\libs\OpenSceneGraph-2.8.2\build\lib\osg55-osg.lib ..\libs\OpenSceneGraph-2.8.2\build\lib\ot11-OpenThreads.lib glu32.lib opengl32.lib ..\libs\OpenSceneGraph-2.8.2\build\include\..\lib\osgPlugins-2.8.2\osgdb_3ds.lib "
-				OutputFile="E:\study\Exploded\ExplodedView\build\bin\Windows-5.1\Release\ExplodedView.exe"
+				OutputFile="$(SolutionDir)\bin\$(PlatformName)\$(ConfigurationName)\ExplodedView.exe"
 				Version="0.0"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories=""
@@ -249,7 +250,7 @@
 				AdditionalOptions=" /Zm1000"
 				Optimization="1"
 				InlineFunctionExpansion="1"
-				AdditionalIncludeDirectories="E:\study\Exploded\ExplodedView\libs\OpenSceneGraph-2.8.2\build\include;C:\SDK\Qt\2009.03\qt\include;E:\study\Exploded\ExplodedView\libs\VCollide201\include;"
+				AdditionalIncludeDirectories="..\libs\PQP_v1.3\include;&quot;..\libs\OpenSceneGraph-2.8.2\include&quot;"
 				PreprocessorDefinitions="WIN32,_WINDOWS,NDEBUG,OSG_LIBRARY_STATIC,CMAKE_INTDIR=\&quot;MinSizeRel\&quot;"
 				ExceptionHandling="1"
 				RuntimeLibrary="2"
@@ -275,7 +276,7 @@
 				Name="VCLinkerTool"
 				AdditionalOptions=" /STACK:10000000 /machine:I386"
 				AdditionalDependencies="$(NOINHERIT) kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib  ..\libs\OpenSceneGraph-2.8.2\build\lib\osg55-osgViewer.lib ..\libs\OpenSceneGraph-2.8.2\build\lib\osg55-osgUtil.lib ..\libs\OpenSceneGraph-2.8.2\build\lib\\osg55-osgGA.lib ..\libs\OpenSceneGraph-2.8.2\build\lib\osg55-osgDB.lib ..\libs\OpenSceneGraph-2.8.2\build\lib\osg55-osgText.lib ..\libs\OpenSceneGraph-2.8.2\build\lib\osg55-osg.lib ..\libs\OpenSceneGraph-2.8.2\build\lib\ot11-OpenThreads.lib glu32.lib opengl32.lib ..\libs\OpenSceneGraph-2.8.2\build\include\..\lib\osgPlugins-2.8.2\osgdb_3ds.lib "
-				OutputFile="E:\study\Exploded\ExplodedView\build\bin\Windows-5.1\MinSizeRel\ExplodedView.exe"
+				OutputFile="$(SolutionDir)\bin\$(PlatformName)\$(ConfigurationName)\ExplodedView.exe"
 				Version="0.0"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories=""
@@ -345,7 +346,7 @@
 				AdditionalOptions=" /Zm1000"
 				Optimization="2"
 				InlineFunctionExpansion="1"
-				AdditionalIncludeDirectories="E:\study\Exploded\ExplodedView\libs\OpenSceneGraph-2.8.2\build\include;C:\SDK\Qt\2009.03\qt\include;E:\study\Exploded\ExplodedView\libs\VCollide201\include;"
+				AdditionalIncludeDirectories="..\libs\PQP_v1.3\include;&quot;..\libs\OpenSceneGraph-2.8.2\include&quot;"
 				PreprocessorDefinitions="WIN32,_WINDOWS,NDEBUG,OSG_LIBRARY_STATIC,CMAKE_INTDIR=\&quot;RelWithDebInfo\&quot;"
 				ExceptionHandling="1"
 				RuntimeLibrary="2"
@@ -372,7 +373,7 @@
 				Name="VCLinkerTool"
 				AdditionalOptions=" /STACK:10000000 /machine:I386 /debug"
 				AdditionalDependencies="$(NOINHERIT) kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib  ..\libs\OpenSceneGraph-2.8.2\build\lib\osg55-osgViewer.lib ..\libs\OpenSceneGraph-2.8.2\build\lib\osg55-osgUtil.lib ..\libs\OpenSceneGraph-2.8.2\build\lib\\osg55-osgGA.lib ..\libs\OpenSceneGraph-2.8.2\build\lib\osg55-osgDB.lib ..\libs\OpenSceneGraph-2.8.2\build\lib\osg55-osgText.lib ..\libs\OpenSceneGraph-2.8.2\build\lib\osg55-osg.lib ..\libs\OpenSceneGraph-2.8.2\build\lib\ot11-OpenThreads.lib glu32.lib opengl32.lib ..\libs\OpenSceneGraph-2.8.2\build\include\..\lib\osgPlugins-2.8.2\osgdb_3ds.lib "
-				OutputFile="E:\study\Exploded\ExplodedView\build\bin\Windows-5.1\RelWithDebInfo\ExplodedView.exe"
+				OutputFile="$(SolutionDir)\bin\$(PlatformName)\$(ConfigurationName)\ExplodedView.exe"
 				Version="0.0"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories=""
@@ -424,7 +425,7 @@
 				>
 			</File>
 			<File
-				RelativePath="E:\study\Exploded\ExplodedView\src\osgviewer.cpp"
+				RelativePath="..\src\osgviewer.cpp"
 				>
 			</File>
 			<File
@@ -484,54 +485,6 @@
 				</File>
 			</Filter>
 		</Filter>
-		<File
-			RelativePath="E:\study\Exploded\ExplodedView\CMakeLists.txt"
-			>
-			<FileConfiguration
-				Name="Debug|Win32"
-				>
-				<Tool
-					Name="VCCustomBuildTool"
-					Description="Building Custom Rule E:/study/Exploded/ExplodedView/CMakeLists.txt"
-					CommandLine="&quot;C:\Program Files\CMake 2.6\bin\cmake.exe&quot; -HE:/study/Exploded/ExplodedView -BE:/study/Exploded/ExplodedView/build --check-stamp-file CMakeFiles/generate.stamp&#x0D;&#x0A;"
-					AdditionalDependencies="E:\study\Exploded\ExplodedView\CMakeLists.txt;E:\study\Exploded\ExplodedView\build\CMakeFiles\CMakeSystem.cmake;E:\study\Exploded\ExplodedView\build\CMakeFiles\CMakeCCompiler.cmake;E:\study\Exploded\ExplodedView\build\CMakeFiles\CMakeCXXCompiler.cmake;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\CMakeSystemSpecificInformation.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\CMakeGenericSystem.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\Platform\gcc.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\Platform\Windows.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\Platform\WindowsPaths.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\CMakeCInformation.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\Platform\Windows-cl.cmake&quot;;E:\study\Exploded\ExplodedView\build\CMakeFiles\CMakeCPlatform.cmake;E:\study\Exploded\ExplodedView\build\CMakeFiles\CMakeCXXPlatform.cmake;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\Platform\cl.cmake&quot;;E:\study\Exploded\ExplodedView\build\CMakeFiles\CMakeRCCompiler.cmake;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\CMakeRCInformation.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\CMakeCommonLanguageInclude.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\CMakeCXXInformation.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\CMakeCommonLanguageInclude.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\FindQt4.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\CheckSymbolExists.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\MacroAddFileDependencies.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\FindPackageMessage.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\FindOpenSceneGraph.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\Findosg_functions.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\FindosgViewer.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\Findosg_functions.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\FindPackageHandleStandardArgs.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\FindPackageMessage.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\FindosgUtil.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\Findosg_functions.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\FindPackageHandleStandardArgs.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\FindPackageMessage.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\FindosgGA.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\Findosg_functions.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\FindPackageHandleStandardArgs.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\FindPackageMessage.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\FindosgDB.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\Findosg_functions.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\FindPackageHandleStandardArgs.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\FindPackageMessage.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\FindosgText.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\Findosg_functions.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\FindPackageHandleStandardArgs.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\FindPackageMessage.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\Findosg.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\Findosg_functions.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\FindPackageHandleStandardArgs.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\FindPackageMessage.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\FindOpenThreads.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\FindPackageHandleStandardArgs.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\FindPackageMessage.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\FindPackageHandleStandardArgs.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\FindPackageMessage.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\FindOpenGL.cmake&quot;;E:\study\Exploded\ExplodedView\CMakeLists.txt;"
-					Outputs="CMakeFiles\generate.stamp"
-				/>
-			</FileConfiguration>
-			<FileConfiguration
-				Name="Release|Win32"
-				>
-				<Tool
-					Name="VCCustomBuildTool"
-					Description="Building Custom Rule E:/study/Exploded/ExplodedView/CMakeLists.txt"
-					CommandLine="&quot;C:\Program Files\CMake 2.6\bin\cmake.exe&quot; -HE:/study/Exploded/ExplodedView -BE:/study/Exploded/ExplodedView/build --check-stamp-file CMakeFiles/generate.stamp&#x0D;&#x0A;"
-					AdditionalDependencies="E:\study\Exploded\ExplodedView\CMakeLists.txt;E:\study\Exploded\ExplodedView\build\CMakeFiles\CMakeSystem.cmake;E:\study\Exploded\ExplodedView\build\CMakeFiles\CMakeCCompiler.cmake;E:\study\Exploded\ExplodedView\build\CMakeFiles\CMakeCXXCompiler.cmake;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\CMakeSystemSpecificInformation.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\CMakeGenericSystem.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\Platform\gcc.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\Platform\Windows.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\Platform\WindowsPaths.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\CMakeCInformation.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\Platform\Windows-cl.cmake&quot;;E:\study\Exploded\ExplodedView\build\CMakeFiles\CMakeCPlatform.cmake;E:\study\Exploded\ExplodedView\build\CMakeFiles\CMakeCXXPlatform.cmake;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\Platform\cl.cmake&quot;;E:\study\Exploded\ExplodedView\build\CMakeFiles\CMakeRCCompiler.cmake;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\CMakeRCInformation.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\CMakeCommonLanguageInclude.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\CMakeCXXInformation.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\CMakeCommonLanguageInclude.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\FindQt4.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\CheckSymbolExists.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\MacroAddFileDependencies.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\FindPackageMessage.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\FindOpenSceneGraph.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\Findosg_functions.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\FindosgViewer.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\Findosg_functions.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\FindPackageHandleStandardArgs.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\FindPackageMessage.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\FindosgUtil.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\Findosg_functions.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\FindPackageHandleStandardArgs.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\FindPackageMessage.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\FindosgGA.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\Findosg_functions.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\FindPackageHandleStandardArgs.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\FindPackageMessage.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\FindosgDB.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\Findosg_functions.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\FindPackageHandleStandardArgs.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\FindPackageMessage.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\FindosgText.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\Findosg_functions.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\FindPackageHandleStandardArgs.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\FindPackageMessage.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\Findosg.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\Findosg_functions.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\FindPackageHandleStandardArgs.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\FindPackageMessage.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\FindOpenThreads.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\FindPackageHandleStandardArgs.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\FindPackageMessage.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\FindPackageHandleStandardArgs.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\FindPackageMessage.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\FindOpenGL.cmake&quot;;E:\study\Exploded\ExplodedView\CMakeLists.txt;"
-					Outputs="CMakeFiles\generate.stamp"
-				/>
-			</FileConfiguration>
-			<FileConfiguration
-				Name="MinSizeRel|Win32"
-				>
-				<Tool
-					Name="VCCustomBuildTool"
-					Description="Building Custom Rule E:/study/Exploded/ExplodedView/CMakeLists.txt"
-					CommandLine="&quot;C:\Program Files\CMake 2.6\bin\cmake.exe&quot; -HE:/study/Exploded/ExplodedView -BE:/study/Exploded/ExplodedView/build --check-stamp-file CMakeFiles/generate.stamp&#x0D;&#x0A;"
-					AdditionalDependencies="E:\study\Exploded\ExplodedView\CMakeLists.txt;E:\study\Exploded\ExplodedView\build\CMakeFiles\CMakeSystem.cmake;E:\study\Exploded\ExplodedView\build\CMakeFiles\CMakeCCompiler.cmake;E:\study\Exploded\ExplodedView\build\CMakeFiles\CMakeCXXCompiler.cmake;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\CMakeSystemSpecificInformation.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\CMakeGenericSystem.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\Platform\gcc.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\Platform\Windows.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\Platform\WindowsPaths.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\CMakeCInformation.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\Platform\Windows-cl.cmake&quot;;E:\study\Exploded\ExplodedView\build\CMakeFiles\CMakeCPlatform.cmake;E:\study\Exploded\ExplodedView\build\CMakeFiles\CMakeCXXPlatform.cmake;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\Platform\cl.cmake&quot;;E:\study\Exploded\ExplodedView\build\CMakeFiles\CMakeRCCompiler.cmake;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\CMakeRCInformation.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\CMakeCommonLanguageInclude.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\CMakeCXXInformation.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\CMakeCommonLanguageInclude.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\FindQt4.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\CheckSymbolExists.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\MacroAddFileDependencies.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\FindPackageMessage.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\FindOpenSceneGraph.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\Findosg_functions.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\FindosgViewer.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\Findosg_functions.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\FindPackageHandleStandardArgs.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\FindPackageMessage.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\FindosgUtil.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\Findosg_functions.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\FindPackageHandleStandardArgs.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\FindPackageMessage.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\FindosgGA.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\Findosg_functions.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\FindPackageHandleStandardArgs.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\FindPackageMessage.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\FindosgDB.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\Findosg_functions.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\FindPackageHandleStandardArgs.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\FindPackageMessage.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\FindosgText.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\Findosg_functions.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\FindPackageHandleStandardArgs.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\FindPackageMessage.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\Findosg.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\Findosg_functions.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\FindPackageHandleStandardArgs.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\FindPackageMessage.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\FindOpenThreads.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\FindPackageHandleStandardArgs.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\FindPackageMessage.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\FindPackageHandleStandardArgs.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\FindPackageMessage.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\FindOpenGL.cmake&quot;;E:\study\Exploded\ExplodedView\CMakeLists.txt;"
-					Outputs="CMakeFiles\generate.stamp"
-				/>
-			</FileConfiguration>
-			<FileConfiguration
-				Name="RelWithDebInfo|Win32"
-				>
-				<Tool
-					Name="VCCustomBuildTool"
-					Description="Building Custom Rule E:/study/Exploded/ExplodedView/CMakeLists.txt"
-					CommandLine="&quot;C:\Program Files\CMake 2.6\bin\cmake.exe&quot; -HE:/study/Exploded/ExplodedView -BE:/study/Exploded/ExplodedView/build --check-stamp-file CMakeFiles/generate.stamp&#x0D;&#x0A;"
-					AdditionalDependencies="E:\study\Exploded\ExplodedView\CMakeLists.txt;E:\study\Exploded\ExplodedView\build\CMakeFiles\CMakeSystem.cmake;E:\study\Exploded\ExplodedView\build\CMakeFiles\CMakeCCompiler.cmake;E:\study\Exploded\ExplodedView\build\CMakeFiles\CMakeCXXCompiler.cmake;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\CMakeSystemSpecificInformation.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\CMakeGenericSystem.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\Platform\gcc.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\Platform\Windows.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\Platform\WindowsPaths.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\CMakeCInformation.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\Platform\Windows-cl.cmake&quot;;E:\study\Exploded\ExplodedView\build\CMakeFiles\CMakeCPlatform.cmake;E:\study\Exploded\ExplodedView\build\CMakeFiles\CMakeCXXPlatform.cmake;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\Platform\cl.cmake&quot;;E:\study\Exploded\ExplodedView\build\CMakeFiles\CMakeRCCompiler.cmake;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\CMakeRCInformation.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\CMakeCommonLanguageInclude.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\CMakeCXXInformation.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\CMakeCommonLanguageInclude.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\FindQt4.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\CheckSymbolExists.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\MacroAddFileDependencies.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\FindPackageMessage.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\FindOpenSceneGraph.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\Findosg_functions.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\FindosgViewer.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\Findosg_functions.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\FindPackageHandleStandardArgs.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\FindPackageMessage.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\FindosgUtil.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\Findosg_functions.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\FindPackageHandleStandardArgs.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\FindPackageMessage.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\FindosgGA.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\Findosg_functions.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\FindPackageHandleStandardArgs.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\FindPackageMessage.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\FindosgDB.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\Findosg_functions.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\FindPackageHandleStandardArgs.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\FindPackageMessage.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\FindosgText.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\Findosg_functions.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\FindPackageHandleStandardArgs.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\FindPackageMessage.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\Findosg.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\Findosg_functions.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\FindPackageHandleStandardArgs.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\FindPackageMessage.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\FindOpenThreads.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\FindPackageHandleStandardArgs.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\FindPackageMessage.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\FindPackageHandleStandardArgs.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\FindPackageMessage.cmake&quot;;&quot;C:\Program Files\CMake 2.6\share\cmake-2.6\Modules\FindOpenGL.cmake&quot;;E:\study\Exploded\ExplodedView\CMakeLists.txt;"
-					Outputs="CMakeFiles\generate.stamp"
-				/>
-			</FileConfiguration>
-		</File>
 	</Files>
 	<Globals>
 	</Globals>
