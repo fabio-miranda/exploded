@@ -55,7 +55,7 @@
 				AdditionalOptions=" /Zm1000"
 				Optimization="0"
 				InlineFunctionExpansion="0"
-				AdditionalIncludeDirectories="..\libs\PQP_v1.3\include;&quot;..\libs\OpenSceneGraph-2.8.2\include&quot;"
+				AdditionalIncludeDirectories="..\libs\PQP_v1.3\include;&quot;..\libs\OpenSceneGraph-2.8.2\include&quot;;&quot;..\libs\OpenSceneGraph-2.8.2\build\include&quot;"
 				PreprocessorDefinitions="WIN32,_WINDOWS,_DEBUG,OSG_LIBRARY_STATIC,CMAKE_INTDIR=\&quot;Debug\&quot;"
 				ExceptionHandling="1"
 				BasicRuntimeChecks="3"
@@ -63,7 +63,7 @@
 				RuntimeTypeInfo="true"
 				AssemblerListingLocation="Debug"
 				ObjectFile="$(IntDir)\"
-				ProgramDataBaseFileName="E:/study/Exploded/ExplodedView/build/bin/Windows-5.1/Debug/ExplodedView.pdb"
+				ProgramDataBaseFileName="$(TargetDir)\ExplodedView.pdb"
 				WarningLevel="3"
 				DebugInformationFormat="3"
 				CompileAs="2"
@@ -82,14 +82,14 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalOptions=" /STACK:10000000 /machine:I386 /debug"
-				AdditionalDependencies="kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib ..\libs\OpenSceneGraph-2.8.2\bin\osg55-osgViewerd.lib ..\libs\OpenSceneGraph-2.8.2\bin\osg55-osgUtild.lib ..\libs\OpenSceneGraph-2.8.2\bin\osg55-osgGAd.lib ..\libs\OpenSceneGraph-2.8.2\bin\osg55-osgDBd.lib ..\libs\OpenSceneGraph-2.8.2\bin\osg55-osgTextd.lib ..\libs\OpenSceneGraph-2.8.2\bin\osg55-osgd.lib ..\libs\OpenSceneGraph-2.8.2\bin\ot11-OpenThreadsd.lib glu32.lib opengl32.lib ..\libs\OpenSceneGraph-2.8.2\lib\osgPlugins-2.8.2\osgdb_3dsd.lib ..\libs\PQP_v1.3\lib\PQP.lib $(NOINHERIT)"
+				AdditionalDependencies="kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib ..\libs\OpenSceneGraph-2.8.2\build\bin\osg55-osgViewerd.lib ..\libs\OpenSceneGraph-2.8.2\build\bin\osg55-osgUtild.lib ..\libs\OpenSceneGraph-2.8.2\build\bin\osg55-osgGAd.lib ..\libs\OpenSceneGraph-2.8.2\build\bin\osg55-osgDBd.lib ..\libs\OpenSceneGraph-2.8.2\build\bin\osg55-osgTextd.lib ..\libs\OpenSceneGraph-2.8.2\build\bin\osg55-osgFXd.lib ..\libs\OpenSceneGraph-2.8.2\build\bin\osg55-osgd.lib ..\libs\OpenSceneGraph-2.8.2\build\bin\ot11-OpenThreadsd.lib glu32.lib opengl32.lib ..\libs\OpenSceneGraph-2.8.2\build\lib\osgPlugins-2.8.2\osgdb_3dsd.lib ..\libs\PQP_v1.3\lib\PQP.lib $(NOINHERIT)"
 				OutputFile="$(SolutionDir)\bin\$(PlatformName)\$(ConfigurationName)\ExplodedView.exe"
 				Version="0.0"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories=""
 				GenerateManifest="true"
 				GenerateDebugInformation="true"
-				ProgramDatabaseFile="E:/study/Exploded/ExplodedView/build/bin/Windows-5.1/Debug/ExplodedView.pdb"
+				ProgramDatabaseFile="$(TargetDir)\ExplodedView.pdb"
 				SubSystem="1"
 				ImportLibrary="E:\study\Exploded\ExplodedView\build\bin\Windows-5.1\Debug\ExplodedView.lib"
 			/>
@@ -161,7 +161,7 @@
 				RuntimeTypeInfo="true"
 				AssemblerListingLocation="Release"
 				ObjectFile="$(IntDir)\"
-				ProgramDataBaseFileName="E:/study/Exploded/ExplodedView/build/bin/Windows-5.1/Release/ExplodedView.pdb"
+				ProgramDataBaseFileName="$(TargetDir)\ExplodedView.pdb"
 				WarningLevel="3"
 				CompileAs="2"
 			/>
@@ -185,7 +185,7 @@
 				LinkIncremental="1"
 				AdditionalLibraryDirectories=""
 				GenerateManifest="true"
-				ProgramDatabaseFile="E:/study/Exploded/ExplodedView/build/bin/Windows-5.1/Release/ExplodedView.pdb"
+				ProgramDatabaseFile="$(TargetDir)\ExplodedView.pdb"
 				SubSystem="1"
 				ImportLibrary="E:\study\Exploded\ExplodedView\build\bin\Windows-5.1\Release\ExplodedView.lib"
 			/>
@@ -257,7 +257,7 @@
 				RuntimeTypeInfo="true"
 				AssemblerListingLocation="MinSizeRel"
 				ObjectFile="$(IntDir)\"
-				ProgramDataBaseFileName="E:/study/Exploded/ExplodedView/build/bin/Windows-5.1/MinSizeRel/ExplodedView.pdb"
+				ProgramDataBaseFileName="$(TargetDir)\ExplodedView.pdb"
 				WarningLevel="3"
 				CompileAs="2"
 			/>
@@ -281,7 +281,7 @@
 				LinkIncremental="1"
 				AdditionalLibraryDirectories=""
 				GenerateManifest="true"
-				ProgramDatabaseFile="E:/study/Exploded/ExplodedView/build/bin/Windows-5.1/MinSizeRel/ExplodedView.pdb"
+				ProgramDatabaseFile="$(TargetDir)\ExplodedView.pdb"
 				SubSystem="1"
 				ImportLibrary="E:\study\Exploded\ExplodedView\build\bin\Windows-5.1\MinSizeRel\ExplodedView.lib"
 			/>
@@ -353,7 +353,7 @@
 				RuntimeTypeInfo="true"
 				AssemblerListingLocation="RelWithDebInfo"
 				ObjectFile="$(IntDir)\"
-				ProgramDataBaseFileName="E:/study/Exploded/ExplodedView/build/bin/Windows-5.1/RelWithDebInfo/ExplodedView.pdb"
+				ProgramDataBaseFileName="$(TargetDir)\ExplodedView.pdb"
 				WarningLevel="3"
 				DebugInformationFormat="3"
 				CompileAs="2"
@@ -379,7 +379,7 @@
 				AdditionalLibraryDirectories=""
 				GenerateManifest="true"
 				GenerateDebugInformation="true"
-				ProgramDatabaseFile="E:/study/Exploded/ExplodedView/build/bin/Windows-5.1/RelWithDebInfo/ExplodedView.pdb"
+				ProgramDatabaseFile="$(TargetDir)\ExplodedView.pdb"
 				SubSystem="1"
 				ImportLibrary="E:\study\Exploded\ExplodedView\build\bin\Windows-5.1\RelWithDebInfo\ExplodedView.lib"
 			/>
@@ -407,11 +407,40 @@
 		</Configuration>
 	</Configurations>
 	<References>
+		<AssemblyReference
+			RelativePath="System.dll"
+			AssemblyName="System, Version=2.0.0.0, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL"
+			MinFrameworkVersion="131072"
+		/>
+		<AssemblyReference
+			RelativePath="System.Data.dll"
+			AssemblyName="System.Data, Version=2.0.0.0, PublicKeyToken=b77a5c561934e089, processorArchitecture=x86"
+			MinFrameworkVersion="131072"
+		/>
+		<AssemblyReference
+			RelativePath="System.Drawing.dll"
+			AssemblyName="System.Drawing, Version=2.0.0.0, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL"
+			MinFrameworkVersion="131072"
+		/>
+		<AssemblyReference
+			RelativePath="System.Windows.Forms.dll"
+			AssemblyName="System.Windows.Forms, Version=2.0.0.0, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL"
+			MinFrameworkVersion="131072"
+		/>
+		<AssemblyReference
+			RelativePath="System.XML.dll"
+			AssemblyName="System.Xml, Version=2.0.0.0, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL"
+			MinFrameworkVersion="131072"
+		/>
 	</References>
 	<Files>
 		<Filter
 			Name="Source Files"
 			>
+			<File
+				RelativePath="..\src\Cell.cpp"
+				>
+			</File>
 			<File
 				RelativePath="..\src\ExplodedView.cpp"
 				>
@@ -441,7 +470,15 @@
 			Name="Header files"
 			>
 			<File
+				RelativePath="..\src\Cell.h"
+				>
+			</File>
+			<File
 				RelativePath="..\src\CollisionData.h"
+				>
+			</File>
+			<File
+				RelativePath="..\src\DrawInstanced.h"
 				>
 			</File>
 			<File
@@ -462,6 +499,10 @@
 			</File>
 			<File
 				RelativePath="..\src\SegmentedParts.h"
+				>
+			</File>
+			<File
+				RelativePath="..\src\StringExplode.h"
 				>
 			</File>
 			<Filter

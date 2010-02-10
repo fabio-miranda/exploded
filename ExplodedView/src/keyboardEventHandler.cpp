@@ -8,6 +8,7 @@ bool myKeyboardEventHandler::handle(const osgGA::GUIEventAdapter& ea,osgGA::GUIA
 		{
 			switch(ea.getKey())
 			{
+			
 			case '0': m_explodedView->switchExplodeInplode(0); break;
 			case '1': m_explodedView->switchExplodeInplode(1); break;
 			case '2': m_explodedView->switchExplodeInplode(2); break;
@@ -18,6 +19,7 @@ bool myKeyboardEventHandler::handle(const osgGA::GUIEventAdapter& ea,osgGA::GUIA
 			case '7': m_explodedView->switchExplodeInplode(7); break;
 			case '8': m_explodedView->switchExplodeInplode(8); break;
 			case '9': m_explodedView->switchExplodeInplode(9); break;
+			
 			default:
 				return false;
 			} 
