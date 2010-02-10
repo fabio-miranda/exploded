@@ -220,7 +220,6 @@ void Part::inplode(double stepSize){
 			m_osgTransform->setPosition(m_osgOriginalTransform->getPosition());
 		}
 	}
-
 }
 
 void Part::insertVertexFrom(Part* vertexFrom){

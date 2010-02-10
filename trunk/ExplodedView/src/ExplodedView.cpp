@@ -21,10 +21,209 @@ ExplodedView::ExplodedView(){
 	//m_vCollide = new VCollide();
 }
 
- 
-void ExplodedView::setUp(char* modelName){
+void ExplodedView::loadModelOSG(char* modelName){
+
+	m_loadedModel = osgDB::readNodeFile(modelName);
+    if (!m_loadedModel) 
+    {
+        std::cout << "No data loaded" << std::endl;
+		exit(1);
+    }
+	m_loadedModel->setCullingActive (false);
+
+	findPartsOSG();
+
+}
+
+
+
+void ExplodedView::loadModelGeresim(char* modelName){
+	
+	std::ifstream file;
+	std::string lineRead;
+	std::vector<std::string> tokens;
+	int ni, nj, nk, numActiveCells, numVertices;
+
+	//osg::Group* root = new osg::Group();
+	//osg::Geode* geode = new osg::Geode();
+	//osg::Geometry* geometry = new osg::Geometry();
+
+	osg::Vec3Array* verticesArray = new osg::Vec3Array();
+	m_cellsVector = new std::vector<Cell*>();
+	m_propSet = new std::set<float>();
+	//std::multimap<float, Cell*>* cellsMap = new std::multimap<float, Cell*>();;
+	
+
+	file.open(modelName);
+
+	if(!file){
+		std::cout << "No data loaded" << std::endl;
+		exit(1);
+	}
+
+	//First line
+	std::getline(file, lineRead);
+	StringExplode(lineRead, " ", &tokens);
+	ni = atoi(tokens[0].c_str()); nj = atoi(tokens[1].c_str()); nk = atoi(tokens[2].c_str());
+	numActiveCells = atoi(tokens[3].c_str()); numVertices = atoi(tokens[4].c_str());
 
 	
+
+	//Vertices
+	for(int i=0; i< numVertices; i++){
+
+		tokens.clear();
+		std::getline(file, lineRead);
+		StringExplode(lineRead, " ", &tokens);
+
+		verticesArray->push_back(osg::Vec3(atof(tokens[0].c_str()), atof(tokens[1].c_str()), atof(tokens[2].c_str())));
+
+
+	}
+	//geometry->setVertexArray(verticesArray);
+
+
+	//Cells
+	osg::Vec4Array* colorsArray = new osg::Vec4Array();
+	for(int i=0; i< ni*nj*nk; i++){
+		
+
+		std::getline(file, lineRead);
+		
+
+
+		if(lineRead[0] == '1'){
+			
+			tokens.clear();
+			StringExplode(lineRead, " ", &tokens);
+			std::vector<int>* neighbours = new std::vector<int>();
+			vector<int>* verticesIndex = new vector<int>();
+			osg::Vec3* cellIndex;
+			bool active = 1;
+			
+
+			if(true){
+			//if(atoi(tokens[3].c_str()) == 0){
+
+				cellIndex = new osg::Vec3(atoi(tokens[1].c_str()), atoi(tokens[2].c_str()), atoi(tokens[3].c_str()));
+				
+				for(int j=4; j<12; j++){
+					verticesIndex->push_back(atoi(tokens[j].c_str()));
+				}
+				for(int k=12; k<18; k++){
+					neighbours->push_back(atoi(tokens[k].c_str()));
+				}
+
+				Cell* cell = new Cell(active, cellIndex, verticesIndex, neighbours, atof(tokens[18].c_str()));
+				//cell->addPrimitiveSets(geometry);
+				m_cellsVector->push_back(cell);
+		
+				
+				//Color
+				srand(cell->mProp * 10000.0);
+				osg::Vec4f color = osg::Vec4f(((float)rand() / RAND_MAX), (float)rand() / RAND_MAX, (float)rand() / RAND_MAX, 1.0);
+				//osg::Vec4f color = osg::Vec4f(0, 0, cell->mProp, 1);
+				//osg::Vec4f color = osg::Vec4f(1, 0, 0, 1);
+				for(int j = 0; j<6; j++){
+					colorsArray->push_back(color);
+				}
+				//cellsMap->insert(pair<float, Cell*>(cell->mProp, cell));
+				m_propSet->insert(cell->mProp);
+				
+
+			}
+		}
+	}
+	file.close();
+
+	//geometry->setColorArray(colorsArray);
+	//geometry->setColorBinding(osg::Geometry::BIND_PER_VERTEX);
+	
+	//Light
+	
+	osg::Light * light = new osg::Light();
+	osg::LightSource * lightsource = new osg::LightSource();
+	lightsource->setLight(light); 
+	m_sceneGraphRoot->addChild(lightsource);
+	light->setAmbient(osg::Vec4d(1.0, 1.0, 1.0, 1.0));
+	
+	//Toon shading
+	/*
+	osgFX::Cartoon* toon = new osgFX::Cartoon();
+	//toon->setLightNumber(0);
+	//toon->setUpDemo();
+	toon->addChild(root);
+	
+	//Add nodes to the scene graph
+	geode->addDrawable(geometry);
+	root->addChild(geode);
+	m_sceneGraphRoot->addChild(toon);
+	*/
+
+	findPartsGeresim(verticesArray, colorsArray);
+}
+
+void ExplodedView::findPartsOSG(){
+	
+	//Find the parts
+	FindNamedPartVisitor findParts("part_");
+
+	m_loadedModel->accept(findParts);
+	m_partsGraph = findParts.getPartList();
+
+}
+
+
+void ExplodedView::findPartsGeresim(osg::Vec3Array* verticesArray, osg::Vec4Array* colorsArray){
+
+	std::set<float>::iterator it;
+	//m_partsGraph = new std::vector<Part*>();
+
+	osg::Group* root = new osg::Group();
+	
+
+	//Look the cells and find the ones with the same color
+	int i =0 ;
+	for(it = m_propSet->begin(); it != m_propSet->end(); it++){
+		
+		osg::Geometry* geometry = new osg::Geometry();
+		osg::Geode* geode = new osg::Geode();
+
+		geometry->setVertexArray(verticesArray);
+		geometry->setColorArray(colorsArray);
+		geometry->setColorBinding(osg::Geometry::BIND_PER_VERTEX);
+
+		geode->addDrawable(geometry);
+		
+		
+		//if(i==3)
+		root->addChild(geode);
+		
+
+		for(int j=0; j<m_cellsVector->size(); j++){
+			
+			if(*it == m_cellsVector->at(j)->mProp){
+				m_cellsVector->at(j)->addPrimitiveSets(geometry);
+			}
+		}
+		Part* part = new Part();
+		part->m_osgNode = geode;
+
+		m_partsGraph.push_back(part);
+	}
+
+	osgFX::Cartoon* toon = new osgFX::Cartoon();
+	//toon->setLightNumber(0);
+	//toon->setUpDemo();
+	toon->setOutlineLineWidth(0.1);
+	toon->addChild(root);
+
+	m_sceneGraphRoot->addChild(toon);
+	
+
+}
+ 
+void ExplodedView::setUp(){
 
     // add the state manipulator
     m_viewer->addEventHandler( new osgGA::StateSetManipulator(m_viewer->getCamera()->getOrCreateStateSet()) );
@@ -47,42 +246,31 @@ void ExplodedView::setUp(char* modelName){
 	m_viewer->getCamera()->setClearColor(osg::Vec4(1,1,1,1));
 
 	//box
-	buildBox();
+	//buildBox();
 
 	//model
 	// load the data
 	//osg::ref_ptr<osgDB::ReaderWriter::Options> opt = new osgDB::ReaderWriter::Options; 
 	//opt->setObjectCacheHint(osgDB::ReaderWriter::Options::CACHE_NONE); 
-	m_loadedModel = osgDB::readNodeFile(modelName);
-    if (!m_loadedModel) 
-    {
-        std::cout << "No data loaded" << std::endl;
-		exit(1);
-    }
-	m_loadedModel->setCullingActive (false);
+	
 
-
+	osg::setNotifyLevel(osg::NOTICE);
     // optimize the scene graph, remove redundant nodes and state etc.
     osgUtil::Optimizer optimizer;
-	optimizer.optimize(m_loadedModel);
+	/////optimizer.optimize(m_loadedModel);
+	optimizer.optimize(m_sceneGraphRoot, optimizer.CHECK_GEOMETRY);
 
-
-
-	///Find the parts
-	FindNamedPartVisitor findParts("part_");
-
-	m_loadedModel->accept(findParts);
-	m_partsGraph = findParts.getPartList();
 	
+
 	
 	for (int i=0; i<m_partsGraph.size(); i++) {
 		//m_sceneGraphRoot->addChild(m_partsGraph[i]->getOSGNode());
 		//m_partsGraph[i]->setUp(m_vCollide, m_sceneGraphRoot);
-		m_partsGraph[i]->setUp(m_sceneGraphRoot);
+		/////m_partsGraph[i]->setUp(m_sceneGraphRoot);
 	}
 
 	m_viewer->setCameraManipulator( new osgGA::TrackballManipulator() );
-	m_viewer->getCameraManipulator()->setHomePosition(osg::Vec3d(400,400,400), osg::Vec3d(0,0,0), osg::Vec3d(0,0,1));
+	m_viewer->getCameraManipulator()->setHomePosition(osg::Vec3d(2500, 3500, -3500), osg::Vec3d(1500, 1500, 3242), osg::Vec3d(0,0,-1));
 
 	//Set the scene
 	m_viewer->setSceneData(m_sceneGraphRoot);
@@ -96,9 +284,6 @@ void ExplodedView::setUp(char* modelName){
 	m_viewer->getCamera()->setComputeNearFarMode(osg::CullSettings::COMPUTE_NEAR_FAR_USING_BOUNDING_VOLUMES);
 	*/
 	m_viewer->getCamera()->setClearColor(osg::Vec4(1,1,1,1));
-
-    
-
 
 }
 
@@ -285,12 +470,19 @@ void ExplodedView::switchExplodeInplode(int index){
 	
 	if(index >= m_partsGraph.size()) return;
 
+	if(m_partsGraph[index]->m_osgNode->getNodeMask() == 0xffffffff)
+		m_partsGraph[index]->m_osgNode->setNodeMask(0x0);
+	else
+		m_partsGraph[index]->m_osgNode->setNodeMask(0xffffffff);
+
+	/*
 	if(m_partsGraph[index]->m_inploded == false){
 		inplode(index);
 	}
 	else if(m_partsGraph[index]->m_exploded == false){
 		explode(index);
 	}
+	*/
 }
 
 void ExplodedView::explode(int index){
@@ -436,22 +628,24 @@ void ExplodedView::buildBox(){
 
 void ExplodedView::run(){
 
-	setUp("test9.3ds");
+	
+	//loadModelOSG("test0.3ds");
+	loadModelGeresim("namorado_so.gmdl");
+	setUp();
 	
 	for(int i=0; i<60; i++)
 		m_viewer->frame();
 	
 	
-	buildPartsGraph();
+	/////buildPartsGraph();
 
-	
 
 	while(!m_viewer->done()){
-		updateExplodingParts();
-		updateInplodingParts();
+		/////updateExplodingParts();
+		/////updateInplodingParts();
 		//verifyExplodingParts();
 		m_viewer->frame();
-		
+		/*
 		if(m_ptrCurrentPart != NULL && (*m_explodingLevels).size() == 0){
 			
 			osg::Vec3 eye = osg::Vec3();
@@ -460,14 +654,9 @@ void ExplodedView::run(){
 			m_viewer->getCamera()->getViewMatrixAsLookAt(eye, center, up);
 			m_ptrCurrentPart->checkVisibility(eye, &m_partsGraph);
 		}
-		
-		
-		
-		
+		*/
 	}
-
 	
-
 }
 
 

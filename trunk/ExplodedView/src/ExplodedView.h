@@ -4,6 +4,8 @@
 #include "FindPartVisitor.h"
 #include "Part.h"
 #include "keyboardEventHandler.h"
+#include "StringExplode.h"
+#include "Cell.h"
 
 //#include "PQP.h"
 
@@ -11,6 +13,11 @@
 #include <iostream>
 #include <limits>
 #include <queue>
+#include <fstream>
+#include <string>
+#include <hash_map>
+
+
 
 
 //osg
@@ -20,10 +27,13 @@
 #include <osgViewer/ViewerEventHandlers>
 #include <osgDB/ReadFile>
 #include <osgUtil/Optimizer>
+#include <osgUtil/SmoothingVisitor>
+#include <osgFX/Cartoon>
 #include <osg/Node>
 #include <osg/ClipNode>
 #include <osgSim/MultiSwitch>
 #include <osg/ShapeDrawable>
+#include <osg/Texture1D>
 
 
 
@@ -32,7 +42,11 @@ class ExplodedView{
 public:
 	ExplodedView();
 
-	void setUp(char* modelName);
+	void setUp();
+	void loadModelOSG(char* modelName);
+	void findPartsOSG();
+	void loadModelGeresim(char* modelName);
+	void findPartsGeresim(osg::Vec3Array* verticesArray, osg::Vec4Array* colorsArray);
 	void buildPartsGraph();
 	void run();
 
@@ -66,6 +80,9 @@ private:
 	
 	std::vector< std::vector<Part*> >* m_explodingLevels;
 	std::vector< std::vector<Part*> >* m_inplodingLevels;
+	
+	std::vector< Cell*>* m_cellsVector;
+	std::set<float>* m_propSet;
 
 	
 
