@@ -124,7 +124,7 @@ void ExplodedView::loadModelGeresim(char* modelName){
 				osg::Vec4f color = osg::Vec4f(((float)rand() / RAND_MAX), (float)rand() / RAND_MAX, (float)rand() / RAND_MAX, 1.0);
 				//osg::Vec4f color = osg::Vec4f(0, 0, cell->mProp, 1);
 				//osg::Vec4f color = osg::Vec4f(1, 0, 0, 1);
-				for(int j = 0; j<6; j++){
+				for(int j = 0; j<3; j++){
 					colorsArray->push_back(color);
 				}
 				//cellsMap->insert(pair<float, Cell*>(cell->mProp, cell));
@@ -243,7 +243,7 @@ void ExplodedView::setUp(){
 
     // windowed
 	m_viewer->setUpViewInWindow(50, 25, 1280, 720);
-	m_viewer->getCamera()->setClearColor(osg::Vec4(1,1,1,1));
+	m_viewer->getCamera()->setClearColor(osg::Vec4(0,0,0,0));
 
 	//box
 	//buildBox();
@@ -266,7 +266,7 @@ void ExplodedView::setUp(){
 	for (int i=0; i<m_partsGraph.size(); i++) {
 		//m_sceneGraphRoot->addChild(m_partsGraph[i]->getOSGNode());
 		//m_partsGraph[i]->setUp(m_vCollide, m_sceneGraphRoot);
-		/////m_partsGraph[i]->setUp(m_sceneGraphRoot);
+		m_partsGraph[i]->setUp(m_sceneGraphRoot);
 	}
 
 	m_viewer->setCameraManipulator( new osgGA::TrackballManipulator() );
@@ -283,7 +283,7 @@ void ExplodedView::setUp(){
 	m_viewer->getCamera()->setCullingMode( cullingMode );
 	m_viewer->getCamera()->setComputeNearFarMode(osg::CullSettings::COMPUTE_NEAR_FAR_USING_BOUNDING_VOLUMES);
 	*/
-	m_viewer->getCamera()->setClearColor(osg::Vec4(1,1,1,1));
+	m_viewer->getCamera()->setClearColor(osg::Vec4(0,0,0,1));
 
 }
 
