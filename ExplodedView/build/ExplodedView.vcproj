@@ -55,8 +55,8 @@
 				AdditionalOptions=" /Zm1000"
 				Optimization="0"
 				InlineFunctionExpansion="0"
-				AdditionalIncludeDirectories="..\libs\PQP_v1.3\include;&quot;..\libs\OpenSceneGraph-2.8.2\include&quot;;&quot;..\libs\OpenSceneGraph-2.8.2\build\include&quot;"
-				PreprocessorDefinitions="WIN32,_WINDOWS,_DEBUG,OSG_LIBRARY_STATIC,CMAKE_INTDIR=\&quot;Debug\&quot;"
+				AdditionalIncludeDirectories="..\libs\PQP_v1.3\include;&quot;..\libs\OpenSceneGraph-2.8.2\include&quot;;&quot;..\libs\OpenSceneGraph-2.8.2\build\include&quot;;..\libs\boost_1_42_0"
+				PreprocessorDefinitions="WIN32;_WINDOWS;_DEBUG;OSG_LIBRARY_STATIC;CMAKE_INTDIR=\&quot;Debug\&quot;;_SCL_SECURE_NO_WARNINGS"
 				ExceptionHandling="1"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
@@ -446,39 +446,23 @@
 				>
 			</File>
 			<File
-				RelativePath="..\src\keyboardEventHandler.cpp"
-				>
-			</File>
-			<File
 				RelativePath="..\src\main.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\src\osgviewer.cpp"
+				RelativePath="..\src\ModelLoader.cpp"
 				>
 			</File>
 			<File
 				RelativePath="..\src\Part.cpp"
 				>
 			</File>
-			<File
-				RelativePath="..\src\SegmentedParts.cpp"
-				>
-			</File>
 		</Filter>
 		<Filter
-			Name="Header files"
+			Name="Header Files"
 			>
 			<File
 				RelativePath="..\src\Cell.h"
-				>
-			</File>
-			<File
-				RelativePath="..\src\CollisionData.h"
-				>
-			</File>
-			<File
-				RelativePath="..\src\DrawInstanced.h"
 				>
 			</File>
 			<File
@@ -486,7 +470,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\src\keyboardEventHandler.h"
+				RelativePath="..\src\ModelLoader.h"
 				>
 			</File>
 			<File
@@ -494,37 +478,9 @@
 				>
 			</File>
 			<File
-				RelativePath="..\src\ProxyPart.h"
+				RelativePath="..\src\PropertiesTree.h"
 				>
 			</File>
-			<File
-				RelativePath="..\src\SegmentedParts.h"
-				>
-			</File>
-			<File
-				RelativePath="..\src\StringExplode.h"
-				>
-			</File>
-			<Filter
-				Name="Visitors"
-				>
-				<File
-					RelativePath="..\src\ColorVisitor.h"
-					>
-				</File>
-				<File
-					RelativePath="..\src\FindPartVisitor.h"
-					>
-				</File>
-				<File
-					RelativePath="..\src\TriangleIndexVisitor.h"
-					>
-				</File>
-				<File
-					RelativePath="..\src\TriangleVertexVisitor.h"
-					>
-				</File>
-			</Filter>
 		</Filter>
 	</Files>
 	<Globals>

@@ -1,22 +1,29 @@
-#ifndef CELL_H
-#define CELL_H
+#ifndef Cell_H
+#define Cell_H
 
-#include <osg/Node>
-#include <osg/Geometry>
+#include <osg/Vec3>
+
+#include <vector>
 
 class Cell{
-	
+
 public:
-	Cell(bool active, osg::Vec3* cellIndex, std::vector<int>* verticesIndex, std::vector<int>* neighboursIndex, float prop);
-	void addPrimitiveSets(osg::Geometry* geometry);
+	Cell(bool pActive, osg::Vec3* pIndex, int* pVerticesIndex, int* pNeighboursIndex, float pProp);
+	bool isActive();
+	bool isOnAPart();
+	bool isOnEdge();
 
+private:
 	bool mActive;
-	osg::Vec3* mCellIndex;
-	std::vector<int>* mVerticesIndex;
-	std::vector<int>* mNeighboursIndex;
-
+	bool mIsOnAPart;
+	bool mIsOnEdge;
+	osg::Vec3* mIndex;
+	int* mVerticesIndex;
+	int* mNeighboursIndex;
 	float mProp;
 
+
 };
+
 
 #endif
